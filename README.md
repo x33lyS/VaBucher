@@ -1,3 +1,1 @@
-# VaBucher
-
-Trello: https://trello.com/b/0yM7fL5w/vabucher
+Node version 16.4.2
