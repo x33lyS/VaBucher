@@ -11,8 +11,8 @@ using VaBucherBack.Data;
 namespace VabucherBack.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221020131939_Initial")]
-    partial class Initial
+    [Migration("20221021173103_Second_Push")]
+    partial class Second_Push
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,10 @@ namespace VabucherBack.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("CV")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -40,6 +44,17 @@ namespace VabucherBack.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Search")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
