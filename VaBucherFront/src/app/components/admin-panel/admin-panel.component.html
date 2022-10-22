@@ -9,8 +9,24 @@
     <input [(ngModel)]="user.lastName" placeholder="LastName">
 </div>
 <div>
+    Password:
+    <input [(ngModel)]="user.password" placeholder="Password">
+</div>
+<div>
     Location:
     <input [(ngModel)]="user.location" placeholder="Location">
+</div>
+<div>
+    CV:
+    <input [(ngModel)]="user.cv" placeholder="cv">
+</div>
+<div>
+    Role:
+    <input [(ngModel)]="user.role" placeholder="role">
+</div>
+<div>
+    Search:
+    <input [(ngModel)]="user.search" placeholder="Search">
 </div>
 <button (click)="updateUser(user)" *ngIf="user.id">Save</button>
   <button (click)="deleteUser(user)" *ngIf="user.id">Delete</button>

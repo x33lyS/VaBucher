@@ -44,6 +44,11 @@ namespace VaBucherBack.Controllers
             dbUser.FirstName = user.FirstName;
             dbUser.LastName = user.LastName;
             dbUser.Location = user.Location;
+            dbUser.Password = user.Password;
+            dbUser.Search = user.Search;
+            dbUser.Role = user.Role;
+            dbUser.CV = user.CV;
+
             await _context.SaveChangesAsync();
 
             return Ok(await _context.Users.ToListAsync());

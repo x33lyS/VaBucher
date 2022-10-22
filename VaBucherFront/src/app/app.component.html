@@ -2,17 +2,25 @@
 
 <table>
   <thead>
-    <th>Name</th>
     <th>First Name</th>
     <th>Last Name</th>
-    <th>Place</th>
+    <th>Password</th>
+    <th>Location</th>
+    <th>CV</th>
+    <th>Role</th>
+    <th>Search</th>
     <th></th>
   </thead>
   <tbody>
     <tr *ngFor="let user of users">
       <td>{{ user.firstName }}</td>
       <td>{{ user.lastName }}</td>
+      <td>{{ user.password }}</td>
       <td>{{ user.location }}</td>
+      <td>{{ user.cv }}</td>
+      <td>{{ user.role }}</td>
+      <td>{{ user.search }}</td>
+
       <td><button (click)="editUser(user)">Edit</button></td>
     </tr>
   </tbody>
