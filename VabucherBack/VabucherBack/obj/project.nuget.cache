@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0memrAOg4Ko/oAfTDc5TlMdTS04bi5D/NKsxsMUZJf/vHM9Iht2FnJ8lIWjtk1M4bkc4Nc92WgZrGWfm7+s9CQ==",
+  "dgSpecHash": "/bB1WtFLAnZMgeGczT6tk8b1/dxSBBVrWuEbGqi8okDrAEwAb4SJ6Tg3uax21OTsiyuqQwTZHWbqXgzbEOIeLw==",
   "success": true,
   "projectFilePath": "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
   "expectedPackageFiles": [
@@ -34,6 +34,7 @@
     "C:\\Users\\florian.lejosne\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\florian.lejosne\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\florian.lejosne\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\florian.lejosne\\.nuget\\packages\\mysqlconnector\\2.1.13\\mysqlconnector.2.1.13.nupkg.sha512",
     "C:\\Users\\florian.lejosne\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\florian.lejosne\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\florian.lejosne\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
