@@ -1,5 +1,6 @@
 using VaBucherBack.Data;
 using Microsoft.EntityFrameworkCore;
+using VabucherBack;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+await Crawler.WebScrapper();
 
 app.UseCors("UserOrigins");
 
