@@ -1,3 +1,4 @@
+<div *ngIf="true">
 <button (click)="initNewUser()">Create New Hero</button>
 
 <table>
@@ -30,3 +31,10 @@
   [user]="userToEdit"
   (usersUpdated)="updateUserList($event)"
 ></app-admin-panel>
+</div>
+
+<br>
+<br>
+<br>
+<app-joboffer
+></app-joboffer>

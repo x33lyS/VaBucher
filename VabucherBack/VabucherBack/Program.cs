@@ -30,7 +30,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-await Crawler.WebScrapper();
+//Crawler.WebScrapper();
 
 app.UseCors("UserOrigins");
 

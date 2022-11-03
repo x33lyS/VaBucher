@@ -122,3 +122,4 @@ C:\Users\florian.lejosne\Code\VaBucher\VabucherBack\VabucherBack\obj\Debug\net6.
 C:\Users\florian.lejosne\Code\VaBucher\VabucherBack\VabucherBack\obj\Debug\net6.0\VabucherBack.pdb
 C:\Users\florian.lejosne\Code\VaBucher\VabucherBack\VabucherBack\obj\Debug\net6.0\VabucherBack.genruntimeconfig.cache
 C:\Users\florian.lejosne\Code\VaBucher\VabucherBack\VabucherBack\obj\Debug\net6.0\ref\VabucherBack.dll
+C:\Users\florian.lejosne\Code\VaBucher\VabucherBack\VabucherBack\bin\Debug\net6.0\MySqlConnector.dll

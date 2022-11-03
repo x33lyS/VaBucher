@@ -22,5 +22,27 @@ namespace VabucherBack.Controllers
         {
             return Ok(await _context.JobOffers.ToListAsync());
         }
+
+        [HttpPost]
+        public async Task<ActionResult<List<JobOffer>>> CreateJobOffer(JobOffer jobOffer)
+        {
+            _context.JobOffers.Add(jobOffer);
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.JobOffers.ToListAsync());
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<JobOffer>>> DeleteJobOffer(int id)
+        {
+            var dbJobOffer = await _context.JobOffers.FindAsync(id);
+            if (dbJobOffer == null)
+                return BadRequest("User not found.");
+
+            _context.JobOffers.Remove(dbJobOffer);
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.JobOffers.ToListAsync());
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,12 @@ namespace VaBucherBack.Controllers
         [HttpPost]
         public async Task<ActionResult<List<User>>> CreateUser(User user)
         {
+
+            Console.WriteLine(user.FirstName);
+            Console.WriteLine("//");
+            Console.WriteLine(_context.Users);
+
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
