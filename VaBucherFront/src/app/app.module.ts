@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { JobofferComponent } from './components/joboffer/joboffer.component';
 import { AccueilComponent } from './components/accueil/accueil.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     AdminPanelComponent,
     JobofferComponent,
     AccueilComponent,
-    LoaderComponent
+    LoaderComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
