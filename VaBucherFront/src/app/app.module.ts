@@ -7,12 +7,16 @@ import { AppComponent } from './app.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { FormsModule } from '@angular/forms';
 import { JobofferComponent } from './components/joboffer/joboffer.component';
+import { AccueilComponent } from './components/accueil/accueil.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminPanelComponent,
-    JobofferComponent
+    JobofferComponent,
+    AccueilComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

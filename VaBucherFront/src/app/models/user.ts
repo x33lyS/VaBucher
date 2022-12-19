@@ -7,4 +7,6 @@ export class User {
     search = "";
     role?: number;
     cv = "";
+    email = "";
+    phone = "";
 }
