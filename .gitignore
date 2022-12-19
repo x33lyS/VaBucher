@@ -3,3 +3,5 @@ Crawler/nodes-modules/
 .idea/
 
 VabucherBack/VabucherBack/Migrations/
+
+VabucherBack/VabucherBack/bin/*
