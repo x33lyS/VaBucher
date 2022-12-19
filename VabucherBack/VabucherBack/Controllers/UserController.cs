@@ -29,12 +29,6 @@ namespace VaBucherBack.Controllers
         [HttpPost]
         public async Task<ActionResult<List<User>>> CreateUser(User user)
         {
-
-            Console.WriteLine(user.FirstName);
-            Console.WriteLine("//");
-            Console.WriteLine(_context.Users);
-
-
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
@@ -55,6 +49,9 @@ namespace VaBucherBack.Controllers
             dbUser.Search = user.Search;
             dbUser.Role = user.Role;
             dbUser.CV = user.CV;
+            dbUser.Email = user.Email;
+            dbUser.Phone = user.Phone;
+
 
             await _context.SaveChangesAsync();
 

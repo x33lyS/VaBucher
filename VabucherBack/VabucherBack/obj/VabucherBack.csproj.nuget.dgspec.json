@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {}
+    "C:\\Users\\Florian\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {}
   },
   "projects": {
-    "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {
+    "C:\\Users\\Florian\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
+        "projectUniqueName": "C:\\Users\\Florian\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
         "projectName": "VabucherBack",
-        "projectPath": "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
-        "packagesPath": "C:\\Users\\florian.lejosne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\obj\\",
+        "projectPath": "C:\\Users\\Florian\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
+        "packagesPath": "C:\\Users\\Florian\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Florian\\Code\\VaBucher\\VabucherBack\\VabucherBack\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\florian.lejosne\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Florian\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
