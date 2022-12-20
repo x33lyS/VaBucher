@@ -11,49 +11,37 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class SignupComponent implements OnInit {
 
-    
-
-@Input() user?: User;
-@Output() usersUpdated = new EventEmitter<User[]>();
-
-constructor(private userService:UserService,private _formBuilder: FormBuilder) {}
-
-signupform = this._formBuilder.group({
-  firstName: [undefined, Validators.required],
-  lastName: [null, Validators.required],
-  email: [null, Validators.required],
-  password: ['', Validators.required],
-  confirmPassword: [null, Validators.required],
-  filter: [null, Validators.required],
-  phone: [null, Validators.required],
-  search: [null, Validators.required],
-  location: ['', Validators.required],
-})
 
 
-ngOnInit(): void {}
+  @Input() user?: User;
+  @Output() usersUpdated = new EventEmitter<User[]>();
+
+  constructor(private userService: UserService, private _formBuilder: FormBuilder) { }
+
+  signupform = this._formBuilder.group({
+    firstName: [null, Validators.required],
+    lastName: [null, Validators.required],
+    email: [null, Validators.required],
+    password: [null, Validators.required],
+    confirmPassword: [null, Validators.required],
+    phone: [null, Validators.required],
+    search: [null, Validators.required],
+    location: [null, Validators.required],
+  })
 
 
-onSubmit() {
-  // Envoyer les données du formulaire à un serveur ici...
-}
+  ngOnInit(): void { }
 
 
- validatePasswords() {
-  // console.log(this.signupform.get('password')?.value === this.signupform.get('confirmPassword')?.value);
-  
-  return this.signupform.get('password')?.value === this.signupform.get('confirmPassword')?.value && this.signupform.get('password')?.value !== null;
-}
-submit() {
-  if (!this.signupform.valid) {
-    console.log("valid");
-    if (this.validatePasswords())
-    {
-      console.log(true);
-      
-    }
-    
-  } 
-}
+  onSubmit() {
+    // Envoyer les données du formulaire à un serveur ici...
+  }
 
+
+  validatePasswords() {
+    return this.signupform.get('password')?.value === this.signupform.get('confirmPassword')?.value;
+  }
+  submit() {
+    return this.signupform.valid && this.validatePasswords()
+  }
 }

@@ -1,7 +1,7 @@
 <form [formGroup]="signupform" (ngSubmit)="onSubmit()" >
     <div >
       <label>FirstName:</label>
-      <input type="text" formControlName="firstName" name="firstName">
+      <input type="text" formControlName="firstName" name="firstName" required>
       <br>
       <label>LastName:</label>
       <input type="text" formControlName="lastName" name="lastName">
@@ -12,13 +12,52 @@
       <label>Password:</label>
       <input type="password" formControlName="password" name="password">
       <br>
+      <div class="validators" *ngIf="signupform.controls['password'].value != null">
+
+        <label class="validator"
+            [ngClass]="signupform.controls['password'].hasError('required') || signupform.controls['password'].hasError('minlength')  ? 'invalid' : 'valid'">
+            <i class="material-icons">{{ signupform.controls['password'].hasError('required') ||
+                signupform.controls['password'].hasError('minlength') ? 'cancel' :
+                'check_circle' }}</i>
+            {{ 'VALIDATORS.LENGTH'}}
+        </label>
+        <label class="validator"
+            [ngClass]="signupform.controls['password'].hasError('required') || signupform.controls['password'].hasError('hasNumber')  ? 'invalid' : 'valid'">
+            <i class="material-icons">{{ signupform.controls['password'].hasError('required') ||
+                signupform.controls['password'].hasError('hasNumber') ? 'cancel' :
+                'check_circle' }}</i>
+            {{ 'VALIDATORS.NUMBER'}}
+        </label>
+        <label class="validator"
+            [ngClass]="signupform.controls['password'].hasError('required') || signupform.controls['password'].hasError('hasCapitalCase')  ? 'invalid' : 'valid'">
+            <i class="material-icons">{{ signupform.controls['password'].hasError('required') ||
+                signupform.controls['password'].hasError('hasCapitalCase') ? 'cancel' :
+                'check_circle' }}</i>
+            {{ 'VALIDATORS.CAPITAL'}}
+        </label>
+        <label class="validator"
+            [ngClass]="signupform.controls['password'].hasError('required') || signupform.controls['password'].hasError('hasSmallCase')  ? 'invalid' : 'valid'">
+            <i class="material-icons">{{ signupform.controls['password'].hasError('required') ||
+                signupform.controls['password'].hasError('hasSmallCase') ? 'cancel' :
+                'check_circle' }}</i>
+            {{ 'VALIDATORS.SMALL'}}
+        </label>
+        <label class="validator"
+            [ngClass]="signupform.controls['password'].hasError('required') || signupform.controls['password'].hasError('hasSpecialCharacters') ? 'invalid' : 'valid'">
+            <i class="material-icons">{{ signupform.controls['password'].hasError('required') ||
+                signupform.controls['password'].hasError('hasSpecialCharacters') ? 'cancel' :
+                'check_circle' }}</i>
+            {{ 'VALIDATORS.SPECIAL'}}
+        </label>
+
+    </div>
       <label>Confirm password:</label>
       <input type="password" formControlName="confirmPassword" name="confirmPassword">
       <br>
-      <div *ngIf="!validatePasswords()" class="alert alert-danger">
+      <!-- <div *ngIf="!validatePasswords()" class="alert alert-danger">
         Password and confirm password do not match.
-      </div>
-      <br>
+      </div> -->
+ 
       <label>Filter:</label>
       <select formControlName="search" name="search">
         <option value="Option 1">Option 1</option>
@@ -32,5 +71,5 @@
       <label>Location:</label>
       <input type="text" formControlName="location" name="location">
     </div>
-    <button type="submit" [disabled]="submit()">Sign up</button>
+    <button type="submit" [disabled]="!submit()">Sign up</button>
   </form>
