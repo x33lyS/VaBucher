@@ -1,36 +1,36 @@
-<form (ngSubmit)="onSubmit()" #signupForm="ngForm">
-    <div ngModelGroup="account">
+<form [formGroup]="signupform" (ngSubmit)="onSubmit()" >
+    <div >
       <label>FirstName:</label>
-      <input type="text" [(ngModel)]="form.firstName" name="firstName" required>
+      <input type="text" formControlName="firstName" name="firstName">
       <br>
       <label>LastName:</label>
-      <input type="text" [(ngModel)]="form.lastName" name="lastName" required>
+      <input type="text" formControlName="lastName" name="lastName">
       <br>
       <label>Email:</label>
-      <input type="email" [(ngModel)]="form.email" name="email" required>
+      <input type="email" formControlName="email" name="email">
       <br>
       <label>Password:</label>
-      <input type="password" [(ngModel)]="form.password" name="password" required>
+      <input type="password" formControlName="password" name="password">
       <br>
       <label>Confirm password:</label>
-      <input type="password" [(ngModel)]="form.confirmPassword" name="confirmPassword" required>
+      <input type="password" formControlName="confirmPassword" name="confirmPassword">
       <br>
-      <div *ngIf="" class="alert alert-danger">
+      <div *ngIf="!validatePasswords()" class="alert alert-danger">
         Password and confirm password do not match.
       </div>
       <br>
       <label>Filter:</label>
-      <select [(ngModel)]="form.search" name="search">
+      <select formControlName="search" name="search">
         <option value="Option 1">Option 1</option>
         <option value="Option 2">Option 2</option>
         <option value="Option 3">Option 3</option>
       </select>
       <br>
       <label>Phone:</label>
-      <input type="tel" [(ngModel)]="form.phone" name="phone">
+      <input type="tel" formControlName="phone" name="phone">
       <br>
       <label>Location:</label>
-      <input type="text" [(ngModel)]="form.location" name="location">
+      <input type="text" formControlName="location" name="location">
     </div>
-    <button type="submit" [disabled]="!signupForm.form.valid && validatePasswords()">Sign up</button>
+    <button type="submit" [disabled]="submit()">Sign up</button>
   </form>
