@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'VaBucherFront';
   users: User[] = [];
   userToEdit?: User;
-  
+
   constructor(private userService: UserService) {}
 
   ngOnInit() : void {
