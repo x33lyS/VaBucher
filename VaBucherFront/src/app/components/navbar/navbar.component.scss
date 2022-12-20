@@ -1,22 +1,63 @@
-.nav__links {
-    margin-top: 40px;
-    font-family: "La Belle Aurore", sans-serif;
-    padding-right: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100000;
-}
-.nav__link {
-    cursor: none;
-    margin: 0 10px;
+.container{
+  display: flex;
+  position: fixed;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 50px;
+  //border-radius: 9px;
+  border-bottom-right-radius: 9px;
+  border-bottom-left-radius: 9px;
+  background: rgb(0, 0, 0);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+  backdrop-filter: blur(10px);
+  .logo{
     color: white;
-    padding: 9px 15px;
-    border-radius: 100px;
-    transition: all 0.5s ease-in-out;
-    text-decoration: none;
-}
-.nav__link.active,
-.nav__link:hover {
-    background-color: #504f4f;
+    cursor: pointer;
+  }
+  .content{
+    display: flex;
+    gap: 20px;
+    .nav__links{
+      display: flex;
+      gap: 2px;
+      .nav__link{
+        text-decoration: none;
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: 1px transparent solid;
+        padding: 5px 20px;
+        border-radius: 4px;
+        &:hover{
+          border: 1px solid;
+          background: rgba(0, 0, 0, 0.11);
+        }
+      }
+    }
+    .nav_buttons{
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      button{
+        background: transparent;
+        border: 1px solid #b03216;
+        padding: 2px 10px;
+        border-radius: 4px;
+        outline: none;
+        font-size: 18px;
+        font-weight: 500;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .full{
+        background: #b03216;
+        &:hover{
+          background: rgba(176, 50, 22, 0.69);
+        }
+      }
+    }
+  }
 }

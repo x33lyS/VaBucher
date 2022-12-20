@@ -1,0 +1,29 @@
+section{
+  height: 100vh;
+}
+
+button{
+  outline: none;
+  background: #e94a35;
+  color: white;
+  border: 2px solid #e94a35;
+  border-radius: 9px;
+  transition: all 0.3s ease;
+  &:hover{
+    background: transparent;
+    border: 2px solid #e94a35;
+    color: #e94a35;
+  }
+}
+
+.main_section{
+  background-image: url("https://cdn.pixabay.com/photo/2019/09/12/21/05/desk-4472634_960_720.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  .title{
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+  }
+}
