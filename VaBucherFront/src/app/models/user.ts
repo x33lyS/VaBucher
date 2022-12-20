@@ -1,6 +1,6 @@
 export class User {
     id?: number;
-    firstName = "";
+    firstName= "";
     lastName = "";
     password = "";
     location = "";

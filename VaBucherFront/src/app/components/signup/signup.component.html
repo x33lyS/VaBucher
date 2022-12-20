@@ -1,0 +1,36 @@
+<form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+    <div ngModelGroup="account">
+      <label>FirstName:</label>
+      <input type="text" [(ngModel)]="form.firstName" name="firstName" required>
+      <br>
+      <label>LastName:</label>
+      <input type="text" [(ngModel)]="form.lastName" name="lastName" required>
+      <br>
+      <label>Email:</label>
+      <input type="email" [(ngModel)]="form.email" name="email" required>
+      <br>
+      <label>Password:</label>
+      <input type="password" [(ngModel)]="form.password" name="password" required>
+      <br>
+      <label>Confirm password:</label>
+      <input type="password" [(ngModel)]="form.confirmPassword" name="confirmPassword" required>
+      <br>
+      <div *ngIf="" class="alert alert-danger">
+        Password and confirm password do not match.
+      </div>
+      <br>
+      <label>Filter:</label>
+      <select [(ngModel)]="form.search" name="search">
+        <option value="Option 1">Option 1</option>
+        <option value="Option 2">Option 2</option>
+        <option value="Option 3">Option 3</option>
+      </select>
+      <br>
+      <label>Phone:</label>
+      <input type="tel" [(ngModel)]="form.phone" name="phone">
+      <br>
+      <label>Location:</label>
+      <input type="text" [(ngModel)]="form.location" name="location">
+    </div>
+    <button type="submit" [disabled]="!signupForm.form.valid && validatePasswords()">Sign up</button>
+  </form>
