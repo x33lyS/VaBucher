@@ -11,30 +11,38 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class SignupComponent implements OnInit {
 
-
+  signupform: FormGroup;
 
   @Input() user?: User;
   @Output() usersUpdated = new EventEmitter<User[]>();
+  
+  constructor(private userService: UserService, private _formBuilder: FormBuilder) { 
 
-  constructor(private userService: UserService, private _formBuilder: FormBuilder) { }
-
-  signupform = this._formBuilder.group({
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    email: [null, Validators.required],
-    password: [null, Validators.required],
-    confirmPassword: [null, Validators.required],
-    phone: [null, Validators.required],
-    search: [null, Validators.required],
-    location: [null, Validators.required],
+  this.signupform = this._formBuilder.group({
+    firstName: ["", Validators.required],
+    lastName: ["", Validators.required],
+    email: ["", Validators.required],
+    password: ["", Validators.required],
+    confirmPassword: ["", Validators.required],
+    phone: ["", Validators.required],
+    search: ["", Validators.required],
+    location: ["", Validators.required],
   })
+}
 
 
   ngOnInit(): void { }
 
 
   onSubmit() {
-    // Envoyer les données du formulaire à un serveur ici...
+    this.user!.firstName = this.signupform.get('firstName')!.value;
+    this.user!.lastName = this.signupform.get('lastName')!.value;
+    this.user!.email = this.signupform.get('email')!.value;
+    this.user!.password = this.signupform.get('password')!.value;
+    this.user!.phone = this.signupform.get('phone')!.value;
+    this.user!.search = this.signupform.get('search')!.value;
+    this.user!.location = this.signupform.get('location')!.value;
+    this.userService.createUser(this.user!).subscribe((result: User[]) => this.usersUpdated.emit(result));
   }
 
 
