@@ -12,14 +12,20 @@
       <label>Password:</label>
       <input type="password" formControlName="password" name="password">
       <br>
-      <div *ngIf="signupform.get('password')?.value.length < 8; else passwordError">
+      <div *ngIf="signupform.get('password')?.value.length < 8; else passwordErrorlength">
         <!-- Affichez un message d'erreur si le mot de passe a moins de 8 caractères -->
-        <mat-icon>done</mat-icon>
-        <p>Le mot de passe doit avoir au moins 8 caractères.</p>
+        <span>
+            <mat-icon>close</mat-icon>
+            <p>Le mot de passe doit avoir au moins 8 caractères.</p>
+          </span>
+          
       </div>
       
-      <ng-template #passwordError>
-        <!-- Ne faites rien si le mot de passe a au moins 8 caractères -->
+      <ng-template #passwordErrorlength>
+        <span>
+            <mat-icon>done</mat-icon>
+            <p>Le mot de passe doit avoir au moins 8 caractères.</p>
+        </span>
       </ng-template>
       <label>Confirm password:</label>
       <input type="password" formControlName="confirmPassword" name="confirmPassword">
