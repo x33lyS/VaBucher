@@ -4,6 +4,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 
+
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -15,15 +17,13 @@ export class SignupComponent implements OnInit {
   passwordValid = false;
   passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/;
 
-
-
   // @Input() user?: User;
   @Output() usersUpdated = new EventEmitter<User[]>();
-  
-  constructor(private userService: UserService, private _formBuilder: FormBuilder) { 
+
+  constructor(private userService: UserService, private _formBuilder: FormBuilder) {
 
   this.signupform = this._formBuilder.group({
-    firstName: ['', Validators.required],
+      firstName:['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -66,7 +66,7 @@ export class SignupComponent implements OnInit {
   validatePasswords() {
     const password = this.signupform.value.password;
     const confirmPassword = this.signupform.value.confirmPassword;
-    return password === confirmPassword && password !== '' && confirmPassword !== '';
+    return password === confirmPassword && password !== '' && confirmPassword !== '' && this.checkPassword() && password.length >= 8;
   }
   submit() {
     return this.signupform.valid && this.validatePasswords()
