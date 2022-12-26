@@ -10,6 +10,8 @@ import { HomeComponent } from './components/home/home.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponent }
@@ -29,7 +31,9 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
-    FormsModule
+    MatIconModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
