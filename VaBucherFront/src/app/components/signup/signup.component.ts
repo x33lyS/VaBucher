@@ -12,21 +12,27 @@ import { UserService } from 'src/app/services/user.service';
 export class SignupComponent implements OnInit {
 
   signupform: FormGroup;
+  passwordValid = false;
+  passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/;
 
-  @Input() user?: User;
+
+
+  // @Input() user?: User;
   @Output() usersUpdated = new EventEmitter<User[]>();
   
   constructor(private userService: UserService, private _formBuilder: FormBuilder) { 
 
   this.signupform = this._formBuilder.group({
-    firstName: ["", Validators.required],
-    lastName: ["", Validators.required],
-    email: ["", Validators.required],
-    password: ["", Validators.required],
-    confirmPassword: ["", Validators.required],
-    phone: ["", Validators.required],
-    search: ["", Validators.required],
-    location: ["", Validators.required],
+    firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      location: '',
+      search: '',
+      role: 1,
+      cv: '',
+      phone: ''
   })
 }
 
@@ -35,19 +41,32 @@ export class SignupComponent implements OnInit {
 
 
   onSubmit() {
-    this.user!.firstName = this.signupform.get('firstName')!.value;
-    this.user!.lastName = this.signupform.get('lastName')!.value;
-    this.user!.email = this.signupform.get('email')!.value;
-    this.user!.password = this.signupform.get('password')!.value;
-    this.user!.phone = this.signupform.get('phone')!.value;
-    this.user!.search = this.signupform.get('search')!.value;
-    this.user!.location = this.signupform.get('location')!.value;
-    this.userService.createUser(this.user!).subscribe((result: User[]) => this.usersUpdated.emit(result));
+    if (this.signupform.valid) {
+    const user = new User();
+    user.firstName = this.signupform.value.firstName;
+    user.lastName = this.signupform.value.lastName;
+    user.email = this.signupform.value.email;
+    user.password = this.signupform.value.password;
+    user.location = this.signupform.value.location;
+    user.search = this.signupform.value.search;
+    user.role = this.signupform.value.role;
+    user.cv = this.signupform.value.cv;
+    user.phone = this.signupform.value.phone;
+    console.log(user);
+    this.userService.createUser(user).subscribe((result: User[]) => this.usersUpdated.emit(result));
+  }
+}
+
+
+  checkPassword() {
+    return this.passwordValid = this.passwordRegex.test(this.signupform.value.password);
   }
 
 
   validatePasswords() {
-    return this.signupform.get('password')?.value === this.signupform.get('confirmPassword')?.value;
+    const password = this.signupform.value.password;
+    const confirmPassword = this.signupform.value.confirmPassword;
+    return password === confirmPassword && password !== '' && confirmPassword !== '';
   }
   submit() {
     return this.signupform.valid && this.validatePasswords()

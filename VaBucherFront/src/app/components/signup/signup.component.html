@@ -4,14 +4,15 @@
       <input type="text" formControlName="firstName" name="firstName" required>
       <br>
       <label>LastName:</label>
-      <input type="text" formControlName="lastName" name="lastName">
+      <input type="text" formControlName="lastName" name="lastName" required>
       <br>
       <label>Email:</label>
-      <input type="email" formControlName="email" name="email">
+      <input type="email" formControlName="email" name="email" required>
       <br>
       <label>Password:</label>
-      <input type="password" formControlName="password" name="password">
+      <input type="password" formControlName="password" name="password" required>
       <br>
+
       <div *ngIf="signupform.get('password')?.value.length < 8; else passwordErrorlength">
         <!-- Affichez un message d'erreur si le mot de passe a moins de 8 caractères -->
         <span>
@@ -20,19 +21,38 @@
           </span>
           
       </div>
-      
       <ng-template #passwordErrorlength>
         <span>
             <mat-icon>done</mat-icon>
             <p>Le mot de passe doit avoir au moins 8 caractères.</p>
         </span>
       </ng-template>
+
+      <div *ngIf="!checkPassword() else passwordValidMessage">
+        <!-- Affichez un message d'erreur si le mot de passe ne respecte pas les critères -->
+        <span>
+          <mat-icon>close</mat-icon>
+          <p>The password must contain at least one uppercase letter, one lowercase letter, and one special character.</p>
+        </span>
+      </div>
+      
+      <ng-template #passwordValidMessage>
+        <span>
+          <mat-icon>done</mat-icon>
+          <p>The password meets the criteria.</p>
+        </span>
+      </ng-template>
+
       <label>Confirm password:</label>
-      <input type="password" formControlName="confirmPassword" name="confirmPassword">
+      <input type="password" formControlName="confirmPassword" name="confirmPassword" required>
       <br>
-      <!-- <div *ngIf="!validatePasswords()" class="alert alert-danger">
-        Password and confirm password do not match.
-      </div> -->
+      <div *ngIf="signupform.get('confirmPassword')?.touched && !validatePasswords()">
+        <span>
+          <mat-icon>close</mat-icon>
+          <p>Passwords do not match.</p>
+        </span>
+       
+      </div>
  
       <label>Filter:</label>
       <select formControlName="search" name="search">
