@@ -12,6 +12,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponent }
@@ -27,14 +28,15 @@ const routes: Routes = [
     NavbarComponent,
     SignupComponent
   ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-    MatIconModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        RouterModule.forRoot(routes),
+        HttpClientModule,
+        MatIconModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule
+    ],
   providers: [],
   bootstrap: [AppComponent],
   exports: [RouterModule]
