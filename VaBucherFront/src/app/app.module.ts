@@ -13,6 +13,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponent },
@@ -28,7 +29,8 @@ const routes: Routes = [
     LoaderComponent,
     NavbarComponent,
     SignupComponent,
-    DashboardComponent
+    DashboardComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
