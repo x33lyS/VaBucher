@@ -1,0 +1,5 @@
+.vs/*
+.idea/*
+VabucherBack/.vs/*
+Crawler/nodes-modules/*
+VabucherBack/VabucherBack/Migrations/*
