@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class registrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit {
 
   registrationform: FormGroup;
   passwordValid = false;

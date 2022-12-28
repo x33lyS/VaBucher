@@ -9,15 +9,16 @@ import { JobofferComponent } from './components/joboffer/joboffer.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { registrationComponent } from './components/registration/registration.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SearchComponent } from './components/search/search.component';
 import { LoginComponent } from './components/login/login.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 const routes: Routes = [
-  { path: 'registration', component: registrationComponent },
+  { path: 'registration', component: RegistrationComponent },
   { path: 'dashboard', component: DashboardComponent }
 ];
 
@@ -29,19 +30,20 @@ const routes: Routes = [
     HomeComponent,
     LoaderComponent,
     NavbarComponent,
-    registrationComponent,
+    RegistrationComponent,
     DashboardComponent,
     SearchComponent,
     LoginComponent
   ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-    MatIconModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        RouterModule.forRoot(routes),
+        HttpClientModule,
+        MatIconModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule
+    ],
   providers: [],
   bootstrap: [AppComponent],
   exports: [RouterModule]
