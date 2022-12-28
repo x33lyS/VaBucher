@@ -9,14 +9,15 @@ import { JobofferComponent } from './components/joboffer/joboffer.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { SignupComponent } from './components/signup/signup.component';
+import { registrationComponent } from './components/registration/registration.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SearchComponent } from './components/search/search.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  { path: 'signup', component: SignupComponent },
+  { path: 'registration', component: registrationComponent },
   { path: 'dashboard', component: DashboardComponent }
 ];
 
@@ -28,9 +29,10 @@ const routes: Routes = [
     HomeComponent,
     LoaderComponent,
     NavbarComponent,
-    SignupComponent,
+    registrationComponent,
     DashboardComponent,
-    SearchComponent
+    SearchComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

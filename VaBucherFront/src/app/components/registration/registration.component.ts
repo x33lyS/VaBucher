@@ -5,13 +5,13 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class registrationComponent implements OnInit {
 
-  signupform: FormGroup;
+  registrationform: FormGroup;
   passwordValid = false;
   passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/;
 
@@ -19,10 +19,10 @@ export class SignupComponent implements OnInit {
 
   // @Input() user?: User;
   @Output() usersUpdated = new EventEmitter<User[]>();
-  
-  constructor(private userService: UserService, private _formBuilder: FormBuilder) { 
 
-  this.signupform = this._formBuilder.group({
+  constructor(private userService: UserService, private _formBuilder: FormBuilder) {
+
+  this.registrationform = this._formBuilder.group({
     firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -41,17 +41,17 @@ export class SignupComponent implements OnInit {
 
 
   onSubmit() {
-    if (this.signupform.valid) {
+    if (this.registrationform.valid) {
     const user = new User();
-    user.firstName = this.signupform.value.firstName;
-    user.lastName = this.signupform.value.lastName;
-    user.email = this.signupform.value.email;
-    user.password = this.signupform.value.password;
-    user.location = this.signupform.value.location;
-    user.search = this.signupform.value.search;
-    user.role = this.signupform.value.role;
-    user.cv = this.signupform.value.cv;
-    user.phone = this.signupform.value.phone;
+    user.firstName = this.registrationform.value.firstName;
+    user.lastName = this.registrationform.value.lastName;
+    user.email = this.registrationform.value.email;
+    user.password = this.registrationform.value.password;
+    user.location = this.registrationform.value.location;
+    user.search = this.registrationform.value.search;
+    user.role = this.registrationform.value.role;
+    user.cv = this.registrationform.value.cv;
+    user.phone = this.registrationform.value.phone;
     console.log(user);
     this.userService.createUser(user).subscribe((result: User[]) => this.usersUpdated.emit(result));
   }
@@ -59,16 +59,16 @@ export class SignupComponent implements OnInit {
 
 
   checkPassword() {
-    return this.passwordValid = this.passwordRegex.test(this.signupform.value.password);
+    return this.passwordValid = this.passwordRegex.test(this.registrationform.value.password);
   }
 
 
   validatePasswords() {
-    const password = this.signupform.value.password;
-    const confirmPassword = this.signupform.value.confirmPassword;
+    const password = this.registrationform.value.password;
+    const confirmPassword = this.registrationform.value.confirmPassword;
     return password === confirmPassword && password !== '' && confirmPassword !== '';
   }
   submit() {
-    return this.signupform.valid && this.validatePasswords()
+    return this.registrationform.valid && this.validatePasswords()
   }
 }
