@@ -124,3 +124,5 @@ C:\Users\florian.lejosne\Code\VaBucher\VabucherBack\VabucherBack\obj\Debug\net6.
 C:\Users\florian.lejosne\Code\VaBucher\VabucherBack\VabucherBack\obj\Debug\net6.0\ref\VabucherBack.dll
 C:\Users\florian.lejosne\Code\VaBucher\VabucherBack\VabucherBack\bin\Debug\net6.0\MySqlConnector.dll
 C:\Users\Florian\Code\VaBucher\VabucherBack\VabucherBack\bin\Debug\net6.0\MySqlConnector.dll
+C:\Users\florian.lejosne\Code\VaBucher\VabucherBack\VabucherBack\bin\Debug\net6.0\HtmlAgilityPack.dll
+C:\Users\florian.lejosne\Code\VaBucher\VabucherBack\VabucherBack\bin\Debug\net6.0\System.Xml.XPath.XmlDocument.dll
