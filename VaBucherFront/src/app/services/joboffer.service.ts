@@ -17,6 +17,13 @@ export class JobofferService {
     return this.http.get<JobOffer[]>(`${environment.apiUrl}/${this.url}`);
   }
 
+  public createJobOffer(joboffer: JobOffer): Observable<JobOffer[]> {
+    return this.http.post<JobOffer[]>(
+      `${environment.apiUrl}/${this.url}`,
+      joboffer
+    );
+  }
+
   public deleteJobOffer(joboffer: JobOffer): Observable<JobOffer[]> {
     return this.http.delete<JobOffer[]>(
       `${environment.apiUrl}/${this.url}/${joboffer.id}`

@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
@@ -29,7 +30,8 @@ const routes: Routes = [
     LoaderComponent,
     NavbarComponent,
     RegistrationComponent,
-    DashboardComponent
+    DashboardComponent,
+    SearchComponent
   ],
     imports: [
         BrowserModule,
