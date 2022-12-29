@@ -3,7 +3,7 @@
     <div class="input-container">
       <label>FirstName*:</label>
       <input type="text" formControlName="firstName" name="firstName" required>
-      <small *ngIf="registrationform.value.firstName.length <= 0 && registrationform.get('firstName')?.touched">FirstName required</small>
+      <small *ngIf="registrationform.value.firstName.length === 0 && registrationform.get('firstName')?.touched">FirstName required</small>
     </div>
 
     <br>
@@ -11,14 +11,14 @@
     <div class="input-container">
       <label>LastName*:</label>
       <input type="text" formControlName="lastName" name="lastName" required>
-      <small *ngIf="registrationform.value.lastName.length <= 0 && registrationform.get('lastName')?.touched">LastName required</small>
+      <small *ngIf="registrationform.value.lastName.length === 0 && registrationform.get('lastName')?.touched">LastName required</small>
     </div>
 
     <br>
     <div class="input-container">
       <label>Email*:</label>
       <input type="email" formControlName="email" name="email" required>
-      <small *ngIf="registrationform.value.email.length <= 0 && registrationform.get('email')?.touched">Email required</small>
+      <small *ngIf="registrationform.value.email.length === 0 && registrationform.get('email')?.touched">Email required</small>
       <mat-error *ngIf="registrationform.get('email')?.hasError('email') && !registrationform.get('email')?.hasError('required')">
         Please enter a valid email address
       </mat-error>
@@ -28,7 +28,7 @@
     <div class="input-container">
       <label>Password*:</label>
       <input type="password" formControlName="password" name="password" required>
-      <small *ngIf="registrationform.value.password.length <= 0 && registrationform.get('password')?.touched">Password required</small>
+      <small *ngIf="registrationform.value.password.length === 0 && registrationform.get('password')?.touched">Password required</small>
 
       <!-- Affichez un message d'erreur si le mot de passe a moins de 8 caractères -->
 
@@ -60,9 +60,10 @@
     <br>
 
     <div class="input-container">
-      <label>Confirm password:</label>
+      <label>Confirm password*:</label>
       <input type="password" formControlName="confirmPassword" name="confirmPassword" required>
-      <div *ngIf="registrationform.get('confirmPassword')?.touched && !validatePasswords()">
+      <small *ngIf="registrationform.value.confirmPassword.length === 0 && registrationform.get('confirmPassword')?.touched">Confirm Password required</small>
+      <div *ngIf="registrationform.value.confirmPassword.length > 0 && registrationform.get('confirmPassword')?.touched && !validatePasswords()">
       <span>
         <mat-icon>close</mat-icon>
         <p>Passwords do not match.</p>
