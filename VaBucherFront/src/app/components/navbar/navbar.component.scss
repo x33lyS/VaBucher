@@ -4,27 +4,33 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 15% 0;
+  background: transparent;
 }
 
 ul li {
   color: var(--p-color);
   font-size: var(--p-font-size);
-  font-weight: var(--font-weight-light)
+  font-weight: var(--font-weight-light);
+  background: transparent;
+
 }
 
 a {
   touch-action: manipulation;
-  transition: all .3s
+  transition: all .3s;
+
 }
 
 a {
   display: inline-block;
   color: var(--primary-color);
-  text-decoration: none
+  text-decoration: none;
+
 }
 
 a:hover {
-  color: var(--link-hover-color)
+  color: var(--link-hover-color);
+
 }
 
 .custom-btn {
@@ -36,11 +42,13 @@ a:hover {
   font-weight: var(--font-weight-bold);
   line-height: normal;
   transition: all .3s;
-  padding: 10px 20px
+  padding: 10px 20px;
+
 }
 
 .custom-btn:hover {
   background: var(--custom-btn-bg-hover-color);
+
   color: var(--white-color)
 }
 
@@ -51,20 +59,28 @@ a:hover {
 }
 
 .navbar {
+  position: fixed;
+  width: 100%;
   background: 0 0;
-  z-index: 9
+  background: transparent;
+
+  z-index: 9;
 }
 
 .navbar-brand,
 .navbar-brand:hover {
   color: var(--white-color);
   font-size: var(--h5-font-size);
+  background: transparent;
   font-weight: var(--font-weight-bold)
 }
+
 
 .navbar-expand-lg .navbar-nav .nav-item {
   border-radius: var(--border-radius-large);
   margin: 10px;
+  background: transparent;
+
   padding: 10px 20px
 }
 
@@ -75,16 +91,21 @@ a:hover {
   font-weight: var(--font-weight-normal);
   position: relative;
   padding-top: 15px;
+  background: transparent;
+
   padding-bottom: 15px
 }
 
 .navbar-nav .nav-item:hover {
+  background: transparent;
+
   color: var(--secondary-color)
 }
 
 @media screen and (max-width:991px) {
   .navbar {
-    background-color: var(--dark-color)
+    background-color: var(--primary-color);
+
   }
 
   .navbar-expand-lg .navbar-nav {

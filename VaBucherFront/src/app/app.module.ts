@@ -15,11 +15,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SearchComponent } from './components/search/search.component';
+import {AppRoutingModule} from "./app-routing.module";
 
-const routes: Routes = [
-  { path: 'registration', component: RegistrationComponent },
-  { path: 'dashboard', component: DashboardComponent }
-];
 
 @NgModule({
   declarations: [
@@ -35,18 +32,16 @@ const routes: Routes = [
   ],
     imports: [
         BrowserModule,
-        RouterModule.forRoot(routes),
         HttpClientModule,
         MatIconModule,
         FormsModule,
         ReactiveFormsModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        AppRoutingModule,
+        RouterModule
     ],
   providers: [],
-  bootstrap: [AppComponent],
-  exports: [RouterModule]
-
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 
-export class AppRoutingModule { }

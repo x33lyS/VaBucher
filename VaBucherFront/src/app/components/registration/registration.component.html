@@ -1,5 +1,6 @@
-<form [formGroup]="registrationform" (ngSubmit)="onSubmit()" >
-  <div >
+
+<div class="container"><form [formGroup]="registrationform" (ngSubmit)="onSubmit()" >
+  <div>
     <div class="input-container">
       <label>FirstName*:</label>
       <input type="text" formControlName="firstName" name="firstName" required>
@@ -45,8 +46,8 @@
             <p>Le mot de passe doit avoir au moins 8 caractères.</p>
           </span>
       </ng-template>
-        <!-- Affichez un message d'erreur si le mot de passe ne respecte pas les critères -->
-        <span *ngIf="!checkPassword() else passwordValidMessage" >
+      <!-- Affichez un message d'erreur si le mot de passe ne respecte pas les critères -->
+      <span *ngIf="!checkPassword() else passwordValidMessage" >
             <mat-icon>close</mat-icon>
             <p>The password must contain at least one uppercase letter, one lowercase letter, and one special character.</p>
           </span>
@@ -68,7 +69,7 @@
         <mat-icon>close</mat-icon>
         <p>Passwords do not match.</p>
       </span>
-    </div>
+      </div>
     </div>
 
     <br>
@@ -97,4 +98,5 @@
     <br>
   </div>
   <button type="submit" [disabled]="!submit()">Sign up</button>
-</form>
+</form></div>
+
