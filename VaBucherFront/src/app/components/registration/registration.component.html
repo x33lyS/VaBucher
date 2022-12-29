@@ -1,9 +1,9 @@
-<form [formGroup]="signupform" (ngSubmit)="onSubmit()" >
+<form [formGroup]="registrationform" (ngSubmit)="onSubmit()" >
   <div >
     <div class="input-container">
       <label>FirstName*:</label>
       <input type="text" formControlName="firstName" name="firstName" required>
-      <small *ngIf="signupform.get('firstName')?.value.length <= 0">FirstName required</small>
+      <small *ngIf="registrationform.value.firstName.length === 0 && registrationform.get('firstName')?.touched">FirstName required</small>
     </div>
 
     <br>
@@ -11,15 +11,15 @@
     <div class="input-container">
       <label>LastName*:</label>
       <input type="text" formControlName="lastName" name="lastName" required>
-      <small *ngIf="signupform.get('lastName')?.value.length <= 0">LastName required</small>
+      <small *ngIf="registrationform.value.lastName.length === 0 && registrationform.get('lastName')?.touched">LastName required</small>
     </div>
 
     <br>
     <div class="input-container">
       <label>Email*:</label>
       <input type="email" formControlName="email" name="email" required>
-      <small *ngIf="signupform.get('email')?.value.length <= 0">Email required</small>
-      <mat-error *ngIf="signupform.get('email')?.hasError('email') && !signupform.get('email')?.hasError('required')">
+      <small *ngIf="registrationform.value.email.length === 0 && registrationform.get('email')?.touched">Email required</small>
+      <mat-error *ngIf="registrationform.get('email')?.hasError('email') && !registrationform.get('email')?.hasError('required')">
         Please enter a valid email address
       </mat-error>
     </div>
@@ -28,14 +28,14 @@
     <div class="input-container">
       <label>Password*:</label>
       <input type="password" formControlName="password" name="password" required>
-      <small *ngIf="signupform.get('password')?.value.length <= 0">Password required</small>
+      <small *ngIf="registrationform.value.password.length === 0 && registrationform.get('password')?.touched">Password required</small>
 
       <!-- Affichez un message d'erreur si le mot de passe a moins de 8 caractères -->
 
 
     </div>
     <div class="validate-password">
-       <span *ngIf="signupform.get('password')?.value.length < 8; else passwordErrorlength">
+       <span *ngIf="registrationform.value.password.length < 8; else passwordErrorlength">
           <mat-icon>close</mat-icon>
           <p>Le mot de passe doit avoir au moins 8 caractères.</p>
         </span>
@@ -60,9 +60,10 @@
     <br>
 
     <div class="input-container">
-      <label>Confirm password:</label>
+      <label>Confirm password*:</label>
       <input type="password" formControlName="confirmPassword" name="confirmPassword" required>
-      <div *ngIf="signupform.get('confirmPassword')?.touched && !validatePasswords()">
+      <small *ngIf="registrationform.value.confirmPassword.length === 0 && registrationform.get('confirmPassword')?.touched">Confirm Password required</small>
+      <div *ngIf="registrationform.value.confirmPassword.length > 0 && registrationform.get('confirmPassword')?.touched && !validatePasswords()">
       <span>
         <mat-icon>close</mat-icon>
         <p>Passwords do not match.</p>
