@@ -5,16 +5,20 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  // background-color: var(--white-color);
-  background-color: rgb(87, 82, 82);
-  font-family: var(--body-font-family); 
+  font-family: var(--body-font-family);
+  scroll-behavior: smooth;
+}
+
+
+::-webkit-scrollbar{
+  display: none;
 }
 
 a, button{
   cursor: pointer;
 }
 /*---------------------------------------
-  CUSTOM PROPERTIES ( VARIABLES )             
+  CUSTOM PROPERTIES ( VARIABLES )
 -----------------------------------------*/
 :root {
   --white-color:                  #FDEFED;
@@ -51,7 +55,7 @@ a, button{
 
 
 /*---------------------------------------
-  TYPOGRAPHY               
+  TYPOGRAPHY
 -----------------------------------------*/
 
 h2,
@@ -107,7 +111,7 @@ ul li {
   font-weight: var(--font-weight-light);
 }
 
-a, 
+a,
 button {
   touch-action: manipulation;
   transition: all 0.3s;

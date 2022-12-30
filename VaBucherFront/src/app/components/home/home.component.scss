@@ -1,0 +1,50 @@
+.container{
+  .first-section{
+    height: 100vh;
+    background: linear-gradient(125deg, rgba(2,0,36,1) 50%, rgba(255,0,0,1));
+    opacity: 0.3;
+    .social-media-container{
+      display: flex;
+      height: 100%;
+      justify-content: flex-end;
+      align-items: flex-end;
+      button{
+        background: transparent;
+        border: none;
+        margin: 0 20px 20px 0;
+        img{
+          width: 55px;
+          filter: invert(100%);
+        }
+      }
+    }
+  }
+  .about{
+    display: flex;
+    padding: 20px;
+    height: auto;
+    background: var(--secondary-color);
+    opacity: 0.6;
+    .text{
+      h5,p{
+        color: white;
+      }
+      h5{
+        margin-bottom: 20px;
+      }
+      display: block;
+      padding: 50px;
+      width: 70%;
+    }
+    .image{
+      display: flex;
+      padding: 50px 0;
+      svg{
+        border-radius: 20px;
+        margin: auto;
+        width:50%;
+        height: auto;
+      }
+    }
+  }
+}
