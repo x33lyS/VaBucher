@@ -1,4 +1,4 @@
-.container{
+.container{ 
   .first-section{
     height: 100vh;
     background: linear-gradient(125deg, rgba(2,0,36,1) 50%, rgba(255,0,0,1));
@@ -21,10 +21,10 @@
   }
   .about{
     display: flex;
-    padding: 20px;
+    padding: 20px 120px;
     height: auto;
     background: var(--secondary-color);
-    opacity: 0.6;
+
     .text{
       h5,p{
         color: white;
@@ -33,17 +33,16 @@
         margin-bottom: 20px;
       }
       display: block;
-      padding: 50px;
+      padding: 50px 0;
       width: 70%;
     }
     .image{
       display: flex;
-      padding: 50px 0;
-      svg{
-        border-radius: 20px;
-        margin: auto;
-        width:50%;
-        height: auto;
+      width: 30%;
+      img {
+        width: 80%;
+        padding-right: 0px;
+        border-radius: 10%;
       }
     }
   }
@@ -60,6 +59,7 @@
       display: flex;
       .box {
         margin: 10px;
+        border-radius: 12px;
         h6, p {
           color: #fff;
           padding: 25px 15px 10px 20px;
@@ -67,7 +67,7 @@
         p{
           padding: 0 15px 15px 15px;
         }
-        background: var(--secondary-color);
+        background: var(--primary-color);
         padding-left: 0.25rem;
         padding-right: 0.25rem;
       }
