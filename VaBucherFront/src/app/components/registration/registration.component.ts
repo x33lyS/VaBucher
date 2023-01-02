@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
+import {Router} from "@angular/router";
 
 
 
@@ -20,7 +21,7 @@ export class RegistrationComponent implements OnInit {
   // @Input() user?: User;
   @Output() usersUpdated = new EventEmitter<User[]>();
 
-  constructor(private userService: UserService, private _formBuilder: FormBuilder) {
+  constructor(private userService: UserService, private _formBuilder: FormBuilder, private router: Router) {
 
   this.registrationform = this._formBuilder.group({
       firstName:['', Validators.required],
@@ -34,10 +35,21 @@ export class RegistrationComponent implements OnInit {
       cv: '',
       phone: ''
   })
+    this.userService.createUser().subscribe(
+      () => {
+        // Traitement en cas de réussite, par exemple en redirigeant l'utilisateur vers une autre page
+        this.router.navigate(['']);
+      },
+      (error: string) => {
+        this.errorMessage = error;
+      }
+    );
 }
 
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+  }
 
 
   onSubmit() {

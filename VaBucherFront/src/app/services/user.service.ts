@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
+import {catchError, of, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,7 @@ export class UserService {
   private url= "user";
 
   constructor(private http: HttpClient) { }
+
 
   public getUser() : Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiUrl}/${this.url}`);
@@ -21,13 +24,27 @@ export class UserService {
       user
     );
   }
-
-  public createUser(user: User): Observable<User[]> {
+  // public createUser(user: User): Observable<User[]> {
+  //   return this.http.post<User[]>(
+  //     `${environment.apiUrl}/${this.url}`,
+  //     user
+  //   );
+  // }
+  public createUser(user: User): Observable<User[] | HttpErrorResponse> {
     return this.http.post<User[]>(
       `${environment.apiUrl}/${this.url}`,
       user
+    ).pipe(
+      catchError((error: { status: number; error: { error: string; }; }) => {
+        if (error.status === 400 && error.error.error === "Email already exists") {
+          return of(new HttpErrorResponse({ error: "Un utilisateur avec cet e-mail existe déjà." }));
+        } else {
+          return throwError(error);
+        }
+      })
     );
   }
+
 
   public deleteUser(user: User): Observable<User[]> {
     return this.http.delete<User[]>(
