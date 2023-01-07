@@ -10,6 +10,8 @@ import { HomeComponent } from './components/home/home.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -17,6 +19,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponent },
+  { path: 'signin', component: SignInComponent },
   { path: 'dashboard', component: DashboardComponent }
 ];
 
@@ -29,6 +32,7 @@ const routes: Routes = [
     LoaderComponent,
     NavbarComponent,
     SignupComponent,
+    SignInComponent,
     DashboardComponent
   ],
     imports: [

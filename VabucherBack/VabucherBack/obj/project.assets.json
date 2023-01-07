@@ -2436,19 +2436,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Florian\\.nuget\\packages\\": {}
+    "C:\\Users\\sauri\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Florian\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
+      "projectUniqueName": "C:\\Users\\sauri\\OneDrive\\Bureau\\CodesProjets\\B3\\VaBucherProject\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
       "projectName": "VabucherBack",
-      "projectPath": "C:\\Users\\Florian\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
-      "packagesPath": "C:\\Users\\Florian\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Florian\\Code\\VaBucher\\VabucherBack\\VabucherBack\\obj\\",
+      "projectPath": "C:\\Users\\sauri\\OneDrive\\Bureau\\CodesProjets\\B3\\VaBucherProject\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
+      "packagesPath": "C:\\Users\\sauri\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sauri\\OneDrive\\Bureau\\CodesProjets\\B3\\VaBucherProject\\VaBucher\\VabucherBack\\VabucherBack\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Florian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\sauri\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
