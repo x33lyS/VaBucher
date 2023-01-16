@@ -3,11 +3,38 @@
     height: 100vh;
     background: linear-gradient(125deg, rgba(2,0,36,1) 50%, rgba(255,0,0,1));
     opacity: 0.7;
+    .image{
+      z-index: -1;
+      position: absolute;
+      top: 12vh;
+      right: 0;
+      height: 80vh;
+    }
+    .start {
+      width: 70vw;
+      margin: 0 auto;
+      padding-top: 40vh;
+      justify-content: center;
+      h2 {
+        color: #fff;
+      }
+      h3 {
+        color: #fff;
+        font-weight: 400;
+      }
+      button {
+        font-size: 20px;
+        margin-top: 20px;
+        padding: 17px 70px;
+        color: #fff;
+        background: #ED6A5A;
+        border-radius: 10px;
+      }
+    }
     .social-media-container{
-      display: flex;
-      height: 100%;
-      justify-content: flex-end;
-      align-items: flex-end;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
       button{
         background: transparent;
         border: none;
@@ -24,7 +51,6 @@
     padding: 20px 120px;
     height: auto;
     background: var(--secondary-color);
-
     .text{
       h5,p{
         color: white;
@@ -48,6 +74,11 @@
   }
   .recent-offers {
     background: var(--section-bg-color);
+    .image {
+      position: absolute;
+      left: 0;
+      height: 60%;
+    }
     h5 {
       text-transform: uppercase;
       text-align: center;

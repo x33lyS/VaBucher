@@ -67,6 +67,10 @@ a:hover {
   z-index: 9;
 }
 
+.navbar-inverse {
+  background: #000;
+}
+
 .navbar-brand,
 .navbar-brand:hover {
   color: var(--white-color);
@@ -81,7 +85,7 @@ a:hover {
   margin: 10px;
   background: transparent;
 
-  padding: 10px 20px
+  padding: 5px 20px
 }
 
 .navbar-nav .nav-item {
