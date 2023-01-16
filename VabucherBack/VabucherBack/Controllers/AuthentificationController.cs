@@ -17,7 +17,7 @@ namespace VaBucherBack.Controllers
     {
         private readonly DataContext _context;
         private readonly IConfiguration _config;
-        private readonly string key ;
+        private readonly string key;
         private readonly string issuer;
         private readonly string audience;
 
@@ -25,9 +25,9 @@ namespace VaBucherBack.Controllers
         {
             _context = context;
             _config = config;
-             key = _config["Jwt:Key"];
-             issuer = _config["Jwt:Issuer"];
-             audience = _config["Jwt:Audience"];
+            key = _config["Jwt:Key"];
+            issuer = _config["Jwt:Issuer"];
+            audience = _config["Jwt:Audience"];
         }
 
         public DataContext Context => _context;
@@ -40,9 +40,9 @@ namespace VaBucherBack.Controllers
         */
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody]  UserAuthentication userAuth )
+        public async Task<IActionResult> Login([FromBody] UserAuthentication userAuth)
         {
-       
+
 
             var dbUser = await Context.Users.FirstOrDefaultAsync(u => u.Email == userAuth.Email && u.Password == userAuth.Password);
             if (dbUser == null)
@@ -70,6 +70,50 @@ namespace VaBucherBack.Controllers
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token)
             });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("verifyToken")]
+        public ObjectResult VerifyToken(string token)
+        {
+            try
+            {
+                Type isTokenAString = token.GetType();
+                if (isTokenAString == typeof(string))
+                {
+                    bool isTokenEmpty = string.IsNullOrEmpty(token);
+                    if (!isTokenEmpty)
+                    {
+                        var jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Jwt:Key"]));
+                        var creds = new SigningCredentials(jwtKey, SecurityAlgorithms.HmacSha256);
+
+                        var tokenHandler = new JwtSecurityTokenHandler();
+                        ClaimsPrincipal claimsPrincipal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = Config["Jwt:Issuer"],
+                            ValidAudience = Config["Jwt:Issuer"],
+                            IssuerSigningKey = jwtKey
+                        }, out _);
+                        var principal = claimsPrincipal;
+                        return Ok("Token is valid");
+                    }
+                    else
+                    {
+                        return BadRequest("Token is not valid");
+                    }
+                }
+                else
+                {
+                    return BadRequest("Token is not a string");
+                }
+            }
+            catch (SecurityTokenException)
+            {
+                return BadRequest("Token is not valid");
+            }
         }
     }
 }

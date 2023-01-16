@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {environment} from 'src/environments/environment';
-import {map} from 'rxjs/operators';
 import {User} from "../models/user";
 
 @Injectable({
@@ -26,11 +25,19 @@ export class AuthenticationService {
 
   }
 
-public checkToken(){
-    // let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    // headers = headers.set ('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    // return this.http.post(`${environment.apiUrl}/Auth/checkToken`, {headers}).pipe(map((res: any) => {
-    //   return res;
-    // }));
-}
+  public logout() {
+    localStorage.removeItem('access_token');
+  }
+
+  public checkToken() {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    let basic = localStorage.getItem('access_token');
+    if (basic) {
+      headers = headers.set('Authorization', basic);
+      this.http.post(`${environment.apiUrl}/Auth/verifyToken`, {headers})
+        .pipe(tap((userData: any) => {
+          console.log(userData);
+        }));
+    }
+  }
 }

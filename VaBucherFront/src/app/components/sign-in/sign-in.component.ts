@@ -38,7 +38,7 @@ export class SignInComponent implements OnInit {
         next: (result) => {
           alert("Connected, token set dans le storage pour 30 minutes !");
           localStorage.setItem('access_token', result.token);
-          this.router.navigate(['/']);
+          this.router.navigate(['/dashboard']);
           // il faut protéger la route home aves un guard dans le futur pour ne pas pouvoir y accéder sans être connecté
         },
         error: (error) => {
