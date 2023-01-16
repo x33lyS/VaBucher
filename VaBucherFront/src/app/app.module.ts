@@ -16,7 +16,10 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SearchComponent } from './components/search/search.component';
 import {AppRoutingModule} from "./app-routing.module";
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -31,14 +34,17 @@ import {AppRoutingModule} from "./app-routing.module";
     SearchComponent
   ],
     imports: [
-        BrowserModule,
-        HttpClientModule,
-        MatIconModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        AppRoutingModule,
-        RouterModule
+      BrowserModule,
+      HttpClientModule,
+      MatIconModule,
+      FormsModule,
+      ReactiveFormsModule,
+      MatFormFieldModule,
+      MatInputModule,
+      AppRoutingModule,
+      RouterModule,
+      BrowserAnimationsModule,
+      ToastrModule.forRoot(),
     ],
   providers: [],
   bootstrap: [AppComponent]

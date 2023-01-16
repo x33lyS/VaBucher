@@ -27,23 +27,27 @@ form {
   .input-container{
     display: block;
     position: relative;
+    align-items: center;
     margin-bottom: 15px;
     input{
       margin-bottom: 5px;
     }
-    small, span {
-      color: red;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      top: 100%;
+    div{
+      width: 50%;
+      position: relative;
+      small, span {
+        color: red;
+        position: absolute;
+        //bottom: 0;
+        left: 0;
+        top: 100%;
+      }
     }
     span{
       margin-top: 10px;
     }
     .validate-password{
       padding: 50px;
-
     }
   }
 
@@ -71,3 +75,8 @@ form {
     align-items: center;
   }
 
+  .error-message{
+    width: 100%;
+    padding: 10px;
+    color: red;
+  }

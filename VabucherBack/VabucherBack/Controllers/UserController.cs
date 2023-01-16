@@ -29,10 +29,20 @@ namespace VaBucherBack.Controllers
         [HttpPost]
         public async Task<ActionResult<List<User>>> CreateUser(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+            if (dbUser == null)
+            { 
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+                return Ok(await _context.Users.ToListAsync());
 
-            return Ok(await _context.Users.ToListAsync());
+            }
+            else
+            {
+                return BadRequest("Un utilisateur avec cet e-mail existe déjà.");
+
+            }
+
         }
 
         [HttpPut]
