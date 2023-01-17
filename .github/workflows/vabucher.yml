@@ -11,7 +11,7 @@ jobs:
     - name: Install Angular CLI
       run: npm install -g @angular/cli
     - name: Navigate to Angular application
-      run: cd VaBucherFront
+      run: cd ./VaBucherFront
     - name: Install npm
       run: npm install -g
     - name: Build Angular application
