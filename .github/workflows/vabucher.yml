@@ -13,6 +13,6 @@ jobs:
     - name: Navigate to Angular application
       run: cd ./VaBucherFront
     - name: Install npm
-      run: npm install -g
+      run: npm install
     - name: Build Angular application
       run: ng build
