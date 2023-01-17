@@ -8,8 +8,6 @@ jobs:
     container: node:12
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: npm ci --prefix VaBucherFront
     - name: Install npm
       run: npm i --prefix VaBucherFront
     - name: Navigate to Angular application
@@ -27,7 +25,7 @@ jobs:
     - name: Navigate to .NET solution
       run: cd VabucherBack
     - name: Build .NET application
-      run: dotnet build --prefix VabucherBack
+      run: dotnet build --prefix VabucherBack.sln
 
       
   push-docker:
