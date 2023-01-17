@@ -9,6 +9,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
+      run: npm ci
+    - name: Install npm
       run: npm i
     - name: Navigate to Angular application
       run: cd VaBucherFront
@@ -25,7 +27,7 @@ jobs:
     - name: Echo contents of VabucherBack directory
       run: echo $(ls -l VabucherBack)
     - name: Navigate to .NET solution
-      run: cd VabucherBack
+      run: cd VabucherBack/VabucherBack.sln
     - name: Restore .NET dependencies
       run: dotnet restore
     - name: Build .NET application
