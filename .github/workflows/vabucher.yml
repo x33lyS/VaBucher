@@ -11,7 +11,7 @@ jobs:
     - name: Install dependencies
       run: npm i
     - name: Navigate to Angular application
-      run: cd ./VabucherFront/src/app
+      run: cd ../../VaBucherFront/src/app
     - name: Build Angular application
       run: ng build --prod
     - name: Test Angular application
@@ -23,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Navigate to .NET solution
-      run: cd ./VabucherBack/VabucherBack.sln
+      run: cd ../../VabucherBack/VabucherBack.sln
     - name: Restore .NET dependencies
       run: dotnet restore
     - name: Build .NET application
