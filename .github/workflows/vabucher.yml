@@ -9,54 +9,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install npm
-      run: npm i --prefix VaBucherFront 
+      run: npm install -g
     - name: Install Angular CLI
       run: npm install -g @angular/cli
-    - name: Create Angular workspace
-      run: ng new VaBucherFront
     - name: Navigate to Angular application
       run: cd VaBucherFront
     - name: Build Angular application
       run: ng build
-      
-  build-dotnet:
-    runs-on: ubuntu-latest
-    container: mcr.microsoft.com/dotnet/core/sdk:3.1
-    steps:
-    - uses: actions/checkout@v2
-    - name: Navigate to .NET solution
-      run: cd VabucherBack
-    - name: Build .NET application
-      run: dotnet build VabucherBack.sln
-
-      
-  push-docker:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Login to Harbor
-      run: echo ${{ secrets.HARBOR_PASSWORD }} | docker login -u ${{ secrets.HARBOR_USERNAME }} --password-stdin ${{ secrets.HARBOR_REGISTRY }}
-    - name: Navigate to Angular Dockerfile
-      run: cd path/to/angular/dockerfile
-    - name: Build Angular Docker image
-      run: docker build -t ${{ secrets.HARBOR_REGISTRY }}/my-project-angular:${{ github.sha }} .
-    - name: Push Angular Docker image
-      run: docker push ${{ secrets.HARBOR_REGISTRY }}/my-project-angular:${{ github.sha }}
-      
-  deploy-test:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Install Kubernetes CLI
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y kubectl
-    - name: Navigate to k8s configuration
-      run: cd path/to/k8s/config
-    - name: Deploy to test environment
-      env:
-        KUBECONFIG: ${{ secrets.KUBECONFIG_TEST }}
-      run: kubectl apply -f test.yml
-  monitor-test:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Install Prometheus
-      run: <prometheus installation command>
