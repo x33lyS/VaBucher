@@ -5,7 +5,7 @@ on:
 jobs:
   build-angular:
     runs-on: ubuntu-latest
-    container: node:12
+    container: node:18
     steps:
     - uses: actions/checkout@v2
     - name: Install npm
@@ -25,7 +25,7 @@ jobs:
     - name: Navigate to .NET solution
       run: cd VabucherBack
     - name: Build .NET application
-      run: dotnet build
+      run: dotnet build VabucherBack.sln
 
       
   push-docker:
