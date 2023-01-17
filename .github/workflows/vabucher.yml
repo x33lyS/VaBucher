@@ -24,14 +24,10 @@ jobs:
     container: mcr.microsoft.com/dotnet/core/sdk:3.1
     steps:
     - uses: actions/checkout@v2
-    - name: Echo contents of VabucherBack directory
-      run: echo $(ls -l VabucherBack)
     - name: Navigate to .NET solution
       run: cd VabucherBack
     - name: Build .NET application
-      run: dotnet build --configuration Release
-    - name: Publish .NET application
-      run: dotnet publish --configuration Release --output dist
+      run: dotnet build
 
       
   push-docker:
