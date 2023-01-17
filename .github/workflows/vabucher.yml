@@ -14,4 +14,4 @@ jobs:
       run: | 
         cd ./VaBucherFront
         npm install
-        ng build
+        ng serve
