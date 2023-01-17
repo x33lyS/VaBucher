@@ -48,4 +48,14 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y kubectl
-    - name: Navigate
+    - name: Navigate to k8s configuration
+      run: cd path/to/k8s/config
+    - name: Deploy to test environment
+      env:
+        KUBECONFIG: ${{ secrets.KUBECONFIG_TEST }}
+      run: kubectl apply -f test.yml
+  monitor-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install Prometheus
+      run: <prometheus installation command>
