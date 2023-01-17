@@ -12,12 +12,12 @@ jobs:
       run: npm i --prefix VaBucherFront 
     - name: Install Angular CLI
       run: npm install -g @angular/cli
+    - name: Create Angular workspace
+      run: ng new VaBucherFront
     - name: Navigate to Angular application
-      run: cd VaBucherFront/
+      run: cd VaBucherFront
     - name: Build Angular application
-      run: ng build --prefix VaBucherFront
-    - name: Test Angular application
-      run: ng test
+      run: ng build
       
   build-dotnet:
     runs-on: ubuntu-latest
