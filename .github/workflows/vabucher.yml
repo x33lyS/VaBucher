@@ -1,0 +1,53 @@
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  build-angular:
+    runs-on: ubuntu-latest
+    container: node:12
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: npm i
+    - name: Build Angular application
+      run: ng build --prod
+      
+  build-dotnet:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/dotnet/core/sdk:3.1
+    steps:
+    - uses: actions/checkout@v2
+    - name: Restore .NET dependencies
+      run: dotnet restore
+    - name: Build .NET application
+      run: dotnet build --configuration Release
+    - name: Publish .NET application
+      run: dotnet publish --configuration Release --output dist
+      
+  push-docker:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Login to Harbor
+      run: echo ${{ secrets.HARBOR_PASSWORD }} | docker login -u ${{ secrets.HARBOR_USERNAME }} --password-stdin ${{ secrets.HARBOR_REGISTRY }}
+    - name: Build Angular Docker image
+      run: docker build -t ${{ secrets.HARBOR_REGISTRY }}/my-project-angular:${{ github.sha }} .
+    - name: Push Angular Docker image
+      run: docker push ${{ secrets.HARBOR_REGISTRY }}/my-project-angular:${{ github.sha }}
+      
+  deploy-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install Kubernetes CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y kubectl
+    - name: Deploy to test environment
+      env:
+        KUBECONFIG: ${{ secrets.KUBECONFIG_TEST }}
+      run: kubectl apply -f k8s/test.yml
+      
+  monitor-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install Prometheus
