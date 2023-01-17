@@ -22,12 +22,15 @@ jobs:
     container: mcr.microsoft.com/dotnet/core/sdk:3.1
     steps:
     - uses: actions/checkout@v2
+    - name: Navigate to .NET solution
+      run: cd ../VabucherBack/VabucherBack.sln
     - name: Restore .NET dependencies
       run: dotnet restore
     - name: Build .NET application
-      run: dotnet build --configuration Release
+      run: dotnet build --configuration Release VabucherBack.sln
     - name: Publish .NET application
       run: dotnet publish --configuration Release --output dist
+
       
   push-docker:
     runs-on: ubuntu-latest
