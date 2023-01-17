@@ -27,7 +27,7 @@ jobs:
     - name: Navigate to .NET solution
       run: cd VabucherBack
     - name: Build .NET application
-      run: dotnet build
+      run: dotnet build --prefix VabucherBack
 
       
   push-docker:
