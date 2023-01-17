@@ -15,7 +15,7 @@ jobs:
     - name: Navigate to Angular application
       run: cd VaBucherFront
     - name: Build Angular application
-      run: ng build --prefix VaBucherFront
+      run: ng build --project VaBucherFront
     - name: Test Angular application
       run: ng test
       
