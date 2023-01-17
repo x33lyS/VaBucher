@@ -11,7 +11,7 @@ jobs:
     - name: Install dependencies
       run: npm i
     - name: Navigate to Angular application
-      run: cd VabucherFront/src/app
+      run: cd ../../VabucherFront/src/app
     - name: Build Angular application
       run: ng build --prod
     - name: Test Angular application
