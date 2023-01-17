@@ -5,7 +5,7 @@ on:
 jobs:
   build-dotnet:
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/dotnet/core/sdk:3.1
+    container: mcr.microsoft.com/dotnet/core/sdk:6.0
     steps:
     - uses: actions/checkout@v2
     - name: Build .NET application
