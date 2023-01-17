@@ -3,6 +3,18 @@ on:
     branches:
       - dev
 jobs:
+  build-dotnet:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/dotnet/core/sdk:3.1
+    steps:
+    - uses: actions/checkout@v2
+    - name: Restore .NET dependencies
+      run: dotnet restore
+    - name: Build .NET application
+      run: |
+        cd VabucherBack
+        dotnet build --configuration Release
+      
   build-angular:
     runs-on: ubuntu-latest
     container: node:18
@@ -15,14 +27,5 @@ jobs:
         cd ./VaBucherFront
         npm install
         ng serve
-  build-dotnet:
-    runs-on: ubuntu-latest
-    container: mcr.microsoft.com/dotnet/core/sdk:3.1
-    steps:
-    - uses: actions/checkout@v2
-    - name: Restore .NET dependencies
-      run: dotnet restore
-    - name: Build .NET application
-      run: dotnet build --configuration Release
-    - name: Publish .NET application
-      run: dotnet publish --configuration Release --output dist
+        
+
