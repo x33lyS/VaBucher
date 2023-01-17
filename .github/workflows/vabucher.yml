@@ -9,11 +9,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install npm
-      run: npm i --prefix VaBucherFront
+      run: npm i --prefix VaBucherFront 
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
     - name: Navigate to Angular application
       run: cd VaBucherFront
     - name: Build Angular application
-      run: ng serve --prefix VaBucherFront
+      run: ng serve --project VaBucherFront
     - name: Test Angular application
       run: ng test
       
