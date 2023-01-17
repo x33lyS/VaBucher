@@ -27,9 +27,7 @@ jobs:
     - name: Echo contents of VabucherBack directory
       run: echo $(ls -l VabucherBack)
     - name: Navigate to .NET solution
-      run: cd VabucherBack/VabucherBack.sln
-    - name: Restore .NET dependencies
-      run: dotnet restore
+      run: cd VabucherBack
     - name: Build .NET application
       run: dotnet build --configuration Release VabucherBack.sln
     - name: Publish .NET application
