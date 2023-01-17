@@ -10,9 +10,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install Angular CLI
       run: npm install -g @angular/cli
-    - name: Navigate to Angular application
-      run: cd ./VaBucherFront
-    - name: Install npm
-      run: npm install
-    - name: Build Angular application
-      run: ng build
+    - name: Install depedencies and build
+      run: | 
+        cd ./VaBucherFront
+        npm install
+        ng build
