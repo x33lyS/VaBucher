@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { environment } from 'src/environments/environment';
 import { JobOffer } from '../models/joboffer';
 
 @Injectable({
@@ -9,24 +8,25 @@ import { JobOffer } from '../models/joboffer';
 })
 export class JobofferService {
   private url= "joboffer";
+  private apiUrl = "https://localhost:7059/api"
 
 
   constructor(private http: HttpClient) { }
 
   public getJobOffer() : Observable<JobOffer[]> {
-    return this.http.get<JobOffer[]>(`${environment.apiUrl}/${this.url}`);
+    return this.http.get<JobOffer[]>(`${this.apiUrl}/${this.url}`);
   }
 
   public createJobOffer(joboffer: JobOffer): Observable<JobOffer[]> {
     return this.http.post<JobOffer[]>(
-      `${environment.apiUrl}/${this.url}`,
+      `${this.apiUrl}/${this.url}`,
       joboffer
     );
   }
 
   public deleteJobOffer(joboffer: JobOffer): Observable<JobOffer[]> {
     return this.http.delete<JobOffer[]>(
-      `${environment.apiUrl}/${this.url}/${joboffer.id}`
+      `${this.apiUrl}/${this.url}/${joboffer.id}`
     );
   }
 }
