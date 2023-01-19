@@ -31,7 +31,10 @@ export class AdminPanelComponent implements OnInit {
   createUser(user: User) {
     this.userService
       .createUser(user)
-      .subscribe((users: User[]) => this.usersUpdated.emit(users));
+      .subscribe(
+        // @ts-ignore
+        (users: User[]) => this.usersUpdated.emit(users),
+      );
   }
 
 }

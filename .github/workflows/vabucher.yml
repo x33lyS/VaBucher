@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  build-dotnet:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/dotnet/core/sdk:3.1
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build .NET application
+      run: |
+        cd ./VabucherBack
+        dotnet restore
+        dotnet build --configuration Release
+      
+  build-angular:
+    runs-on: ubuntu-latest
+    container: node:18
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+    - name: Install depedencies and build
+      run: | 
+        cd ./VaBucherFront
+        npm install
+        ng build
+        
+
