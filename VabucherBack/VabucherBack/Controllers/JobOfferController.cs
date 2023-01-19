@@ -66,6 +66,7 @@ namespace VabucherBack.Controllers
                     catch
                     {
                         var salaryElement = "";
+                        driver.Quit();
                     }
                 } while (nextLink != null);
             }
