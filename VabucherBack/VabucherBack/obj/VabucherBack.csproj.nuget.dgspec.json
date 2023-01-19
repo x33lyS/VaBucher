@@ -1,32 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {}
+    "E:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {}
   },
   "projects": {
-    "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {
+    "E:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
+        "projectUniqueName": "E:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
         "projectName": "VabucherBack",
-        "projectPath": "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
-        "packagesPath": "C:\\Users\\florian.lejosne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\obj\\",
+        "projectPath": "E:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
+        "packagesPath": "C:\\Users\\adamh\\.nuget\\packages\\",
+        "outputPath": "E:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\florian.lejosne\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\adamh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net7.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net7.0": {
+            "targetAlias": "net7.0",
             "projectReferences": {}
           }
         },
@@ -37,8 +37,8 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net7.0": {
+          "targetAlias": "net7.0",
           "dependencies": {
             "HtmlAgilityPack": {
               "target": "Package",
@@ -86,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
