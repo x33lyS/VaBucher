@@ -27,7 +27,8 @@ jobs:
         npm install
         ng build
      
-  build-and-push:
+  deploy:
+    needs: [build-dotnet, build-angular]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
