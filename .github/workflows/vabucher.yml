@@ -36,6 +36,7 @@ jobs:
         docker build -t docker.io/adamoccidevops/vabucherback:${{ github.sha }} ./VabucherBack
         docker build -t docker.io/adamoccidevops/vabucherfront:${{ github.sha }} ./VaBucherFront
         echo "Alternance2022" | docker login --username adamoccidevops --password-stdin
-        docker push docker.io/adamoccidevops/vabucher:${{ github.sha }}
+        docker push docker.io/adamoccidevops/vabucherback:${{ github.sha }}
+        docker push docker.io/adamoccidevops/vabucherfront:${{ github.sha }}
         
 
