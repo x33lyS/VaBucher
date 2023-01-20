@@ -26,5 +26,15 @@ jobs:
         cd ./VaBucherFront
         npm install
         ng build
+     
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and push Docker images
+      run: |
+        docker build -t docker.io/adamoccidevops/vabucher:${{ github.sha }} .
+        echo "adamoccidevops:Alternance2022" | docker login --username adamoccidevops --password-stdin
+        docker push docker.io/adamoccidevops/vabucher:${{ github.sha }}
         
 
