@@ -33,7 +33,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build and push Docker images
       run: |
-        docker build -t docker.io/adamoccidevops/vabucher:${{ github.sha }} .
+        docker build -t docker.io/adamoccidevops/vabucher:${{ github.sha }} ./VabucherBack
         echo "adamoccidevops:Alternance2022" | docker login --username adamoccidevops --password-stdin
         docker push docker.io/adamoccidevops/vabucher:${{ github.sha }}
         
