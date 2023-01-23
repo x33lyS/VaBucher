@@ -34,9 +34,7 @@ namespace VaBucherBack.Controllers
             var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
             if (dbUser == null)
             {
-                // Generate a random salt
                 var salt = BCrypt.Net.BCrypt.GenerateSalt();
-                // Hash the password using the salt
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
 
                 _context.Users.Add(user);
