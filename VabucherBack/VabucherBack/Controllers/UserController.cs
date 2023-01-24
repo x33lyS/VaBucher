@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Generators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VaBucherBack.Data;
+using BCrypt.Net;
 
 namespace VaBucherBack.Controllers
 {
@@ -31,18 +33,18 @@ namespace VaBucherBack.Controllers
         {
             var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
             if (dbUser == null)
-            { 
+            {
+                var salt = BCrypt.Net.BCrypt.GenerateSalt();
+                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
+
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
                 return Ok(await _context.Users.ToListAsync());
-
             }
             else
             {
                 return BadRequest("Un utilisateur avec cet e-mail existe déjà.");
-
             }
-
         }
 
         [HttpPut]

@@ -1,32 +1,37 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {}
+    "D:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {}
   },
   "projects": {
-    "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {
+    "D:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
+        "projectUniqueName": "D:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
         "projectName": "VabucherBack",
-        "projectPath": "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
-        "packagesPath": "C:\\Users\\florian.lejosne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\florian.lejosne\\Code\\VaBucher\\VabucherBack\\VabucherBack\\obj\\",
+        "projectPath": "D:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
+        "packagesPath": "C:\\Users\\adamh\\.nuget\\packages\\",
+        "outputPath": "D:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\florian.lejosne\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\adamh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net7.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net7.0": {
+            "targetAlias": "net7.0",
             "projectReferences": {}
           }
         },
@@ -37,9 +42,13 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net7.0": {
+          "targetAlias": "net7.0",
           "dependencies": {
+            "BCrypt.Net-Core": {
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
             "HtmlAgilityPack": {
               "target": "Package",
               "version": "[1.6.16, )"
@@ -61,6 +70,10 @@
             "MySqlConnector": {
               "target": "Package",
               "version": "[2.1.13, )"
+            },
+            "Portable.BouncyCastle": {
+              "target": "Package",
+              "version": "[1.9.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -86,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
