@@ -12,5 +12,6 @@ namespace VabucherBack
         public string Types { get; set; } = string.Empty;
         public string CompanyInfo { get; set; } = string.Empty;
         public string Domain { get; set; } = string.Empty;
+        public string IsNew { get; set; } = string.Empty;
     }
 }
