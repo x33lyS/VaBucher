@@ -13,6 +13,8 @@ using System.Security.Cryptography.X509Certificates;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace VabucherBack.Controllers
 {
@@ -36,6 +38,7 @@ namespace VabucherBack.Controllers
         [HttpPost]
         public async Task<ActionResult<List<JobOffer>>> CreateJobOffer(JobOffer jobOffer)
         {
+            
             try
             {
                 using (var driver = new ChromeDriver("."))
@@ -46,116 +49,130 @@ namespace VabucherBack.Controllers
                     var submitButton = driver.FindElement(By.Id("onetrust-accept-btn-handler"));
                     submitButton.Click();
                     var input = driver.FindElement(By.Id("search-job"));
-                    input.SendKeys("Informatique etudiant");
+                    input.SendKeys(jobOffer.Domain+" etudiant");
                     submitButton = driver.FindElement(By.ClassName("btn-purple-fill"));
                     submitButton.Click();
                     string principalHandle = driver.CurrentWindowHandle;
                     // Get Started section is a multi-step wizard
                     // The following sections will find the visible next step button until there's no next step button left
-                    int i = 1;
-                    while (i < driver.FindElements(By.ClassName("job-cardstyle__JobCardComponent-sc-1mbmxes-0")).Count())
+                    int i = 0;
+                    IWebElement nextLink = null;
+                    var exist = "";
+                    while (nextLink == null)
                     {
-                        var nextLink = driver.FindElements(By.ClassName("job-cardstyle__JobCardComponent-sc-1mbmxes-0")).ElementAt(i);
-
-                        var originalHandles = driver.WindowHandles;
-                        nextLink.Click();
-                        var newHandle = driver.WindowHandles.Except(originalHandles).Single();
-                        driver.SwitchTo().Window(newHandle);
-
-
-
-
-                        JobOffer offer = new JobOffer();
-                        //Title
                         try
                         {
-                            var titleElement = driver.FindElement(By.ClassName("JobViewTitle"));
-                            var Texttitle = titleElement.Text;
-                            offer.Title = Texttitle;
-                        }
-                        catch
-                        {
-                            offer.Title = "";
-                        }
-                        //CompanyInfo
-                        try
-                        {
-                            var companyInfoElement = driver.FindElement(By.ClassName("headerstyle__JobViewHeaderCompany-sc-1ijq9nh-6"));
-                            var TextcompanyInfo = companyInfoElement.Text;
-                            offer.CompanyInfo = TextcompanyInfo;
-                        }
-                        catch
-                        {
-                            offer.CompanyInfo = "";
-                        }
+                            await Task.Delay(5000);
 
-                        //Salary
-                        try
-                        {
-                            var salaryElement = driver.FindElement(By.XPath("//div[@data-test-id='svx_salaryComponent_body']"));
-                            var Textsalary = salaryElement.Text;
-                            offer.Salaire = Textsalary;
-                        }
-                        catch
-                        {
-                            offer.Salaire = "";
-                        }
-                        //JobTypes
-                        try
-                        {
-                            var jobTypesElement = driver.FindElement(By.XPath("//div[@data-test-id='svx-jobview-employmenttype']"));
-                            var TextjobTypes = jobTypesElement.Text;
-                            offer.Types = TextjobTypes;
-                        }
-                        catch
-                        {
-                            offer.Types = "";
-                        }
-                        //Localisation
-                        try
-                        {
-                            var localisationElement = driver.FindElement(By.XPath("//div[@data-test-id='svx-jobview-location']"));
-                            var Textlocalisation = localisationElement.Text;
-                            offer.Localisation = Textlocalisation;
-                        }
-                        catch
-                        {
-                            offer.Localisation = "";
-                        }
-                        //IsNew
-                        try
-                        {
-                            var isNewElement = driver.FindElement(By.XPath("//div[@data-test-id='svx-jobview-posted']"));
-                            var TextisNew = isNewElement.Text;
-                            offer.IsNew = TextisNew;
-                        }
-                        catch
-                        {
-                            offer.IsNew = "";
-                        }
-                        //Description
-                        try
-                        {
-                            var descriptionElement = driver.FindElement(By.ClassName("descriptionstyles__DescriptionBody-sc-13ve12b-4"));
-                            var Textdescription = descriptionElement.Text;
-                            offer.Description = Textdescription;
-                        }
-                        catch
-                        {
-                            offer.Description = "";
-                        }
-                        if (principalHandle != newHandle)
-                        {
-                            driver.Close();
-                        }
-                        if (!_context.JobOffers.Any(j => j.Title == offer.Title) && offer.Title != "")
-                        {
-                            _context.JobOffers.Add(offer);
-                            await _context.SaveChangesAsync();
-                        }
-                        i++;
-                        driver.SwitchTo().Window(principalHandle);
+                            nextLink = driver.FindElement(By.ClassName("job-cardstyle__JobCardComponent-sc-1mbmxes-0"));
+                            exist = nextLink.Text;
 
+                        }
+                        catch {
+                        }
+                    }
+                    if (exist != "")
+                    {
+                        while (i < driver.FindElements(By.ClassName("job-cardstyle__JobCardComponent-sc-1mbmxes-0")).Count())
+                        {
+
+
+                            nextLink = driver.FindElements(By.ClassName("job-cardstyle__JobCardComponent-sc-1mbmxes-0")).ElementAt(i);
+
+                            var originalHandles = driver.WindowHandles;
+                            nextLink.Click();
+                            var newHandle = driver.WindowHandles.Except(originalHandles).Single();
+                            driver.SwitchTo().Window(newHandle);
+
+
+
+
+                            JobOffer offer = new JobOffer();
+                            //Title
+                            try
+                            {
+                                var titleElement = driver.FindElement(By.ClassName("JobViewTitle"));
+                                offer.Title = titleElement.Text;
+                                offer.Domain = jobOffer.Domain;
+                            }
+                            catch
+                            {
+                                offer.Title = "";
+                            }
+                            //CompanyInfo
+                            try
+                            {
+                                var companyInfoElement = driver.FindElement(By.ClassName("headerstyle__JobViewHeaderCompany-sc-1ijq9nh-6"));
+                                offer.CompanyInfo = companyInfoElement.Text;
+                            }
+                            catch
+                            {
+                                offer.CompanyInfo = "";
+                            }
+
+                            //Salary
+                            try
+                            {
+                                var salaryElement = driver.FindElement(By.XPath("//div[@data-test-id='svx_salaryComponent_body']"));
+                                offer.Salaire = salaryElement.Text;
+                            }
+                            catch
+                            {
+                                offer.Salaire = "";
+                            }
+                            //JobTypes
+                            try
+                            {
+                                var jobTypesElement = driver.FindElement(By.XPath("//div[@data-test-id='svx-jobview-employmenttype']"));
+                                offer.Types = jobTypesElement.Text;
+                            }
+                            catch
+                            {
+                                offer.Types = "";
+                            }
+                            //Localisation
+                            try
+                            {
+                                var localisationElement = driver.FindElement(By.XPath("//div[@data-test-id='svx-jobview-location']"));
+                                offer.Localisation = localisationElement.Text;
+                            }
+                            catch
+                            {
+                                offer.Localisation = "";
+                            }
+                            //IsNew
+                            try
+                            {
+                                var isNewElement = driver.FindElement(By.XPath("//div[@data-test-id='svx-jobview-posted']"));
+                                offer.IsNew = isNewElement.Text;
+                            }
+                            catch
+                            {
+                                offer.IsNew = "";
+                            }
+                            //Description
+                            try
+                            {
+                                var descriptionElement = driver.FindElement(By.ClassName("descriptionstyles__DescriptionBody-sc-13ve12b-4"));
+                                offer.Description = descriptionElement.Text;
+                            }
+                            catch
+                            {
+                                offer.Description = "";
+                            }
+                            if (principalHandle != newHandle)
+                            {
+                                driver.Close();
+                            }
+                            if (!_context.JobOffers.Any(j => j.Title == offer.Title) && offer.Title != "")
+                            {
+                                _context.JobOffers.Add(offer);
+                                await _context.SaveChangesAsync();
+                            }
+                            i++;
+                            driver.SwitchTo().Window(principalHandle);
+
+                        }
                     }
 
                     driver.Quit();
