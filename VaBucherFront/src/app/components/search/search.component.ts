@@ -15,6 +15,7 @@ export class SearchComponent {
   constructor(private jobofferService: JobofferService) { }
   onSubmit() {
     const joboffer = new JobOffer();
+    joboffer.domain = this.inputValue;
     this.jobofferService.createJobOffer(joboffer).subscribe((result: JobOffer[]) => this.jobOffersUpdated.emit(result));
 
   }
