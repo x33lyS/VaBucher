@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net7.0": {
+      "BCrypt.Net-Core/1.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/BCrypt.Net-Core.dll": {
+            "related": ".pdb"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/BCrypt.Net-Core.dll": {
+            "related": ".pdb"
+          }
+        }
+      },
       "HtmlAgilityPack/1.6.16": {
         "type": "package",
         "dependencies": {
@@ -554,6 +567,19 @@
         },
         "runtime": {
           "lib/net6.0/MySqlConnector.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Portable.BouncyCastle/1.9.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
             "related": ".xml"
           }
         }
@@ -1783,6 +1809,29 @@
     }
   },
   "libraries": {
+    "BCrypt.Net-Core/1.6.0": {
+      "sha512": "hsKiHGjrnlDW05MzuzzlD9gNP8YOW2KbZ+FbvISrilsKJJ76tXKhWey6psZX5sd7DczNpSU2U6ldjPoblk8BLw==",
+      "type": "package",
+      "path": "bcrypt.net-core/1.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bcrypt.net-core.1.6.0.nupkg.sha512",
+        "bcrypt.net-core.nuspec",
+        "lib/net40/BCrypt.Net-Core.dll",
+        "lib/net40/BCrypt.Net-Core.pdb",
+        "lib/net45/BCrypt.Net-Core.dll",
+        "lib/net45/BCrypt.Net-Core.pdb",
+        "lib/net451/BCrypt.Net-Core.dll",
+        "lib/net451/BCrypt.Net-Core.pdb",
+        "lib/net452/BCrypt.Net-Core.dll",
+        "lib/net452/BCrypt.Net-Core.pdb",
+        "lib/netstandard1.3/BCrypt.Net-Core.dll",
+        "lib/netstandard1.3/BCrypt.Net-Core.pdb",
+        "lib/netstandard2.0/BCrypt.Net-Core.dll",
+        "lib/netstandard2.0/BCrypt.Net-Core.pdb"
+      ]
+    },
     "HtmlAgilityPack/1.6.16": {
       "sha512": "4PdXG02HlPEad7doXJKkhE3RLbPcEujTxB6IBiWtxmPP2ZUwxY4bewLcOFx+IedsbioWRGjPce/6bidSF1ERCg==",
       "type": "package",
@@ -2830,6 +2879,21 @@
         "logo.png",
         "mysqlconnector.2.1.13.nupkg.sha512",
         "mysqlconnector.nuspec"
+      ]
+    },
+    "Portable.BouncyCastle/1.9.0": {
+      "sha512": "eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
+      "type": "package",
+      "path": "portable.bouncycastle/1.9.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/BouncyCastle.Crypto.dll",
+        "lib/net40/BouncyCastle.Crypto.xml",
+        "lib/netstandard2.0/BouncyCastle.Crypto.dll",
+        "lib/netstandard2.0/BouncyCastle.Crypto.xml",
+        "portable.bouncycastle.1.9.0.nupkg.sha512",
+        "portable.bouncycastle.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -5737,28 +5801,35 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "BCrypt.Net-Core >= 1.6.0",
       "HtmlAgilityPack >= 1.6.16",
       "Microsoft.EntityFrameworkCore >= 6.0.10",
       "Microsoft.EntityFrameworkCore.Design >= 6.0.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.10",
       "MySqlConnector >= 2.1.13",
+      "Portable.BouncyCastle >= 1.9.0",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\adamh\\.nuget\\packages\\": {}
+    "C:\\Users\\adamh\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
+      "projectUniqueName": "D:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
       "projectName": "VabucherBack",
-      "projectPath": "E:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
+      "projectPath": "D:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\VabucherBack.csproj",
       "packagesPath": "C:\\Users\\adamh\\.nuget\\packages\\",
-      "outputPath": "E:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\obj\\",
+      "outputPath": "D:\\Ynov B3\\ProjetB3\\VaBucher\\VabucherBack\\VabucherBack\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\adamh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5766,6 +5837,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -5784,6 +5856,10 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
+          "BCrypt.Net-Core": {
+            "target": "Package",
+            "version": "[1.6.0, )"
+          },
           "HtmlAgilityPack": {
             "target": "Package",
             "version": "[1.6.16, )"
@@ -5805,6 +5881,10 @@
           "MySqlConnector": {
             "target": "Package",
             "version": "[2.1.13, )"
+          },
+          "Portable.BouncyCastle": {
+            "target": "Package",
+            "version": "[1.9.0, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
@@ -5830,7 +5910,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }
