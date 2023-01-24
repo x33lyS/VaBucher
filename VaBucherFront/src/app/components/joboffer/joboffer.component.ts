@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JobOffer } from 'src/app/models/joboffer';
 import { EventEmitter, Input, Output } from '@angular/core';
-
+import { interval } from 'rxjs';
 import { JobofferService } from 'src/app/services/joboffer.service';
 
 @Component({
@@ -15,9 +15,11 @@ export class JobofferComponent implements OnInit {
   constructor(private jobofferService: JobofferService) { }
 
   ngOnInit(): void {
-    this.jobofferService
+    interval(5000).subscribe(() => this.jobofferService
     .getJobOffer()
-    .subscribe((result: JobOffer[])=> (this.joboffers = result));
+    .subscribe((result: JobOffer[])=> (this.joboffers = result)));
+
+    
   }
   
 }

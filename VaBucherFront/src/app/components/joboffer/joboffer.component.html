@@ -11,7 +11,7 @@
       <th></th>
     </thead>
     <tbody>
-      <tr *ngFor="let joboffer of joboffers">
+      <tr *ngFor="let joboffer of joboffers.slice().reverse()">
         <td>{{ joboffer.title }}</td>
         <td>{{ joboffer.description }}</td>
         <td>{{ joboffer.salaire }}</td>
