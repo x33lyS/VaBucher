@@ -7,10 +7,14 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  private apiUrl = 'https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=informatique&commune=51069,76322,46083,12172,28117&origineOffre=2';
-  private token = 'e85tZgTULngSuHk_THFmQI9-rXo';
+  motsCles!: string;
+  commune:  number[] = [31120];
 
-  constructor(private http: HttpClient) {}
+  private apiUrl =  `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=${this.motsCles}&commune=${this.commune}&origineOffre=2`;
+  private token = 'RRN9RmuTX3zbrFeZAVLTd0WhfrI';
+
+  constructor(private http: HttpClient) {
+  }
 
   getOffresEmploi() {
     const headers = new HttpHeaders({
