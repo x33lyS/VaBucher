@@ -11,16 +11,20 @@ import { JobofferService } from 'src/app/services/joboffer.service';
 })
 export class JobofferComponent implements OnInit {
   joboffers: JobOffer[] = [];
+  domainFilter!: string;
+  locationFilter!: string;
+  salaryFilter!: string;
+
 
   constructor(private jobofferService: JobofferService) { }
 
   ngOnInit(): void {
     interval(5000).subscribe(() => this.jobofferService
-    .getJobOffer()
-    .subscribe((result: JobOffer[])=> (this.joboffers = result)));
+      .getJobOffer()
+      .subscribe((result: JobOffer[]) => (this.joboffers = result)));
 
-    
+
   }
-  
+
 }
 
