@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
+import { FilterPipe } from './filter.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatButtonModule} from "@angular/material/button";
     NavbarComponent,
     RegistrationComponent,
     DashboardComponent,
-    SearchComponent
+    SearchComponent,
+    FilterPipe
   ],
     imports: [
       BrowserModule,

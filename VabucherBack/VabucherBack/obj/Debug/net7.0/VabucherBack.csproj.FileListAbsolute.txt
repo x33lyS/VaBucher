@@ -66,3 +66,5 @@ E:\Ynov B3\ProjetB3\VaBucher\VabucherBack\VabucherBack\obj\Debug\net7.0\refint\V
 E:\Ynov B3\ProjetB3\VaBucher\VabucherBack\VabucherBack\obj\Debug\net7.0\VabucherBack.pdb
 E:\Ynov B3\ProjetB3\VaBucher\VabucherBack\VabucherBack\obj\Debug\net7.0\VabucherBack.genruntimeconfig.cache
 E:\Ynov B3\ProjetB3\VaBucher\VabucherBack\VabucherBack\obj\Debug\net7.0\ref\VabucherBack.dll
+E:\Ynov B3\ProjetB3\VaBucher\VabucherBack\VabucherBack\bin\Debug\net7.0\BCrypt.Net-Core.dll
+E:\Ynov B3\ProjetB3\VaBucher\VabucherBack\VabucherBack\bin\Debug\net7.0\BouncyCastle.Crypto.dll

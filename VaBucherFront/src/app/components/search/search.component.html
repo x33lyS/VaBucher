@@ -1,4 +1,9 @@
+<div style="padding: 5%;">
 <form>
   <input type="text" [(ngModel)]="inputValue" name="inputField">
+  <input type="text" [(ngModel)]="domainFilter" placeholder="Filter by domain">
+  <input type="text" [(ngModel)]="locationFilter" placeholder="Filter by location">
+  <input type="text" [(ngModel)]="salaryFilter" placeholder="Filter by salary">
   <button (click)="onSubmit()">Valider</button>
 </form>
+</div>
