@@ -10,6 +10,9 @@ import { JobofferService } from 'src/app/services/joboffer.service';
 })
 export class SearchComponent {
   inputValue!: string;
+  domainFilter!: string;
+  locationFilter!: string;
+  salaryFilter!: string;
   @Output() jobOffersUpdated = new EventEmitter<JobOffer[]>();
 
   constructor(private jobofferService: JobofferService) { }
