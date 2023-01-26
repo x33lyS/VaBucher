@@ -1,8 +1,34 @@
-<div style="padding: 5%;">
+<!-- <div style="padding: 5%;">
 <form>
-  <input type="text" [(ngModel)]="domainFilter" placeholder="Filter by domain">
+  <input [(ngModel)]="searchInput" (input)="filterSearches()" placeholder="Filter by domain">
+  <select *ngIf="searchInput" [(ngModel)]="domainFilter" [compareWith]="compareFn" placeholder="Filter by domain">
+    <option *ngFor="let search of filteredSearches" [value]="search.filter">{{ search.filter }}</option>
+</select>
   <input type="text" [(ngModel)]="locationFilter" placeholder="Filter by location">
   <input type="text" [(ngModel)]="salaryFilter" placeholder="Filter by salary">
   <button (click)="onSubmit()">Valider</button>
 </form>
+</div> -->
+
+
+<div style="padding-top: 5%;">
+  <mat-form-field>
+    <mat-label>Filter by domain</mat-label>
+    <input matInput [(ngModel)]="searchInput" (input)="filterSearches()">
+    <mat-select [(ngModel)]="domainFilter" [compareWith]="compareFn">
+      <mat-option *ngFor="let search of searches" [value]="search.filter">{{ search.filter }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Filter by location</mat-label>
+    <input matInput [(ngModel)]="locationFilter">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Filter by salary</mat-label>
+    <input matInput [(ngModel)]="salaryFilter">
+  </mat-form-field>
+  <button mat-raised-button (click)="onSubmit()">Valider</button>
+
+
 </div>
+

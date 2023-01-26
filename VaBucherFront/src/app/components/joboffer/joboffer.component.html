@@ -15,7 +15,7 @@
     <tr *ngFor="let joboffer of joboffers.slice().reverse() | filter:domainFilter:locationFilter:salaryFilter">
 
       <td>{{ joboffer.title }}</td>
-      <td>{{ joboffer.description }}</td>
+      <td>{{ joboffer.description.slice(0, joboffer.description.slice(0, 500).lastIndexOf(' ')) + ' ...' }}</td>
       <td>{{ joboffer.salaire }}</td>
       <td>{{ joboffer.localisation }}</td>
       <td>{{ joboffer.types }}</td>
