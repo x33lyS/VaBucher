@@ -25,16 +25,15 @@ export class JobofferComponent implements OnInit {
   constructor(private jobofferService: JobofferService, private dataService: ApiDataService) { }
 
   ngOnInit(): void {
-    // interval(5000).subscribe(() => this.jobofferService
-    //   .getJobOffer()
-    //   .subscribe((result: JobOffer[]) => (this.joboffers = result)));
-    console.log(this.data);
+    interval(5000).subscribe(() => this.jobofferService
+      .getJobOffer()
+      .subscribe((result: JobOffer[]) => (this.joboffers = result)));
     this.dataService.currentData.subscribe(data => {
       this.data = data;
       console.log(data, '1')
     });
-
   }
+
   updateFilters(filters: {domain: string, location: string, salary: string}): void {
     this.domainFilter = filters.domain;
     this.locationFilter = filters.location;
