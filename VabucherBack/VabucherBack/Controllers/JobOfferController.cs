@@ -39,6 +39,8 @@ namespace VabucherBack.Controllers
         public async Task<ActionResult<List<JobOffer>>> CreateJobOffer(JobOffer jobOffer)
         {
             var working = false;
+            //ChromeOptions options = new ChromeOptions();
+            //options.AddArgument("--headless=true");
             while (!working)
             {
                 using (var driver = new ChromeDriver("."))
@@ -124,7 +126,7 @@ namespace VabucherBack.Controllers
                                 //Salary
                                 try
                                 {
-                                    var salaryElement = driver.FindElement(By.XPath("//div[@data-test-id='svx_salaryComponent_body']"));
+                                    var salaryElement = driver.FindElement(By.XPath("//div[@data-testid='svx_salaryComponent_body']"));
                                     offer.Salaire = salaryElement.Text;
                                 }
                                 catch

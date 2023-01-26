@@ -9,17 +9,22 @@ import { JobofferService } from 'src/app/services/joboffer.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent {
-  inputValue!: string;
   domainFilter!: string;
   locationFilter!: string;
   salaryFilter!: string;
   @Output() jobOffersUpdated = new EventEmitter<JobOffer[]>();
+  @Output() filtersChanged = new EventEmitter<{domain: string, location: string, salary: string}>();
 
   constructor(private jobofferService: JobofferService) { }
   onSubmit() {
     const joboffer = new JobOffer();
-    joboffer.domain = this.inputValue;
+    joboffer.domain = this.domainFilter;
     this.jobofferService.createJobOffer(joboffer).subscribe((result: JobOffer[]) => this.jobOffersUpdated.emit(result));
+    this.filterJobOffers();
 
+  }
+
+  filterJobOffers() {
+    this.filtersChanged.emit({domain: this.domainFilter, location: this.locationFilter, salary: this.salaryFilter});
   }
 }
