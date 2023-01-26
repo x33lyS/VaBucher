@@ -33,6 +33,7 @@ export class JobofferComponent implements OnInit {
       this.data = data;
       console.log(data, '1')
     });
+
   }
   updateFilters(filters: {domain: string, location: string, salary: string}): void {
     this.domainFilter = filters.domain;

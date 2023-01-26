@@ -18,7 +18,7 @@ export class SearchComponent {
 
   @Output() jobOffersUpdated = new EventEmitter<JobOffer[]>();
   @Output() filtersChanged = new EventEmitter<{domain: string, location: string, salary: string}>();
-  private token = 'g2pujecR_5E4LYWFACdOH1oIT58';
+  private token = 'LI10s4sIDFBPfWvY_qLF8HAapbo';
 
   constructor(private jobofferService: JobofferService,
               private http: HttpClient,
