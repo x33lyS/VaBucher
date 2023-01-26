@@ -12,16 +12,21 @@
     <th></th>
   </thead>
   <tbody>
+  <div *ngFor="let api of data">
     <tr *ngFor="let joboffer of joboffers.slice().reverse() | filter:domainFilter:locationFilter:salaryFilter">
-
-      <td>{{ joboffer.title }}</td>
-      <td>{{ joboffer.description }}</td>
-      <td>{{ joboffer.salaire }}</td>
-      <td>{{ joboffer.localisation }}</td>
-      <td>{{ joboffer.types }}</td>
-      <td>{{ joboffer.companyInfo }}</td>
-      <td>{{ joboffer.domain }}</td>
-      <td>{{ joboffer.isNew }}</td>
+        <td>{{ joboffer.title }} - {{ api.intitule }}</td>
+        <td>{{ joboffer.description }}</td>
+        <td>{{ joboffer.salaire }}</td>
+        <td>{{ joboffer.localisation }}</td>
+        <td>{{ joboffer.types }}</td>
+        <td>{{ joboffer.companyInfo }}</td>
+        <td>{{ joboffer.domain }}</td>
+        <td>{{ joboffer.isNew }}</td>
     </tr>
+  </div>
   </tbody>
 </table>
+
+<!--<div *ngFor="let data of data">-->
+<!--  {{ data.intitule }}-->
+<!--</div>-->
