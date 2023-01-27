@@ -31,7 +31,6 @@ export class SearchComponent {
               private dataService: ApiDataService,
               private searchService: SearchService) { }
 
-    const apiUrl =  `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=${this.domainFilter}&commune=${this.locationFilter}&origineOffre=0`;
 
   ngOnInit(): void {
     interval(5000).subscribe(() => this.searchService
@@ -40,6 +39,7 @@ export class SearchComponent {
   }
 
   onSubmit() {
+    const apiUrl =  `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=${this.domainFilter}&commune=${this.locationFilter}&origineOffre=0`;
     const joboffer = new JobOffer();
     if (this.domainFilter){
       joboffer.domain = this.domainFilter.charAt(0).toUpperCase() + this.domainFilter.slice(1);
