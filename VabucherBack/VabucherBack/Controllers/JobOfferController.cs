@@ -27,6 +27,11 @@ namespace VabucherBack.Controllers
         {
             _context = context;
         }
+        class Response
+        {
+            public List<JobOffer>? JobOffers { get; set; }
+            public List<Search>? Searches { get; set; }
+        }
 
 
         [HttpGet]
@@ -54,6 +59,12 @@ namespace VabucherBack.Controllers
                         submitButton.Click();
                         var input = driver.FindElement(By.Id("search-job"));
                         input.SendKeys(jobOffer.Domain + " etudiant");
+                        var dbUser = await _context.Searches.FirstOrDefaultAsync(u => u.Filter == jobOffer.Domain);
+                        if (dbUser == null)
+                        {
+                            _context.Searches.Add(new Search { Filter = jobOffer.Domain });
+                            await _context.SaveChangesAsync();
+                        }
                         submitButton = driver.FindElement(By.ClassName("btn-purple-fill"));
                         submitButton.Click();
                         string principalHandle = driver.CurrentWindowHandle;
@@ -126,7 +137,7 @@ namespace VabucherBack.Controllers
                                 //Salary
                                 try
                                 {
-                                    var salaryElement = driver.FindElement(By.XPath("//div[@data-testid='svx_salaryComponent_body']"));
+                                    var salaryElement = driver.FindElement(By.XPath("//span[@data-testid='svx_salaryComponent_body']"));
                                     offer.Salaire = salaryElement.Text;
                                 }
                                 catch
@@ -198,7 +209,12 @@ namespace VabucherBack.Controllers
                 }
 
             }
-            return Ok(await _context.JobOffers.ToListAsync());
+            var response = new Response
+            {
+                JobOffers = await _context.JobOffers.ToListAsync(),
+                Searches = await _context.Searches.ToListAsync()
+            };
+            return Ok(response);
     }
 
     [HttpDelete("{id}")]
