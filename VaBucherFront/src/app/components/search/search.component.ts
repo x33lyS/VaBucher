@@ -72,6 +72,8 @@ export class SearchComponent {
 
 
   filterJobOffers() {
+    console.log(this.domainFilter, this.locationFilter, this.salaryFilter);
+    
     this.filtersChanged.emit({domain: this.domainFilter, location: this.locationFilter, salary: this.salaryFilter});
   }
 }
