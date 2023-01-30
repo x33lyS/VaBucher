@@ -14,16 +14,6 @@ export class UserService {
   private apiUrl = "https://localhost:7059/api"
 
   constructor(private http: HttpClient) { }
-  public currentUser!: CurrentUser;
-
-  getCurrentUser(): CurrentUser {
-    console.log(this.currentUser);
-    return this.currentUser;
-  }
-
-  setCurrentUser(currentUser: CurrentUser): void {
-    this.currentUser = currentUser;
-  }
 
   public getUser() : Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/${this.url}`);

@@ -58,9 +58,9 @@ namespace VaBucherBack.Controllers
                 // Continue with token creation and return
                 var claims = new[]
                 {
-            new Claim(JwtRegisteredClaimNames.Sub, dbUser.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
+                    new Claim(JwtRegisteredClaimNames.Sub, dbUser.Email),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                };
 
                 var jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Jwt:Key"]));
                 var creds = new SigningCredentials(jwtKey, SecurityAlgorithms.HmacSha256);
@@ -73,25 +73,23 @@ namespace VaBucherBack.Controllers
 
                 return Ok(new
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token)
-                });
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    currentUser = new
+                    {
+                        id = dbUser.Id,
+                        email = dbUser.Email,
+                        firstname = dbUser.FirstName,
+                        lastname = dbUser.LastName,
+                        location = dbUser.Location,
+                        search = dbUser.Search,
+                        role = dbUser.Role,
+                        cv = dbUser.CV,
+                        phone = dbUser.Phone,
+                    }
+                    });
             }
             else
             {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
-                currentUser = new
-                {
-                    id=dbUser.Id,
-                    email = dbUser.Email,
-                    firstname = dbUser.FirstName,
-                    lastname = dbUser.LastName,
-                    location = dbUser.Location,
-                    search = dbUser.Search,
-                    role = dbUser.Role,
-                    cv = dbUser.CV,
-                    phone = dbUser.Phone,
-        }
-            });
                 return BadRequest("Incorrect password.");
             }
         }

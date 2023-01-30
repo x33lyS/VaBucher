@@ -45,9 +45,6 @@ export class LoginComponent implements OnInit {
 
           let currentUser = result.currentUser as unknown as CurrentUser;
           this.currentUser = currentUser;
-          this.userService.setCurrentUser(this.currentUser);
-          console.log(this.currentUser);
-          
           localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
 
           this.router.navigate(['/dashboard']);
