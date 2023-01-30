@@ -9,19 +9,25 @@ import { JobofferComponent } from './components/joboffer/joboffer.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { SignInComponent } from './components/sign-in/sign-in.component';
-
+import { RegistrationComponent } from './components/registration/registration.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
-import {MatFormFieldModule} from "@angular/material/form-field";
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SearchComponent } from './components/search/search.component';
+import { AppRoutingModule } from "./app-routing.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
+import { FilterPipe } from './filter.pipe';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { LoginComponent } from './components/login/login.component';
 
-const routes: Routes = [
-  { path: 'signup', component: SignupComponent },
-  { path: 'signin', component: SignInComponent },
-  { path: 'dashboard', component: DashboardComponent }
-];
+
+
 
 @NgModule({
   declarations: [
@@ -31,24 +37,30 @@ const routes: Routes = [
     HomeComponent,
     LoaderComponent,
     NavbarComponent,
-    SignupComponent,
-    SignInComponent,
-    DashboardComponent
+    LoginComponent,
+    RegistrationComponent,
+    DashboardComponent,
+    SearchComponent,
+    FilterPipe
   ],
-    imports: [
-        BrowserModule,
-        RouterModule.forRoot(routes),
-        HttpClientModule,
-        MatIconModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    MatIconModule,
+    FormsModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    AppRoutingModule,
+    MatAutocompleteModule,
+    RouterModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+  ],
   providers: [],
-  bootstrap: [AppComponent],
-  exports: [RouterModule]
-
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 
-export class AppRoutingModule { }

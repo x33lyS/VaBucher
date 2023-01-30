@@ -9,6 +9,8 @@ import {User} from "../models/user";
 })
 export class AuthenticationService {
 
+  private apiUrl = "https://localhost:7059/api"
+
   constructor(private http: HttpClient) {
   }
 
@@ -18,7 +20,7 @@ export class AuthenticationService {
     let basicAuthHeaderString = 'Basic' + window.btoa(user.email + ':' + user.password);
     headers = headers.set('Authorization', basicAuthHeaderString);
 
-    return this.http.post<{ token: string }>(`${environment.apiUrl}/Auth/login`, {
+    return this.http.post<{ token: string }>(`${this.apiUrl}/Auth/login`, {
       email: user.email,
       password: user.password
     }, {headers});
@@ -34,7 +36,7 @@ export class AuthenticationService {
     let basic = localStorage.getItem('access_token');
     if (basic) {
       headers = headers.set('Authorization', basic);
-      this.http.post(`${environment.apiUrl}/Auth/verifyToken`, {headers})
+      this.http.post(`${this.apiUrl}/Auth/verifyToken`, {headers})
         .pipe(tap((userData: any) => {
           console.log(userData);
         }));
