@@ -2,10 +2,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { interval } from 'rxjs';
 import { JobOffer } from 'src/app/models/joboffer';
 import { Search } from 'src/app/models/search';
+import { JobType } from 'src/app/models/jobtype';
 import { JobofferService } from 'src/app/services/joboffer.service';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ApiDataService} from "../../services/api-data.service";
 import { SearchService } from 'src/app/services/search.service';
+import { JobtypeService } from 'src/app/services/jobtype.service';
+
 
 
 @Component({
@@ -16,10 +19,11 @@ import { SearchService } from 'src/app/services/search.service';
 export class SearchComponent {
   domainFilter!: string;
   locationFilter!: string;
-  salaryFilter!: string;
+  jobtypefilter!: string;
   apiData: any[] = [];
   searches: Search[] = [];
   searchInput!: string;
+  jobtypes: JobType[] = [];
 
 
   @Output() jobOffersUpdated = new EventEmitter<JobOffer[]>();
@@ -29,13 +33,17 @@ export class SearchComponent {
   constructor(private jobofferService: JobofferService,
               private http: HttpClient,
               private dataService: ApiDataService,
-              private searchService: SearchService) { }
+              private searchService: SearchService,
+              private jobtypeService: JobtypeService) { }
 
 
   ngOnInit(): void {
     interval(5000).subscribe(() => this.searchService
     .getSearch()
     .subscribe((result: Search[]) => (this.searches = result)));
+    interval(5000).subscribe(() => this.jobtypeService
+    .getJobType()
+    .subscribe((result: JobType[]) => (this.jobtypes = result)));
   }
 
   onSubmit() {
@@ -72,6 +80,6 @@ export class SearchComponent {
 
 
   filterJobOffers() {    
-    this.filtersChanged.emit({domain: this.domainFilter, location: this.locationFilter, salary: this.salaryFilter});
+    this.filtersChanged.emit({domain: this.domainFilter, location: this.locationFilter, salary: this.jobtypefilter});
   }
 }
