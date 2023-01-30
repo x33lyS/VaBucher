@@ -16,7 +16,9 @@ export class FilterPipe implements PipeTransform {
       if (locationFilter && joboffer.localisation.toLowerCase().indexOf(locationFilter.toLowerCase()) === -1) {
         return false;
       }
-      if (jobtypefilter && joboffer.types.toLowerCase().indexOf(jobtypefilter.toLowerCase()) === -1) {
+      let selectedJobTypes = jobtypefilter.split(',');
+      let jobtypes = joboffer.types.split(',');
+      if (!selectedJobTypes.some(selectedType => jobtypes.some(type => type.toLowerCase().includes(selectedType.toLowerCase())))) {
         return false;
       }
       return true;

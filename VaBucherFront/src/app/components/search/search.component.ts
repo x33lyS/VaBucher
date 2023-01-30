@@ -22,12 +22,14 @@ export class SearchComponent {
   jobtypefilter!: string;
   apiData: any[] = [];
   searches: Search[] = [];
-  searchInput!: string;
+  selectedJobTypes: any[]= [];
+  filteredSearches:any[] = [];
+
   jobtypes: JobType[] = [];
 
 
   @Output() jobOffersUpdated = new EventEmitter<JobOffer[]>();
-  @Output() filtersChanged = new EventEmitter<{domain: string, location: string, salary: string}>();
+  @Output() filtersChanged = new EventEmitter<{domain: string, location: string, jobtype: string}>();
   private token = 'qQXLAMeZBi0kgujYwkbGCuX4t_w';
 
   constructor(private jobofferService: JobofferService,
@@ -52,7 +54,7 @@ export class SearchComponent {
     if (this.domainFilter){
       joboffer.domain = this.domainFilter
     } else {
-      joboffer.domain = this.searchInput.charAt(0).toUpperCase() + this.searchInput.slice(1);
+      joboffer.domain = this.domainFilter.charAt(0).toUpperCase() + this.domainFilter.slice(1);
     }    
     this.jobofferService.createJobOffer(joboffer).subscribe((result: JobOffer[]) => this.jobOffersUpdated.emit(result));
     this.filterJobOffers();
@@ -69,17 +71,21 @@ export class SearchComponent {
       });
     });
   }
-  compareFn(value1: any, value2: any): boolean {
-    return value1 === value2;
+
+  updateSelectedJobTypes(jobType: any) {
+    this.selectedJobTypes = jobType
+    console.log(this.selectedJobTypes);
+    this.jobtypefilter = this.selectedJobTypes.join(',');
+    console.log(1);
+    this.filterJobOffers();
   }
-  filterSearches() {
-    this.searches = this.searches.filter(search =>
-      search.filter.toLowerCase().includes(this.searchInput.toLowerCase())
-    );
+  filterOptions() {
+    console.log();
+    
+    this.filteredSearches = this.searches.filter(search => search.filter.includes(this.domainFilter));
   }
 
-
-  filterJobOffers() {    
-    this.filtersChanged.emit({domain: this.domainFilter, location: this.locationFilter, salary: this.jobtypefilter});
+  filterJobOffers() {          
+    this.filtersChanged.emit({domain: this.domainFilter, location: this.locationFilter, jobtype: this.jobtypefilter});
   }
 }
