@@ -6,9 +6,9 @@ import { JobOffer } from 'src/app/models/joboffer';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(joboffers: JobOffer[], domainFilter: string, locationFilter: string, salaryFilter: string): JobOffer[] {
+  transform(joboffers: JobOffer[], domainFilter: string, locationFilter: string, jobtypefilter: string): JobOffer[] {
     if (!joboffers) { return []; }
-    if (!domainFilter && !locationFilter && !salaryFilter) { return joboffers; }
+    if (!domainFilter && !locationFilter && !jobtypefilter) { return joboffers; }
     return joboffers.filter(joboffer => {
       if (domainFilter && joboffer.domain.toLowerCase().indexOf(domainFilter.toLowerCase()) === -1) {
         return false;
@@ -16,7 +16,9 @@ export class FilterPipe implements PipeTransform {
       if (locationFilter && joboffer.localisation.toLowerCase().indexOf(locationFilter.toLowerCase()) === -1) {
         return false;
       }
-      if (salaryFilter && joboffer.salaire.toLowerCase().indexOf(salaryFilter.toLowerCase()) === -1) {
+      let selectedJobTypes = jobtypefilter.split(',');
+      let jobtypes = joboffer.types.split(',');
+      if (!selectedJobTypes.some(selectedType => jobtypes.some(type => type.toLowerCase().includes(selectedType.toLowerCase())))) {
         return false;
       }
       return true;

@@ -22,6 +22,9 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { FilterPipe } from './filter.pipe';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 
 
@@ -43,11 +46,13 @@ import { MatSelectModule } from '@angular/material/select';
     HttpClientModule,
     MatIconModule,
     FormsModule,
+    MatCheckboxModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     AppRoutingModule,
+    MatAutocompleteModule,
     RouterModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),

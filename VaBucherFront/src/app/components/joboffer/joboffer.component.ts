@@ -18,7 +18,7 @@ export class JobofferComponent implements OnInit {
   joboffers: JobOffer[] = [];
   domainFilter!: string;
   locationFilter!: string;
-  salaryFilter!: string;
+  jobtypefilter!: string;
   filters: any = {};
   data: any[] = [];
 
@@ -33,10 +33,10 @@ export class JobofferComponent implements OnInit {
     });
   }
 
-  updateFilters(filters: {domain: string, location: string, salary: string}): void {
+  updateFilters(filters: {domain: string, location: string, jobtype: string}): void {
     this.domainFilter = filters.domain;
     this.locationFilter = filters.location;
-    this.salaryFilter = filters.salary;
+    this.jobtypefilter = filters.jobtype;
   }
 
 }
