@@ -14,13 +14,13 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
   }
 
-  login(user: User): Observable<{ token: string }> {
+  login(user: User): Observable<{ token: string, currentUser:string }> {
 
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     let basicAuthHeaderString = 'Basic' + window.btoa(user.email + ':' + user.password);
     headers = headers.set('Authorization', basicAuthHeaderString);
 
-    return this.http.post<{ token: string }>(`${this.apiUrl}/Auth/login`, {
+    return this.http.post<{ token: string,currentUser:string }>(`${this.apiUrl}/Auth/login`, {
       email: user.email,
       password: user.password
     }, {headers});
