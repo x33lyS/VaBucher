@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -6,8 +7,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using OpenQA.Selenium.DevTools.V106.Debugger;
 using VabucherBack;
 using VaBucherBack.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using BCrypt.Net;
 
 namespace VaBucherBack.Controllers
@@ -75,6 +78,20 @@ namespace VaBucherBack.Controllers
             }
             else
             {
+                token = new JwtSecurityTokenHandler().WriteToken(token),
+                currentUser = new
+                {
+                    id=dbUser.Id,
+                    email = dbUser.Email,
+                    firstname = dbUser.FirstName,
+                    lastname = dbUser.LastName,
+                    location = dbUser.Location,
+                    search = dbUser.Search,
+                    role = dbUser.Role,
+                    cv = dbUser.CV,
+                    phone = dbUser.Phone,
+        }
+            });
                 return BadRequest("Incorrect password.");
             }
         }
