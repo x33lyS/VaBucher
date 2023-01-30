@@ -42,10 +42,10 @@ export class SearchComponent {
     const apiUrl =  `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=${this.domainFilter}&commune=${this.locationFilter}&origineOffre=0`;
     const joboffer = new JobOffer();
     if (this.domainFilter){
-      joboffer.domain = this.domainFilter.charAt(0).toUpperCase() + this.domainFilter.slice(1);
+      joboffer.domain = this.domainFilter
     } else {
-      joboffer.domain = this.searchInput;
-    }
+      joboffer.domain = this.searchInput.charAt(0).toUpperCase() + this.searchInput.slice(1);
+    }    
     this.jobofferService.createJobOffer(joboffer).subscribe((result: JobOffer[]) => this.jobOffersUpdated.emit(result));
     this.filterJobOffers();
     const headers = new HttpHeaders({
@@ -71,9 +71,7 @@ export class SearchComponent {
   }
 
 
-  filterJobOffers() {
-    console.log(this.domainFilter, this.locationFilter, this.salaryFilter);
-    
+  filterJobOffers() {    
     this.filtersChanged.emit({domain: this.domainFilter, location: this.locationFilter, salary: this.salaryFilter});
   }
 }

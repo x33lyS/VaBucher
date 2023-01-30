@@ -30,7 +30,6 @@ export class JobofferComponent implements OnInit {
       .subscribe((result: JobOffer[]) => (this.joboffers = result)));
     this.dataService.currentData.subscribe(data => {
       this.data = data;
-      console.log(data, '1')
     });
   }
 
