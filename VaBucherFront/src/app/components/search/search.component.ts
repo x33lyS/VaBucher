@@ -76,9 +76,10 @@ export class SearchComponent {
     this.filterJobOffers();
   }
   filterOptions() {
-    console.log();
-    
-    this.filteredSearches = this.searches.filter(search => search.filter.includes(this.domainFilter));
+    const lowerCaseFilter = this.domainFilter.toLowerCase();
+    this.filteredSearches = this.searches.filter(search => 
+      search.filter.toLowerCase().includes(lowerCaseFilter)
+    );
   }
 
   filterJobOffers() {          

@@ -24,6 +24,7 @@ import { FilterPipe } from './filter.pipe';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { LoginComponent } from './components/login/login.component';
 
 
 
@@ -36,6 +37,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     HomeComponent,
     LoaderComponent,
     NavbarComponent,
+    LoginComponent,
     RegistrationComponent,
     DashboardComponent,
     SearchComponent,
