@@ -11,6 +11,7 @@ using OpenQA.Selenium.DevTools.V106.Debugger;
 using VabucherBack;
 using VaBucherBack.Data;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using BCrypt.Net;
 
 namespace VaBucherBack.Controllers
 {
@@ -38,38 +39,44 @@ namespace VaBucherBack.Controllers
         public IConfiguration Config => _config;
         /**
             * Login
-            *  Check l'user dans la base de donnée, si il ne le trouve pas return code 401,
-            *  sinon créer un token JWT, le return avec code 200
+            *  Check l'user dans la base de donnï¿½e, si il ne le trouve pas return code 401,
+            *  sinon crï¿½er un token JWT, le return avec code 200
         */
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserAuthentication userAuth)
         {
-
-
-            var dbUser = await Context.Users.FirstOrDefaultAsync(u => u.Email == userAuth.Email && u.Password == userAuth.Password);
+            var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == userAuth.Email);
+            var hash = dbUser.Password;
+            var pass = userAuth.Password;
             if (dbUser == null)
             {
                 return BadRequest("User not found.");
             }
-
-            // creation du token
-            var claims = new[]
+            else if (BCrypt.Net.BCrypt.Verify(userAuth.Password, dbUser.Password))
             {
-        new Claim(JwtRegisteredClaimNames.Sub, dbUser.Email),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-      };
+                // Continue with token creation and return
+                var claims = new[]
+                {
+            new Claim(JwtRegisteredClaimNames.Sub, dbUser.Email),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
 
-            var jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Jwt:Key"]));
-            var creds = new SigningCredentials(jwtKey, SecurityAlgorithms.HmacSha256);
+                var jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Jwt:Key"]));
+                var creds = new SigningCredentials(jwtKey, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(Config["Jwt:Issuer"],
-              Config["Jwt:Issuer"],
-              claims,
-              expires: DateTime.Now.AddMinutes(30),
-              signingCredentials: creds);
+                var token = new JwtSecurityToken(Config["Jwt:Issuer"],
+                                                 Config["Jwt:Issuer"],
+                                                 claims,
+                                                 expires: DateTime.Now.AddMinutes(30),
+                                                 signingCredentials: creds);
 
-            return Ok(new
+                return Ok(new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token)
+                });
+            }
+            else
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
                 currentUser = new
@@ -85,6 +92,8 @@ namespace VaBucherBack.Controllers
                     phone = dbUser.Phone,
         }
             });
+                return BadRequest("Incorrect password.");
+            }
         }
 
         [AllowAnonymous]
