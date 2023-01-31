@@ -47,8 +47,6 @@ namespace VaBucherBack.Controllers
         public async Task<IActionResult> Login([FromBody] UserAuthentication userAuth)
         {
             var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == userAuth.Email);
-            var hash = dbUser.Password;
-            var pass = userAuth.Password;
             if (dbUser == null)
             {
                 return BadRequest("User not found.");
