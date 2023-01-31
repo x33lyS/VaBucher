@@ -4,6 +4,7 @@ import { EventEmitter, Input, Output } from '@angular/core';
 import { interval } from 'rxjs';
 import { JobofferService } from 'src/app/services/joboffer.service';
 import { FilterPipe } from 'src/app/filter.pipe';
+import {ApiDataService} from "../../services/api-data.service";
 
 
 
@@ -17,23 +18,25 @@ export class JobofferComponent implements OnInit {
   joboffers: JobOffer[] = [];
   domainFilter!: string;
   locationFilter!: string;
-  salaryFilter!: string;
+  jobtypefilter!: string;
   filters: any = {};
+  data: any[] = [];
 
-
-  constructor(private jobofferService: JobofferService) { }
+  constructor(private jobofferService: JobofferService, private dataService: ApiDataService) { }
 
   ngOnInit(): void {
     interval(5000).subscribe(() => this.jobofferService
       .getJobOffer()
       .subscribe((result: JobOffer[]) => (this.joboffers = result)));
-
-
+    this.dataService.currentData.subscribe(data => {
+      this.data = data;
+    });
   }
-  updateFilters(filters: {domain: string, location: string, salary: string}): void {
+
+  updateFilters(filters: {domain: string, location: string, jobtype: string}): void {
     this.domainFilter = filters.domain;
     this.locationFilter = filters.location;
-    this.salaryFilter = filters.salary;
+    this.jobtypefilter = filters.jobtype;
   }
 
 }

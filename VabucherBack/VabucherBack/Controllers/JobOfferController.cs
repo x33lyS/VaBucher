@@ -27,6 +27,11 @@ namespace VabucherBack.Controllers
         {
             _context = context;
         }
+        class Response
+        {
+            public List<JobOffer>? JobOffers { get; set; }
+            public List<Search>? Searches { get; set; }
+        }
 
 
         [HttpGet]
@@ -39,23 +44,28 @@ namespace VabucherBack.Controllers
         public async Task<ActionResult<List<JobOffer>>> CreateJobOffer(JobOffer jobOffer)
         {
             var working = false;
-            //ChromeOptions options = new ChromeOptions();
-            //options.AddArgument("--headless=true");
+            var options = new ChromeOptions();
+            options.AddArgument(".");
             while (!working)
             {
-                using (var driver = new ChromeDriver("."))
+                using (var driver = new ChromeDriver(options))
                 {
                     try
                     {
                         //Navigate to DotNet website
-                        driver.Navigate().GoToUrl("https://www.monster.fr/emploi/");
+                        driver.Navigate().GoToUrl("https://www.monster.fr/emploi/recherche?q="+ jobOffer.Domain + " etudiant");
                         //Click the Get Started button
+                        await Task.Delay(1000);
                         var submitButton = driver.FindElement(By.Id("onetrust-accept-btn-handler"));
                         submitButton.Click();
-                        var input = driver.FindElement(By.Id("search-job"));
-                        input.SendKeys(jobOffer.Domain + " etudiant");
-                        submitButton = driver.FindElement(By.ClassName("btn-purple-fill"));
-                        submitButton.Click();
+                        var dbUser = await _context.Searches.FirstOrDefaultAsync(u => u.Filter == jobOffer.Domain);
+                        if (dbUser == null)
+                        {
+                            _context.Searches.Add(new Search { Filter = jobOffer.Domain });
+                            await _context.SaveChangesAsync();
+                        }
+                        //submitButton = driver.FindElement(By.ClassName("btn-purple-fill"));
+                        //submitButton.Click();
                         string principalHandle = driver.CurrentWindowHandle;
                         // Get Started section is a multi-step wizard
                         // The following sections will find the visible next step button until there's no next step button left
@@ -66,8 +76,7 @@ namespace VabucherBack.Controllers
                         {
                             try
                             {
-                                await Task.Delay(5000);
-
+                                await Task.Delay(1000);
                                 nextLink = driver.FindElement(By.ClassName("job-cardstyle__JobCardComponent-sc-1mbmxes-0"));
                                 exist = nextLink.Text;
 
@@ -126,7 +135,7 @@ namespace VabucherBack.Controllers
                                 //Salary
                                 try
                                 {
-                                    var salaryElement = driver.FindElement(By.XPath("//div[@data-testid='svx_salaryComponent_body']"));
+                                    var salaryElement = driver.FindElement(By.XPath("//span[@data-testid='svx_salaryComponent_body']"));
                                     offer.Salaire = salaryElement.Text;
                                 }
                                 catch
@@ -198,7 +207,12 @@ namespace VabucherBack.Controllers
                 }
 
             }
-            return Ok(await _context.JobOffers.ToListAsync());
+            var response = new Response
+            {
+                JobOffers = await _context.JobOffers.ToListAsync(),
+                Searches = await _context.Searches.ToListAsync()
+            };
+            return Ok(response);
     }
 
     [HttpDelete("{id}")]

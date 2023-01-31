@@ -1,0 +1,12 @@
+<div *ngIf="currentUser">
+    <h1>Profile</h1>
+    <p>ID: {{currentUser.id}}</p>
+    <p>First Name: {{currentUser.firstname}}</p>
+    <p>Last Name: {{currentUser.lastname}}</p>
+    <p>Location: {{currentUser.location || 'Not specified'}}</p>
+    <p>Search: {{currentUser.search || 'Not specified'}}</p>
+    <p>Role: {{currentUser.role}}</p>
+    <p>CV: {{currentUser.cv || 'Not specified'}}</p>
+    <p>Email: {{currentUser.email}}</p>
+    <p>Phone: {{currentUser.phone || 'Not specified'}}</p>
+</div>
