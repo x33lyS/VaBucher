@@ -27,7 +27,7 @@ jobs:
         npm install
         ng build
      
-  deploy:
+  release:
     needs: [build-dotnet, build-angular]
     runs-on: ubuntu-latest
     steps:
