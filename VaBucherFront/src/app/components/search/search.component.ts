@@ -51,7 +51,7 @@ export class SearchComponent {
   onSubmit() {
     const apiUrl =  `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=${this.domainFilter}&commune=${this.locationFilter}&origineOffre=0`;
     const joboffer = new JobOffer();
-      joboffer.domain = this.domainFilter.charAt(0).toUpperCase() + this.domainFilter.slice(1);  
+      joboffer.domain = this.domainFilter.charAt(0).toUpperCase() + this.domainFilter.slice(1);
     this.jobofferService.createJobOffer(joboffer).subscribe((result: JobOffer[]) => this.jobOffersUpdated.emit(result));
     this.filterJobOffers();
     const headers = new HttpHeaders({
@@ -77,12 +77,13 @@ export class SearchComponent {
   }
   filterOptions() {
     const lowerCaseFilter = this.domainFilter.toLowerCase();
-    this.filteredSearches = this.searches.filter(search => 
+    this.filteredSearches = this.searches.filter(search =>
       search.filter.toLowerCase().includes(lowerCaseFilter)
     );
+    this.filterJobOffers()
   }
 
-  filterJobOffers() {          
+  filterJobOffers() {
     this.filtersChanged.emit({domain: this.domainFilter, location: this.locationFilter, jobtype: this.jobtypefilter});
   }
 }
