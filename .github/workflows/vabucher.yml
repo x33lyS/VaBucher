@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - package_fix
+      - dev
 jobs:
   build-dotnet:
     runs-on: ubuntu-latest
