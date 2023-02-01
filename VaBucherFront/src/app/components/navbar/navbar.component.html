@@ -18,13 +18,25 @@
           <a class="nav-item" routerLink="/dashboard">Start</a>
         </li>
 
-        <li class="nav-item">
-          <a routerLink="/registration" class="custom-btn">Sign Up</a>
-        </li>
+        <ng-container *ngIf="!currentUser">
+          <li class="nav-item">
+            <a routerLink="/registration" class="custom-btn">Sign Up</a>
+          </li>
 
-        <li class="nav-item">
-          <a routerLink="/login" class="custom-btn">Sign In</a>
-        </li>
+          <li class="nav-item">
+            <a routerLink="/login" class="custom-btn">Sign In</a>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="currentUser">
+          <li class="nav-item">
+            <a routerLink="/profil" class="custom-btn">Profile</a>
+          </li>
+
+          <li class="nav-item">
+            <a (click)="disconnect()" routerLink="/dashboard" class="custom-btn">Disconnect</a>
+          </li>
+        </ng-container>
       </ul>
     </div>
   </div>

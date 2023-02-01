@@ -5,6 +5,12 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CurrentUser } from 'src/app/models/currentuser';
+import { JobType } from 'src/app/models/jobtype';
+import { JobtypeService } from 'src/app/services/jobtype.service';
+import { SearchService } from 'src/app/services/search.service';
+import { Search } from 'src/app/models/search';
 
 
 @Component({
@@ -18,20 +24,30 @@ export class RegistrationComponent implements OnInit {
   passwordValid = false;
   passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/;
   message: string | undefined;
+  currentUser: CurrentUser | undefined;
+  selectedJobTypes: any[]= [];
+  jobtypes: JobType[] = [];
+  selectedSearches:any[] = [];
+  searches: Search[] = [];
+
+
+
   // @Input() user?: User;
   @Output() usersUpdated = new EventEmitter<User[]>();
 
-  constructor(private userService: UserService, private _formBuilder: FormBuilder, private router: Router,
-              private toastr: ToastrService) {
+  constructor(private authentService: AuthenticationService,private userService: UserService, private _formBuilder: FormBuilder, private router: Router,
+    private searchService: SearchService,
+    private jobtypeService: JobtypeService) {
 
   this.registrationform = this._formBuilder.group({
-      firstName:['', Validators.required],
-      lastName: ['', Validators.required],
+      firstname:['', Validators.required],
+      lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
       location: '',
-      search: '',
+      domain: '',
+      jobtype: '',
       role: 1,
       cv: '',
       phone: ''
@@ -40,6 +56,12 @@ export class RegistrationComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.jobtypeService
+    .getJobType()
+    .subscribe((result: JobType[]) => (this.jobtypes = result));
+    this.searchService
+    .getSearch()
+    .subscribe((result: Search[]) => (this.searches = result));
 
   }
 
@@ -47,20 +69,36 @@ export class RegistrationComponent implements OnInit {
   onSubmit() {
     if (this.registrationform.valid) {
     const user = new User();
-    user.firstName = this.registrationform.value.firstName;
-    user.lastName = this.registrationform.value.lastName;
+    user.firstname = this.registrationform.value.firstname;
+    user.lastname = this.registrationform.value.lastname;
     user.email = this.registrationform.value.email;
     user.password = this.registrationform.value.password;
     user.location = this.registrationform.value.location;
-    user.search = this.registrationform.value.search;
+    user.domain = this.registrationform.value.domain.join(',');
+    user.jobtype = this.registrationform.value.jobtype.join(',');
     user.role = this.registrationform.value.role;
     user.cv = this.registrationform.value.cv;
     user.phone = this.registrationform.value.phone;
     console.log(user);
+
     this.userService.createUser(user).subscribe(
       () => {
         // Traitement en cas de réussite, par exemple en redirigeant l'utilisateur vers une autre page
-        this.router.navigate(['/dashboard']);
+        this.authentService.login(user).subscribe({
+          next: (result) => {
+            localStorage.setItem('access_token', result.token);
+
+            let currentUser = result.currentUser as unknown as CurrentUser;
+            this.currentUser = currentUser;
+            localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+            this.router.navigate(['/dashboard']);
+
+            // il faut protéger la route home aves un guard dans le futur pour ne pas pouvoir y accéder sans être connecté
+          },
+          error: (error) => {
+            console.log("Erreur lors du login : Status " + error.status + ", " + error.error);
+          }
+        });
       },
       (error: string) => {
         // Traitement en cas d'erreur, par exemple en affichant un message d'erreur

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrentUser } from 'src/app/models/currentuser';
 import { JobOffer } from 'src/app/models/joboffer';
 import { JobofferService } from 'src/app/services/joboffer.service';
 
@@ -8,15 +9,56 @@ import { JobofferService } from 'src/app/services/joboffer.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  
+
   joboffers: JobOffer[] = [];
+  currentUser!: CurrentUser;
+  allDomains: string[] = [];
+  allTypes: string[] = [];
+
   constructor(private jobofferService: JobofferService) { }
 
   ngOnInit(): void {
-    this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
-        this.joboffers = result.filter(joboffer => joboffer.domain === "professeur");
-    });
-}
+    const currentUserString = localStorage.getItem('currentUser');
+    if (currentUserString) {
+      this.currentUser = JSON.parse(currentUserString);
+      this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
+        this.joboffers = result;
+        this.allDomains = [...new Set(this.joboffers.map(offer => offer.domain))];
+        this.allTypes = [...new Set(this.joboffers.map(offer => offer.types))];
+        if (this.currentUser.jobtype && this.currentUser.domain) {
+          const currentUserDomains = this.currentUser.domain.split(',');
+          const currentUserJobType = this.currentUser.jobtype;
+          if (currentUserJobType && currentUserDomains) {
+            const isDomainMatch = currentUserDomains.some(domain => this.allDomains.includes(domain));
+            const isJobTypeMatch = this.allTypes.some(type => type.includes(currentUserJobType));
+            if (isDomainMatch && isJobTypeMatch) {
+              this.joboffers = result.filter(offer => currentUserDomains.includes(offer.domain) && offer.types.includes(currentUserJobType));
+              if (this.joboffers.length === 0) {
+                this.joboffers = result;
+              }
+            }
+          }
+        } else if (this.currentUser.jobtype) {
+          const currentUserJobType = this.currentUser.jobtype;
+          this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
+            this.joboffers = result.filter(joboffer => joboffer.types.includes(currentUserJobType));
+          });
+        } else if (this.currentUser.domain) {
+          const currentUserDomains = this.currentUser.domain.split(',');
+          this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
+            this.joboffers = result.filter(joboffer => currentUserDomains.includes(joboffer.domain));
+          });
+        } else {
+          this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
+            this.joboffers = result;
+          });
 
-
+        }
+      });
+    } else {
+      this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
+        this.joboffers = result;
+      });
+    }
+  }
 }

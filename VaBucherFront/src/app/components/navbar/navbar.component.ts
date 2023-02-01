@@ -1,4 +1,6 @@
 import { Component, OnInit, HostListener, Host } from '@angular/core';
+import { interval } from 'rxjs';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 
@@ -8,8 +10,10 @@ import { Component, OnInit, HostListener, Host } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  constructor() { }
-  
+  currentUser = localStorage.getItem('currentUser');
+
+  constructor(private authentificationService: AuthenticationService) { }
+
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(){
     let element = document.querySelector('.navbar') as HTMLElement;
@@ -21,6 +25,15 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    interval(100).subscribe(() => this.currentUser = localStorage.getItem('currentUser'));
+  }
+
+  disconnect() {
+    localStorage.removeItem('currentUser');
+  this.authentificationService.logout();
+  // setTimeout(() => {
+  //   this.currentUser = localStorage.getItem('currentUser');
+  // });
   }
 
 }

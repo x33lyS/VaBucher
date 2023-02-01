@@ -43,9 +43,9 @@ export class SearchComponent {
     interval(5000).subscribe(() => this.searchService
     .getSearch()
     .subscribe((result: Search[]) => (this.searches = result)));
-    interval(5000).subscribe(() => this.jobtypeService
+   this.jobtypeService
     .getJobType()
-    .subscribe((result: JobType[]) => (this.jobtypes = result)));
+    .subscribe((result: JobType[]) => (this.jobtypes = result));
   }
 
   onSubmit() {
@@ -76,6 +76,11 @@ export class SearchComponent {
     this.filterJobOffers();
   }
   filterOptions() {
+    if (!this.domainFilter) {
+      this.filteredSearches = this.searches;
+      return;
+    }
+
     const lowerCaseFilter = this.domainFilter.toLowerCase();
     this.filteredSearches = this.searches.filter(search =>
       search.filter.toLowerCase().includes(lowerCaseFilter)

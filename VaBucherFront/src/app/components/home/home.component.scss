@@ -205,12 +205,21 @@
       left: 0;
       height: 60%;
     }
-
-    h5 {
-      text-transform: uppercase;
-      text-align: center;
-      padding: 30px 0;
+    .offer-title {
+      h5 {
+        text-transform: uppercase;
+        text-align: center;
+        padding: 30px 0;
+      }
+      h5.padding-bottom {
+        padding-bottom: 10px;
+      }
+      p {
+        text-align: center;
+        padding: 0  0 30px;
+      }
     }
+
 
     .offers {
       margin: 0 auto;
@@ -229,6 +238,14 @@
 
         p {
           padding: 0 15px 15px 15px;
+        }
+        button {
+          border: 1px solid white;
+          color: white;
+          background: var(--primary-color);
+          border-radius: 10px;
+          padding: 5px 10px;
+          margin: 5px 0 10px 15px;
         }
 
         background: var(--primary-color);

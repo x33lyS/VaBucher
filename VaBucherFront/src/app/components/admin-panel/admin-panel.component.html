@@ -1,12 +1,12 @@
 <div *ngIf="user">
-<h2>{{user.firstName}}</h2>
+<h2>{{user.firstname}}</h2>
 <div>
-    FirstName:
-    <input [(ngModel)]="user.firstName" placeholder="FirstName">
+    firstname:
+    <input [(ngModel)]="user.firstname" placeholder="firstname">
 </div>
 <div>
-    LastName:
-    <input [(ngModel)]="user.lastName" placeholder="LastName">
+    lastname:
+    <input [(ngModel)]="user.lastname" placeholder="lastname">
 </div>
 <div>
     Password:
@@ -26,7 +26,7 @@
 </div>
 <div>
     Search:
-    <input [(ngModel)]="user.search" placeholder="Search">
+    <input [(ngModel)]="user.jobtype" placeholder="Search">
 </div>
 <button (click)="updateUser(user)" *ngIf="user.id">Save</button>
   <button (click)="deleteUser(user)" *ngIf="user.id">Delete</button>

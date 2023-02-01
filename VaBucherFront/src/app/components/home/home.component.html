@@ -29,18 +29,50 @@
   </div>
   <div class="recent-offers" id="section_3">
     <img class="image" src="../assets/blobGauche.png">
-    <h5>Quelques offres récentes</h5>
+    <div class="offer-title">
+    <h5 [ngClass]="{'padding-bottom': currentUser}">Quelques offres récentes</h5>
+    <p *ngIf="currentUser">Les offres sont affichés en fonction des critères dans votre profil: </p>
+    </div>
     <div class="offers">
       <div *ngFor="let i of [0,1]" class="box" id="box-{{i + 1}}">
-        <h6>{{ joboffers.slice(i, i+1)[0].title }}</h6>
-        <p>{{ joboffers.slice(i, i+1)[0].description.slice(0, joboffers.slice(i, i+1)[0].description.slice(0, 350).lastIndexOf(' ')) + ' ...' }}</p>
+        <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.title as title">
+          <h6>{{ title }}</h6>
+          <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.salaire as salary">
+            <p>Rémunération: {{ salary }}</p>
+          </ng-container>
+          <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.types as types">
+            <p>Type de poste: {{ types }}</p>
+          </ng-container>
+          <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.domain as domain">
+            <button>Domaine: {{ domain }}</button>
+          </ng-container>
+          <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.description as description">
+            <p>{{ description.slice(0, description.slice(0, 350).lastIndexOf(' ')) + ' ...' }}</p>
+          </ng-container>
+        </ng-container>
       </div>
+
     </div>
     <div class="offers">
       <div *ngFor="let i of [2,3]" class="box" id="box-{{i + 1}}">
-        <h6>{{ joboffers.slice(i, i+1)[0].title }}</h6>
-        <p>{{ joboffers.slice(i, i+1)[0].description.slice(0, joboffers.slice(i, i+1)[0].description.slice(0, 350).lastIndexOf(' ')) + ' ...' }}</p>
+        <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.title as title">
+          <h6>{{ title }}</h6>
+          <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.salaire as salary">
+            <p>Rémunération: {{ salary }}</p>
+          </ng-container>
+          <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.types as types">
+            <p>Type de poste: {{ types }}</p>
+          </ng-container>
+          <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.domain as domain">
+            <button>Domaine: {{ domain }}</button>
+          </ng-container>
+          <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.description as description">
+            <p>{{ description.slice(0, description.slice(0, 350).lastIndexOf(' ')) + ' ...' }}</p>
+          </ng-container>
+        </ng-container>
       </div>
+
     </div>
   </div>
 </div>
+
