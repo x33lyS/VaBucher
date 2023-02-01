@@ -1,12 +1,42 @@
-<div *ngIf="currentUser">
-    <h1>Profile</h1>
-    <p>ID: {{currentUser.id}}</p>
-    <p>First Name: {{currentUser.firstname}}</p>
-    <p>Last Name: {{currentUser.lastname}}</p>
-    <p>Location: {{currentUser.location || 'Not specified'}}</p>
-    <p>Search: {{currentUser.search || 'Not specified'}}</p>
-    <p>Role: {{currentUser.role}}</p>
-    <p>CV: {{currentUser.cv || 'Not specified'}}</p>
-    <p>Email: {{currentUser.email}}</p>
-    <p>Phone: {{currentUser.phone || 'Not specified'}}</p>
+<div class="profile" *ngIf="currentUser">
+  <h1>Profile</h1>
+  <form>
+    <div class="info">
+      <div class="label">ID</div>
+      <div class="value">{{currentUser.id}}</div>
+    </div>
+    <div class="info">
+      <div class="label">First Name</div>
+      <input [(ngModel)]="currentUser.firstName" name="firstName" type="text">
+    </div>
+    <div class="info">
+      <div class="label">Last Name</div>
+      <input [(ngModel)]="currentUser.lastName" name="lastName" type="text">
+    </div>
+    <div class="info">
+      <div class="label">Location</div>
+      <input [(ngModel)]="currentUser.location" name="location" type="text">
+    </div>
+    <div class="info">
+      <div class="label">Search</div>
+      <input [(ngModel)]="currentUser.search" name="search" type="text">
+    </div>
+    <div class="info">
+      <div class="label">Role</div>
+      <input [(ngModel)]="currentUser.role" name="role" type="text">
+    </div>
+    <div class="info">
+      <div class="label">CV</div>
+      <input [(ngModel)]="currentUser.cv" name="cv" type="text">
+    </div>
+    <div class="info">
+      <div class="label">Email</div>
+      <input [(ngModel)]="currentUser.email" name="email" type="email">
+    </div>
+    <div class="info">
+      <div class="label">Phone</div>
+      <input [(ngModel)]="currentUser.phone" name="phone" type="tel">
+    </div>
+  </form>
+  <button (click)="updateCurrentUser()">Save</button>
 </div>

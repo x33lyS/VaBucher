@@ -79,12 +79,22 @@
       <br>
 
       <div class="input-container">
-        <label>Filter:</label>
-        <select formControlName="search" name="search">
-          <option value="Option 1">Option 1</option>
-          <option value="Option 2">Option 2</option>
-          <option value="Option 3">Option 3</option>
-        </select>
+        <label>Domaine:</label>
+          <mat-select [value]="selectedJobTypes" multiple formControlName="search" name="search">
+            <mat-option *ngFor="let search of filteredSearches" [value]="search.filter">
+              {{ search.filter }}</mat-option>
+          </mat-select>
+      </div>
+
+      <br>
+
+      <div class="input-container">
+        <label>Type de Job:</label>
+          <mat-select [value]="selectedJobTypes" multiple formControlName="jobtype" name="jobtype">
+            <mat-option *ngFor="let jobType of jobtypes" [value]="jobType.jobs">
+             {{jobType.jobs}}
+            </mat-option>
+          </mat-select>
       </div>
 
       <br>
