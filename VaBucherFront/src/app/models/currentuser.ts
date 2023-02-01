@@ -1,10 +1,11 @@
 export class CurrentUser {
   id!: number;
-  firstName!: string;
-  lastName!: string;
+  firstname!: string;
+  lastname!: string;
   password!: string;
   location: string | null | undefined;
-  search: string | null | undefined;
+  domain: string | null | undefined;
+  jobtype: string | null | undefined;
   role!: number;
   cv: string | null | undefined;
   email!: string;

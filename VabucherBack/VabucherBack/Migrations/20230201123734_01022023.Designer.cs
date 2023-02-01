@@ -11,8 +11,8 @@ using VaBucherBack.Data;
 namespace VabucherBack.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230102140459_snap")]
-    partial class snap
+    [Migration("20230201123734_01022023")]
+    partial class _01022023
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,6 +76,10 @@ namespace VabucherBack.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IsNew")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -163,11 +167,19 @@ namespace VabucherBack.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -189,10 +201,6 @@ namespace VabucherBack.Migrations
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
-
-                    b.Property<string>("Search")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

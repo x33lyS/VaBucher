@@ -27,7 +27,7 @@ export class RegistrationComponent implements OnInit {
   currentUser: CurrentUser | undefined;
   selectedJobTypes: any[]= [];
   jobtypes: JobType[] = [];
-  filteredSearches:any[] = [];
+  selectedSearches:any[] = [];
   searches: Search[] = [];
 
 
@@ -40,13 +40,14 @@ export class RegistrationComponent implements OnInit {
     private jobtypeService: JobtypeService) {
 
   this.registrationform = this._formBuilder.group({
-      firstName:['', Validators.required],
-      lastName: ['', Validators.required],
+      firstname:['', Validators.required],
+      lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
       location: '',
-      search: '',
+      domain: '',
+      jobtype: '',
       role: 1,
       cv: '',
       phone: ''
@@ -68,16 +69,18 @@ export class RegistrationComponent implements OnInit {
   onSubmit() {
     if (this.registrationform.valid) {
     const user = new User();
-    user.firstName = this.registrationform.value.firstName;
-    user.lastName = this.registrationform.value.lastName;
+    user.firstname = this.registrationform.value.firstname;
+    user.lastname = this.registrationform.value.lastname;
     user.email = this.registrationform.value.email;
     user.password = this.registrationform.value.password;
     user.location = this.registrationform.value.location;
-    user.search = this.registrationform.value.search;
+    user.domain = this.registrationform.value.domain.join(',');
+    user.jobtype = this.registrationform.value.jobtype.join(',');
     user.role = this.registrationform.value.role;
     user.cv = this.registrationform.value.cv;
     user.phone = this.registrationform.value.phone;
     console.log(user);
+
     this.userService.createUser(user).subscribe(
       () => {
         // Traitement en cas de réussite, par exemple en redirigeant l'utilisateur vers une autre page
