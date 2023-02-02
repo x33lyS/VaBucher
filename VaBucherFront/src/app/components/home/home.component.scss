@@ -12,6 +12,13 @@
   border: $bor;
   color: $col;
 }
+* {
+  overflow: hidden;
+}
+*[selectedJobOffer]{
+  width: 50%!important;
+  float: left;
+}
 
 .container {
   .first-section {
@@ -196,6 +203,21 @@
       }
     }
   }
+  .pagination {
+    display: flex;
+    justify-content: center;
+
+    span {
+      font-size: 24px;
+      margin: 0 10px;
+      cursor: pointer;
+
+      &.active {
+        color: #333;
+      }
+    }
+  }
+
 
   .recent-offers {
     background: var(--section-bg-color);
@@ -260,3 +282,17 @@
     }
   }
 }
+.reduced-width section {
+  float: left;
+  animation: example-animation 8s ease-in-out;
+  animation-fill-mode: forwards;
+  @keyframes example-animation {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 50%;
+    }
+  }
+}
+

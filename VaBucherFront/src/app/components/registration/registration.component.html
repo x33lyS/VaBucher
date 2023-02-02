@@ -7,12 +7,12 @@
           <div>
             <label>Firstname*:</label>
             <input type="text" formControlName="firstname" name="firstname" required>
-            <small *ngIf="registrationform.value.firstname.length === 0 && registrationform.get('firstname')?.touched">firstname required</small>
+            <small *ngIf="registrationform.value.firstname.length === 0 && registrationform.get('firstname')?.touched">Firstname required</small>
           </div>
           <div>
             <label>Lastname*:</label>
             <input type="text" formControlName="lastname" name="lastname" required>
-            <small *ngIf="registrationform.value.lastname.length === 0 && registrationform.get('lastname')?.touched">lastname required</small>
+            <small *ngIf="registrationform.value.lastname.length === 0 && registrationform.get('lastname')?.touched">Lastname required</small>
           </div>
         </div>
       </div>
@@ -34,10 +34,7 @@
         <label>Password*:</label>
         <input type="password" formControlName="password" name="password" required>
         <small *ngIf="registrationform.value.password.length === 0 && registrationform.get('password')?.touched">Password required</small>
-
         <!-- Affichez un message d'erreur si le mot de passe a moins de 8 caractères -->
-
-
       </div>
       <div class="validate-password">
          <span *ngIf="registrationform.value.password.length < 8; else passwordErrorlength">
