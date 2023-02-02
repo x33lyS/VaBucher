@@ -21,6 +21,7 @@ export class JobofferComponent implements OnInit {
   jobtypefilter!: string;
   filters: any = {};
   data: any[] = [];
+  selectedJoboffer: any;
 
   constructor(private jobofferService: JobofferService, private dataService: ApiDataService) { }
 

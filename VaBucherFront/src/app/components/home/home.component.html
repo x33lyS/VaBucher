@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container"  [ngClass]="{'reduced-width': selectedJobOffer}">
   <section class="first-section" id="section_1">
     <div class="start">
       <h2>Va Bucher</h2>
@@ -32,7 +32,7 @@
       <p *ngIf="criteria">Les offres sont affichés en fonction des critères dans votre profil: </p>
     </div>
     <div class="offers">
-      <div *ngFor="let i of [0,1]" class="box" id="box-{{i + 1}}">
+      <div *ngFor="let i of [(currentPage * 4 - 3)-1, (currentPage * 4 - 2)-1]" class="box" id="box-{{i%2+1}}" (click)="showDetails(joboffers.slice(i, i+1)[0])">
         <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.title as title">
           <h6>{{ title }}</h6>
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.salaire as salary">
@@ -52,7 +52,7 @@
 
     </div>
     <div class="offers">
-      <div *ngFor="let i of [2,3]" class="box" id="box-{{i + 1}}">
+      <div *ngFor="let i of [(currentPage * 4 - 1)-1, (currentPage * 4)-1]" class="box" id="box-{{i%2+3}}" (click)="showDetails(joboffers.slice(i, i+1)[0])">
         <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.title as title">
           <h6>{{ title }}</h6>
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.salaire as salary">
@@ -71,5 +71,12 @@
       </div>
 
     </div>
+    <div class="pagination">
+      <span *ngFor="let page of pages" [ngClass]="{'active': page === currentPage}" (click)="setPage(page)">&#9679;</span>
+    </div>
+
   </div>
+
 </div>
+<app-joboffer-detail *ngIf="selectedJobOffer" [selectedJoboffer]="selectedJobOffer"></app-joboffer-detail>
+

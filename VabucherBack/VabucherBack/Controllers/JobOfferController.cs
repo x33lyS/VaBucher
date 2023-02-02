@@ -190,6 +190,18 @@ namespace VabucherBack.Controllers
                                 {
                                     _context.JobOffers.Add(offer);
                                     await _context.SaveChangesAsync();
+                                }else if (_context.JobOffers.Any(j => j.Title == offer.Title))
+                                {
+                                    var dbOffer = _context.JobOffers.FirstOrDefault(j => j.Title == offer.Title);
+                                    dbOffer.Title = offer.Title;
+                                    dbOffer.Localisation = offer.Localisation;
+                                    dbOffer.Description = offer.Description;
+                                    dbOffer.IsNew = offer.IsNew;
+                                    dbOffer.Types = offer.Types;
+                                    dbOffer.CompanyInfo = offer.CompanyInfo;
+                                    dbOffer.Domain = offer.Domain;
+                                    dbOffer.Salaire = offer.Salaire;
+                                    await _context.SaveChangesAsync();
                                 }
                                 i++;
                                 working = true;

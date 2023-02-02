@@ -15,6 +15,10 @@ export class HomeComponent implements OnInit {
   allDomains: string[] = [];
   allTypes: string[] = [];
   criteria: boolean = false;
+  selectedJobOffer!: JobOffer;
+  currentPage = 1;
+  pages = [1];
+
 
   constructor(private jobofferService: JobofferService) { }
 
@@ -22,7 +26,23 @@ export class HomeComponent implements OnInit {
     this.getOffers();
   }
 
-  getOffers(): void {
+
+  showDetails(joboffer: JobOffer) {
+    this.selectedJobOffer = joboffer;
+  }
+  setPage(page: number) {
+    this.currentPage = page;
+    // Mettre à jour les offres à afficher en fonction de la page actuelle
+  }
+
+  setNumberPage() {
+    this.pages = [];
+    for (let i = 1; i <= Math.min(this.joboffers.length / 4, 3); i++) {
+      this.pages.push(i);
+    }
+  }
+
+  getOffers() {
     const currentUserString = localStorage.getItem('currentUser');
     if (currentUserString) {
       this.currentUser = JSON.parse(currentUserString);
@@ -36,13 +56,19 @@ export class HomeComponent implements OnInit {
           if (currentUserJobType && currentUserDomains) {
             const isDomainMatch = currentUserDomains.some(domain => this.allDomains.includes(domain));
             const isJobTypeMatch = this.allTypes.some(type => type.includes(currentUserJobType));
-            console.log(isDomainMatch + " " + isJobTypeMatch);
-
             if (isDomainMatch && isJobTypeMatch) {
               this.joboffers = result.filter(offer => currentUserDomains.includes(offer.domain) && offer.types.includes(currentUserJobType));
               this.criteria = true;
+              if (this.joboffers.length < 4) {
+                this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
+                  let jobOfferArray = this.joboffers.concat(result);
+                  this.joboffers = jobOfferArray.filter((value, index, self) => self.findIndex((t) => { return t.id === value.id }) === index);
+
+                });
+              }
               if (this.joboffers.length === 0) {
                 this.joboffers = result;
+
               }
             }
           }
@@ -51,25 +77,41 @@ export class HomeComponent implements OnInit {
           this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
             this.joboffers = result.filter(joboffer => joboffer.types.includes(currentUserJobType));
             this.criteria = true;
+            if (this.joboffers.length < 4) {
+              this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
+                let jobOfferArray = this.joboffers.concat(result);
+                this.joboffers = jobOfferArray.filter((value, index, self) => self.findIndex((t) => { return t.id === value.id }) === index);
+              });
+            }
+
           });
         } else if (this.currentUser.domain) {
           const currentUserDomains = this.currentUser.domain.split(',');
           this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
             this.joboffers = result.filter(joboffer => currentUserDomains.includes(joboffer.domain));
             this.criteria = true;
+            if (this.joboffers.length < 4) {
+              this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
+                let jobOfferArray = this.joboffers.concat(result);
+                this.joboffers = jobOfferArray.filter((value, index, self) => self.findIndex((t) => { return t.id === value.id }) === index);
+              });
+            }
           });
         } else {
           this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
             this.joboffers = result;
           });
-
         }
+        this.setNumberPage();
       });
     } else {
       this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
         this.joboffers = result;
+        this.setNumberPage();
       });
     }
+    return this.joboffers
   }
 }
+
 
