@@ -3,10 +3,9 @@
     <div class="start">
       <h2>Va Bucher</h2>
       <h3>Découvres de nouvelles opportunités</h3>
-      <!-- <button href="">Start</button> -->
       <div class="button-start">
         <span class="mas">Start</span>
-        <button type="button" name="Hover">Start</button>
+        <button type="button" name="Hover" routerLink="/dahboard">Start</button>
       </div>
     </div>
     <img class="image" src="../assets/home.png">
@@ -18,10 +17,9 @@
   <div class="about" id="section_2">
     <div class="text">
       <h5>A PROPOS DE VABUCHER</h5>
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
-        a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
-        remaining essentially unchanged.</p>
+      <p>Va Bûcher est une plateforme de recherche d'alternance ou de stage exclusivement pour les étudiants, le but
+        étant de faciliter la recherche aux étudiants qui ont du mal à trouver une entreprise qui leur permettra de
+        continuer leurs études.</p>
     </div>
     <div class="image">
       <img src="../assets/an_worker_in_orange_background_with_floating_object_digital_art.png">
@@ -30,18 +28,18 @@
   <div class="recent-offers" id="section_3">
     <img class="image" src="../assets/blobGauche.png">
     <div class="offer-title">
-    <h5 [ngClass]="{'padding-bottom': currentUser}">Quelques offres récentes</h5>
-    <p *ngIf="currentUser">Les offres sont affichés en fonction des critères dans votre profil: </p>
+      <h5 [ngClass]="{'padding-bottom': currentUser}">Quelques offres récentes</h5>
+      <p *ngIf="criteria">Les offres sont affichés en fonction des critères dans votre profil: </p>
     </div>
     <div class="offers">
       <div *ngFor="let i of [0,1]" class="box" id="box-{{i + 1}}">
         <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.title as title">
           <h6>{{ title }}</h6>
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.salaire as salary">
-            <p>Rémunération: {{ salary }}</p>
+            <button>Rémunération: {{ salary }}</button>
           </ng-container>
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.types as types">
-            <p>Type de poste: {{ types }}</p>
+            <button>Type de poste: {{ types }}</button>
           </ng-container>
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.domain as domain">
             <button>Domaine: {{ domain }}</button>
@@ -58,10 +56,10 @@
         <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.title as title">
           <h6>{{ title }}</h6>
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.salaire as salary">
-            <p>Rémunération: {{ salary }}</p>
+            <button>Rémunération: {{ salary }}</button>
           </ng-container>
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.types as types">
-            <p>Type de poste: {{ types }}</p>
+            <button>Type de poste: {{ types }}</button>
           </ng-container>
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.domain as domain">
             <button>Domaine: {{ domain }}</button>
@@ -75,4 +73,3 @@
     </div>
   </div>
 </div>
-

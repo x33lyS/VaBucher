@@ -14,10 +14,15 @@ export class HomeComponent implements OnInit {
   currentUser!: CurrentUser;
   allDomains: string[] = [];
   allTypes: string[] = [];
+  criteria: boolean = false;
 
   constructor(private jobofferService: JobofferService) { }
 
   ngOnInit(): void {
+    this.getOffers();
+  }
+
+  getOffers(): void {
     const currentUserString = localStorage.getItem('currentUser');
     if (currentUserString) {
       this.currentUser = JSON.parse(currentUserString);
@@ -31,8 +36,11 @@ export class HomeComponent implements OnInit {
           if (currentUserJobType && currentUserDomains) {
             const isDomainMatch = currentUserDomains.some(domain => this.allDomains.includes(domain));
             const isJobTypeMatch = this.allTypes.some(type => type.includes(currentUserJobType));
+            console.log(isDomainMatch + " " + isJobTypeMatch);
+
             if (isDomainMatch && isJobTypeMatch) {
               this.joboffers = result.filter(offer => currentUserDomains.includes(offer.domain) && offer.types.includes(currentUserJobType));
+              this.criteria = true;
               if (this.joboffers.length === 0) {
                 this.joboffers = result;
               }
@@ -42,11 +50,13 @@ export class HomeComponent implements OnInit {
           const currentUserJobType = this.currentUser.jobtype;
           this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
             this.joboffers = result.filter(joboffer => joboffer.types.includes(currentUserJobType));
+            this.criteria = true;
           });
         } else if (this.currentUser.domain) {
           const currentUserDomains = this.currentUser.domain.split(',');
           this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
             this.joboffers = result.filter(joboffer => currentUserDomains.includes(joboffer.domain));
+            this.criteria = true;
           });
         } else {
           this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
@@ -62,3 +72,4 @@ export class HomeComponent implements OnInit {
     }
   }
 }
+

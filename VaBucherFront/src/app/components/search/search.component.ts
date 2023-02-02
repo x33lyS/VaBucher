@@ -52,6 +52,8 @@ export class SearchComponent {
     const apiUrl =  `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=${this.domainFilter}&commune=${this.locationFilter}&origineOffre=0`;
     const joboffer = new JobOffer();
       joboffer.domain = this.domainFilter.charAt(0).toUpperCase() + this.domainFilter.slice(1);
+      joboffer.localisation = this.locationFilter.charAt(0).toUpperCase() + this.locationFilter.slice(1);
+      joboffer.types = this.jobtypefilter;
     this.jobofferService.createJobOffer(joboffer).subscribe((result: JobOffer[]) => this.jobOffersUpdated.emit(result));
     this.filterJobOffers();
     const headers = new HttpHeaders({

@@ -53,7 +53,7 @@ namespace VabucherBack.Controllers
                     try
                     {
                         //Navigate to DotNet website
-                        driver.Navigate().GoToUrl("https://www.monster.fr/emploi/recherche?q="+ jobOffer.Domain + " etudiant");
+                        driver.Navigate().GoToUrl("https://www.monster.fr/emploi/recherche?q="+ jobOffer.Domain + " " + jobOffer.Localisation + " " + jobOffer.Types + " etudiant");
                         //Click the Get Started button
                         await Task.Delay(1000);
                         var submitButton = driver.FindElement(By.Id("onetrust-accept-btn-handler"));
