@@ -22,6 +22,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { FilterPipe } from './filter.pipe';
 import { MatSelectModule } from '@angular/material/select';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 
@@ -36,7 +37,8 @@ import { MatSelectModule } from '@angular/material/select';
     RegistrationComponent,
     DashboardComponent,
     SearchComponent,
-    FilterPipe
+    FilterPipe,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
