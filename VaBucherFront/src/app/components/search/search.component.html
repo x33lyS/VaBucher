@@ -1,32 +1,31 @@
-<!-- <div style="padding: 5%;">
-<form>
-  <input [(ngModel)]="searchInput" (input)="filterSearches()" placeholder="Filter by domain">
-  <select *ngIf="searchInput" [(ngModel)]="domainFilter" [compareWith]="compareFn" placeholder="Filter by domain">
-    <option *ngFor="let search of filteredSearches" [value]="search.filter">{{ search.filter }}</option>
-</select>
-  <input type="text" [(ngModel)]="locationFilter" placeholder="Filter by location">
-  <input type="text" [(ngModel)]="salaryFilter" placeholder="Filter by salary">
-  <button (click)="onSubmit()">Valider</button>
-</form>
-</div> -->
-
-
 <div style="padding-top: 5%;">
-  <mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Filter by domain</mat-label>
-    <input matInput [(ngModel)]="searchInput" (input)="filterSearches()">
-    <mat-select [(ngModel)]="domainFilter" [compareWith]="compareFn">
-      <mat-option *ngFor="let search of searches" [value]="search.filter">{{ search.filter }}</mat-option>
-    </mat-select>
+    <input type="text"
+           aria-label="Domain"
+           matInput
+           (input)="filterOptions()"
+           (click)="filterOptions()"
+           [(ngModel)]="domainFilter"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let search of filteredSearches" [value]="search.filter" (click)="filterOptions()">{{ search.filter }}</mat-option>
+    </mat-autocomplete>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Filter by location</mat-label>
-    <input matInput [(ngModel)]="locationFilter">
+    <input matInput [(ngModel)]="locationFilter" (input)="filterJobOffers()">
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Filter by salary</mat-label>
-    <input matInput [(ngModel)]="salaryFilter">
+    <mat-label>Filter by Job Types</mat-label>
+    <mat-select [value]="selectedJobTypes" multiple (selectionChange)="updateSelectedJobTypes($event.value)">
+      <mat-option *ngFor="let jobType of jobtypes" [value]="jobType.jobs">
+       {{jobType.jobs}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
+
+
   <button mat-raised-button (click)="onSubmit()">Valider</button>
 
 

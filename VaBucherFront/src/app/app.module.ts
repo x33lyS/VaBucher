@@ -23,6 +23,11 @@ import { MatButtonModule } from "@angular/material/button";
 import { FilterPipe } from './filter.pipe';
 import { MatSelectModule } from '@angular/material/select';
 import { FooterComponent } from './components/footer/footer.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { LoginComponent } from './components/login/login.component';
+import { ProfilComponent } from './components/profil/profil.component';
+import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-detail.component';
 
 
 
@@ -34,22 +39,27 @@ import { FooterComponent } from './components/footer/footer.component';
     HomeComponent,
     LoaderComponent,
     NavbarComponent,
+    LoginComponent,
     RegistrationComponent,
     DashboardComponent,
     SearchComponent,
     FilterPipe,
     FooterComponent
+    ProfilComponent,
+    JobofferDetailComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     MatIconModule,
     FormsModule,
+    MatCheckboxModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     AppRoutingModule,
+    MatAutocompleteModule,
     RouterModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),

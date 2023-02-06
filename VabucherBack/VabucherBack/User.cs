@@ -14,7 +14,8 @@ namespace VaBucherBack
         public string Location { get; set; } = string.Empty;
         public string CV { get; set; } = string.Empty;
         public int Role { get; set; }
-        public string Search { get; set; } = string.Empty;
+        public string JobType { get; set; } = string.Empty;
+        public string Domain { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
 

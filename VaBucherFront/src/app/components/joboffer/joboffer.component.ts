@@ -18,9 +18,10 @@ export class JobofferComponent implements OnInit {
   joboffers: JobOffer[] = [];
   domainFilter!: string;
   locationFilter!: string;
-  salaryFilter!: string;
+  jobtypefilter!: string;
   filters: any = {};
   data: any[] = [];
+  selectedJoboffer: any;
 
   constructor(private jobofferService: JobofferService, private dataService: ApiDataService) { }
 
@@ -30,14 +31,13 @@ export class JobofferComponent implements OnInit {
       .subscribe((result: JobOffer[]) => (this.joboffers = result)));
     this.dataService.currentData.subscribe(data => {
       this.data = data;
-      console.log(data, '1')
     });
   }
 
-  updateFilters(filters: {domain: string, location: string, salary: string}): void {
+  updateFilters(filters: {domain: string, location: string, jobtype: string}): void {
     this.domainFilter = filters.domain;
     this.locationFilter = filters.location;
-    this.salaryFilter = filters.salary;
+    this.jobtypefilter = filters.jobtype;
   }
 
 }

@@ -4,7 +4,7 @@
 
 namespace VabucherBack.Migrations
 {
-    public partial class IsNew : Migration
+    public partial class _01022023 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -106,7 +106,8 @@ namespace VabucherBack.Migrations
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CV = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
-                    Search = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JobType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Domain = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },

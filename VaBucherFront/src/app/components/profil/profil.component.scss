@@ -1,0 +1,26 @@
+.profile {
+  h1 {
+    font-size: 32px;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  p {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+
+  .info {
+    display: flex;
+    margin-top: 20px;
+
+    .label {
+      font-weight: bold;
+      width: 150px;
+    }
+
+    .value {
+      width: 100px;
+    }
+  }
+}

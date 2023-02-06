@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { User } from '../models/user';
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 import {catchError, of, throwError} from "rxjs";
+import { CurrentUser } from '../models/currentuser';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,6 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-
   public getUser() : Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/${this.url}`);
   }
@@ -24,12 +24,6 @@ export class UserService {
       user
     );
   }
-  // public createUser(user: User): Observable<User[]> {
-  //   return this.http.post<User[]>(
-  //     `${environment.apiUrl}/${this.url}`,
-  //     user
-  //   );
-  // }
   public createUser(user: User): Observable<User[] | HttpErrorResponse> {
     return this.http.post<User[]>(
       `${this.apiUrl}/${this.url}`,
