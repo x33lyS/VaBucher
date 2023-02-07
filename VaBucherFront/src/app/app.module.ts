@@ -44,7 +44,7 @@ import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-d
     DashboardComponent,
     SearchComponent,
     FilterPipe,
-    FooterComponent
+    FooterComponent,
     ProfilComponent,
     JobofferDetailComponent
   ],
