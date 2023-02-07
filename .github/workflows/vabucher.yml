@@ -26,6 +26,10 @@ jobs:
         cd ./VaBucherFront
         npm install
         ng build
+    - name: Run Angular tests
+      run: |
+        cd ./VaBucherFront
+        ng test
      
   release:
     needs: [build-dotnet, build-angular]
