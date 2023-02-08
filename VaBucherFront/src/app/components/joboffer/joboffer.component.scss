@@ -23,3 +23,95 @@ table {
       background: #ffc107;
     }
   }
+  .pagination {
+    display: flex;
+    justify-content: center;
+
+    span {
+      font-size: 24px;
+      margin: 0 10px;
+      cursor: pointer;
+
+      &.active {
+        color: #333;
+      }
+    }
+  }
+
+
+  .recent-offers {
+    background: var(--section-bg-color);
+    min-height: 85vh;
+
+    .image {
+      position: absolute;
+      left: 0;
+      height: 60%;
+    }
+    .offer-title {
+      h5 {
+        text-transform: uppercase;
+        text-align: center;
+        padding: 30px 0;
+      }
+      h5.padding-bottom {
+        padding-bottom: 10px;
+      }
+      p {
+        text-align: center;
+        padding: 0  0 30px;
+      }
+    }
+
+
+    .offers {
+      margin: 0 auto;
+      width: 70vw;
+      display: flex;
+
+      .box {
+        margin: 10px;
+        border-radius: 12px;
+
+        h6,
+        p {
+          color: #fff;
+          padding: 25px 15px 10px 20px;
+        }
+
+        p {
+          padding: 0 15px 15px 15px;
+        }
+        button {
+          border: 1px solid white;
+          color: white;
+          background: var(--primary-color);
+          border-radius: 10px;
+          padding: 5px 10px;
+          margin: 5px 0 10px 15px;
+        }
+
+        background: var(--primary-color);
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+      }
+    }
+
+    #box-2,
+    #box-3 {
+      flex: 0 0 40%;
+    }
+  }
+.reduced-width section {
+  float: left;
+  animation: example-animation 8s ease-in-out;
+  animation-fill-mode: forwards;
+  @keyframes example-animation {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 50%;
+    }
+  }
+}

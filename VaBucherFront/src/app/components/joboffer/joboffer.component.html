@@ -1,30 +1,40 @@
 <app-search (filtersChanged)="updateFilters($event)"></app-search>
-<table>
-  <thead>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Salaire</th>
-    <th>Localisation</th>
-    <th>Types</th>
-    <th>CompanyInfo</th>
-    <th>Domain</th>
-    <th>Date</th>
-    <th></th>
-  </thead>
-  <tbody>
+<div class="recent-offers" id="section_3">
+  <img class="image" src="../assets/blobGauche.png">
+  <div class="offer-title">
+    <h5 [ngClass]="{'padding-bottom': currentUser}">Quelques offres récentes</h5>
+  </div>
+  <div class="offers">
+    <ng-container *ngFor="let joboffer of joboffers.slice().reverse() | filter:domainFilter:locationFilter:jobtypefilter">
+      <ng-container>
+        <div class="box" id="box-{{(joboffers.indexOf(joboffer) % 2) + 1}}">
+          <h6>{{ joboffer.id}} {{ joboffer.title }}</h6>
+          <button>Rémunération: {{ joboffer.salaire }}</button>
+          <button>Type de poste: {{ joboffer.types }}</button>
+          <button>Domaine: {{ joboffer.domain }}</button>
+          <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }}</p>
+        </div>
+      </ng-container>
+    </ng-container>
 
-    <tr *ngFor="let joboffer of joboffers.slice().reverse() | filter:domainFilter:locationFilter:jobtypefilter">
-      <td>{{ joboffer.title }}</td>
-      <td>{{ joboffer.description.slice(0, joboffer.description.slice(0, 500).lastIndexOf(' ')) + ' ...' }}</td>
-      <td>{{ joboffer.salaire }}</td>
-      <td>{{ joboffer.localisation }}</td>
-      <td>{{ joboffer.types }}</td>
-      <td>{{ joboffer.companyInfo }}</td>
-      <td>{{ joboffer.domain }}</td>
-      <td>{{ joboffer.isNew }}</td>
-    </tr>
-  </tbody>
-</table>
+  </div>
+  <div class="offers">
+
+    <ng-container *ngFor="let joboffer of joboffers.slice().reverse() | filter:domainFilter:locationFilter:jobtypefilter">
+      <ng-container>
+        <div class="box" id="box-{{(joboffers.indexOf(joboffer) % 2) + 3}}">
+          <h6>{{ joboffer.id}} {{ joboffer.title }}</h6>
+          <button>Rémunération: {{ joboffer.salaire }}</button>
+          <button>Type de poste: {{ joboffer.types }}</button>
+          <button>Domaine: {{ joboffer.domain }}</button>
+          <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }}</p>
+        </div>
+      </ng-container>
+    </ng-container>
+
+  </div>
+
+</div>
 <!--<div *ngFor="let data of data">-->
 <!--  {{ data.intitule }}-->
 <!--</div>-->
