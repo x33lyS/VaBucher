@@ -5,7 +5,7 @@
     <h5 [ngClass]="{'padding-bottom': currentUser}">Quelques offres récentes</h5>
   </div>
   <div class="offers">
-    <ng-container *ngFor="let joboffer of joboffers.slice().reverse() | filter:domainFilter:locationFilter:jobtypefilter">
+    <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
       <ng-container>
         <div class="box" id="box-{{(joboffers.indexOf(joboffer) % 2) + 1}}">
           <h6>{{ joboffer.id}} {{ joboffer.title }}</h6>
@@ -20,7 +20,7 @@
   </div>
   <div class="offers">
 
-    <ng-container *ngFor="let joboffer of joboffers.slice().reverse() | filter:domainFilter:locationFilter:jobtypefilter">
+    <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
       <ng-container>
         <div class="box" id="box-{{(joboffers.indexOf(joboffer) % 2) + 3}}">
           <h6>{{ joboffer.id}} {{ joboffer.title }}</h6>

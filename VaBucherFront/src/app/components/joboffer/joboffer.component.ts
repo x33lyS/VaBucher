@@ -27,6 +27,9 @@ export class JobofferComponent implements OnInit {
   allDomains: string[] = [];
   allTypes: string[] = [];
   selectedJobOffer!: JobOffer;
+  page = 1;
+pageSize = 4;
+  
 
   constructor(private jobofferService: JobofferService, private dataService: ApiDataService) { }
 
@@ -44,6 +47,13 @@ export class JobofferComponent implements OnInit {
       this.joboffers = result      
     });
 
+  }
+  get joboffersToDisplay(): JobOffer[] {
+    return this.joboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+  }
+  
+  changePage(newPage: number) {
+    this.page = newPage;
   }
   showDetails(joboffer: JobOffer) {
     this.selectedJobOffer = joboffer;
