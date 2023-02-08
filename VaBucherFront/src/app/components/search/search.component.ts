@@ -8,6 +8,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ApiDataService} from "../../services/api-data.service";
 import { SearchService } from 'src/app/services/search.service';
 import { JobtypeService } from 'src/app/services/jobtype.service';
+import { CurrentUser } from 'src/app/models/currentuser';
 
 
 
@@ -24,7 +25,8 @@ export class SearchComponent {
   searches: Search[] = [];
   selectedJobTypes: any[]= [];
   filteredSearches:any[] = [];
-
+  currentUser!: CurrentUser;
+  currentUserData: string | null | undefined
   jobtypes: JobType[] = [];
 
 
@@ -40,12 +42,18 @@ export class SearchComponent {
 
 
   ngOnInit(): void {
+    interval(100).subscribe(() => {
+      this.currentUserData = localStorage.getItem('currentUser');
+      if (this.currentUserData) {
+        this.currentUser = JSON.parse(this.currentUserData);
+      }
+    });
     interval(5000).subscribe(() => this.searchService
     .getSearch()
     .subscribe((result: Search[]) => (this.searches = result)));
    this.jobtypeService
     .getJobType()
-    .subscribe((result: JobType[]) => (this.jobtypes = result));
+    .subscribe((result: JobType[]) => (this.jobtypes = result)); 
   }
 
   onSubmit() {
