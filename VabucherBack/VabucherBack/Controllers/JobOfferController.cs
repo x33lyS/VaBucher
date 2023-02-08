@@ -232,7 +232,7 @@ namespace VabucherBack.Controllers
     {
         var dbJobOffer = await _context.JobOffers.FindAsync(id);
         if (dbJobOffer == null)
-            return BadRequest("User not found.");
+            return BadRequest("Job Offer not found.");
 
         _context.JobOffers.Remove(dbJobOffer);
         await _context.SaveChangesAsync();
