@@ -33,6 +33,11 @@
     </ng-container>
 
   </div>
+  <div class="pagination">
+    <button class="left-button" (click)="changePage(page - 1)">&lt;</button>
+    <span class="page-number">{{ page }}</span>
+    <button class="right-button" (click)="changePage(page + 1)">&gt;</button>
+  </div>
 
 </div>
 <!--<div *ngFor="let data of data">-->

@@ -28,7 +28,7 @@ export class JobofferComponent implements OnInit {
   allTypes: string[] = [];
   selectedJobOffer!: JobOffer;
   page = 1;
-pageSize = 4;
+pageSize = 3;
   
 
   constructor(private jobofferService: JobofferService, private dataService: ApiDataService) { }
