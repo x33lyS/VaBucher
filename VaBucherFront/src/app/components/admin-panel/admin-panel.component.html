@@ -1,26 +1,102 @@
-<table>
-  <thead>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Salaire</th>
-    <th>Localisation</th>
-    <th>Types</th>
-    <th>CompanyInfo</th>
-    <th>Domain</th>
-    <th>Date</th>
-    <th></th>
-  </thead>
-  <tbody>
+<div class="container">
+  <div class="filter">
+    <h1>filter</h1>
+  </div>
+  <div class="offers">
+    <h1>offers</h1>
+    <table>
+      <thead>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Salaire</th>
+        <th>Localisation</th>
+        <th>Types</th>
+        <th>CompanyInfo</th>
+        <th>Domain</th>
+        <th>Date</th>
+        <th></th>
+      </thead>
+      <tbody>
 
-    <tr *ngFor="let joboffer of joboffers.slice().reverse()">
-      <td>{{ joboffer.title }}</td>
-      <td>{{ joboffer.description.slice(0, joboffer.description.slice(0, 500).lastIndexOf(' ')) + ' ...' }}</td>
-      <td>{{ joboffer.salaire }}</td>
-      <td>{{ joboffer.localisation }}</td>
-      <td>{{ joboffer.types }}</td>
-      <td>{{ joboffer.companyInfo }}</td>
-      <td>{{ joboffer.domain }}</td>
-      <td>{{ joboffer.isNew }}</td>
-    </tr>
-  </tbody>
-</table>
+        <tr *ngFor="let joboffer of joboffers.slice().reverse()">
+          <td>{{ joboffer.title }}</td>
+          <td>{{ joboffer.description.slice(0, joboffer.description.slice(0, 500).lastIndexOf(' ')) + ' ...' }}</td>
+          <td>{{ joboffer.salaire }}</td>
+          <td>{{ joboffer.localisation }}</td>
+          <td>{{ joboffer.types }}</td>
+          <td>{{ joboffer.companyInfo }}</td>
+          <td>{{ joboffer.domain }}</td>
+          <td>{{ joboffer.isNew }}</td>
+          <td><button (click)="deleteOffer(joboffer)"><mat-icon>delete_forever</mat-icon></button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="content">
+    <div class="users">
+      <h1>users</h1>
+      <table>
+        <thead>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>email</th>
+        <th>Localisation</th>
+        <th>Domain</th>
+        <th>Job Type</th>
+        <th>Role</th>
+        <th>CV</th>
+        <th>Phone</th>
+        </thead>
+        <tr *ngFor="let user of users">
+          <td>{{user.firstname}}</td>
+          <td>{{user.lastname}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.location}}</td>
+          <td>{{user.domain}}</td>
+          <td>{{user.jobtype}}</td>
+          <td>{{user.role}}</td>
+          <td>{{user.cv}}</td>
+          <td>{{user.phone}}</td>
+          <td><button (click)="deleteUser(user)"><mat-icon>delete_forever</mat-icon></button></td>
+        </tr>
+      </table>
+    </div>
+    <div class="search">
+      <h1>search</h1>
+      <table>
+        <thead>
+        <th>Filter</th>
+        </thead>
+        <tr *ngFor="let search of search">
+          <td>
+            {{search.filter}}
+          </td>
+          <td><button (click)="deleteSearch(search)"><mat-icon>delete_forever</mat-icon></button></td>
+        </tr>
+      </table>
+    </div>
+    <div class="jobTypes">
+      <h1>jobtypes</h1>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
