@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import {AdminPanelComponent, DialogContentExampleDialog} from './components/admin-panel/admin-panel.component';
 import { FormsModule } from '@angular/forms';
 import { JobofferComponent } from './components/joboffer/joboffer.component';
 import { HomeComponent } from './components/home/home.component';
@@ -28,7 +28,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { LoginComponent } from './components/login/login.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-detail.component';
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -46,7 +46,8 @@ import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-d
     FilterPipe,
     FooterComponent,
     ProfilComponent,
-    JobofferDetailComponent
+    JobofferDetailComponent,
+    DialogContentExampleDialog,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +64,7 @@ import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-d
     RouterModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

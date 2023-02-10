@@ -1,0 +1,28 @@
+.container{
+  border: 1px solid;
+  padding: 10%;
+  .filter{
+    width: 100%;
+    background: red;
+  }
+  .offers{
+    width: 100%;
+    background: blue;
+  }
+  .content{
+    display: flex;
+    flex-direction: row;
+    .users{
+      flex: 1;
+      background: green;
+    }
+    .search{
+      flex: 1;
+      background: yellow;
+    }
+    .jobTypes{
+      flex: 1;
+      background: orange;
+    }
+  }
+}

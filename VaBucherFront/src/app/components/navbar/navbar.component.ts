@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener, Host } from '@angular/core';
 import { interval } from 'rxjs';
+import { CurrentUser } from 'src/app/models/currentuser';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
@@ -10,12 +11,13 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  currentUser = localStorage.getItem('currentUser');
+  currentUser!: CurrentUser;
+  currentUserData: string | null | undefined;
 
   constructor(private authentificationService: AuthenticationService) { }
 
   @HostListener('window:scroll', ['$event'])
-  onWindowScroll(){
+  onWindowScroll() {
     let element = document.querySelector('.navbar') as HTMLElement;
     if (window.pageYOffset > element.clientHeight) {
       element.classList.add('navbar-inverse');
@@ -25,15 +27,20 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    interval(100).subscribe(() => this.currentUser = localStorage.getItem('currentUser'));
+    interval(100).subscribe(() => {
+      this.currentUserData = localStorage.getItem('currentUser');
+      if (this.currentUserData) {
+        this.currentUser = JSON.parse(this.currentUserData);
+      }
+    });    
   }
 
   disconnect() {
     localStorage.removeItem('currentUser');
-  this.authentificationService.logout();
-  // setTimeout(() => {
-  //   this.currentUser = localStorage.getItem('currentUser');
-  // });
+    this.authentificationService.logout();
+    // setTimeout(() => {
+    //   this.currentUser = localStorage.getItem('currentUser');
+    // });
   }
 
 }

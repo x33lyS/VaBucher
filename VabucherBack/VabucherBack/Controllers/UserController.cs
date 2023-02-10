@@ -52,8 +52,8 @@ namespace VaBucherBack.Controllers
             if (dbUser == null)
                 return BadRequest("User not found.");
 
-            dbUser.FirstName = user.FirstName;
-            dbUser.LastName = user.LastName;
+            dbUser.Firstname = user.Firstname;
+            dbUser.Lastname = user.Lastname;
             dbUser.Location = user.Location;
             dbUser.Password = user.Password;
             dbUser.JobType = user.JobType;

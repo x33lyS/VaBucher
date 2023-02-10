@@ -5,6 +5,7 @@ import { interval } from 'rxjs';
 import { JobofferService } from 'src/app/services/joboffer.service';
 import { FilterPipe } from 'src/app/filter.pipe';
 import {ApiDataService} from "../../services/api-data.service";
+import { CurrentUser } from 'src/app/models/currentuser';
 
 
 
@@ -22,16 +23,40 @@ export class JobofferComponent implements OnInit {
   filters: any = {};
   data: any[] = [];
   selectedJoboffer: any;
+  currentUser!: CurrentUser;
+  allDomains: string[] = [];
+  allTypes: string[] = [];
+  selectedJobOffer!: JobOffer;
+  page = 1;
+pageSize = 3;
+  
 
   constructor(private jobofferService: JobofferService, private dataService: ApiDataService) { }
 
   ngOnInit(): void {
-    interval(5000).subscribe(() => this.jobofferService
-      .getJobOffer()
-      .subscribe((result: JobOffer[]) => (this.joboffers = result)));
+    // interval(5000).subscribe(() => this.jobofferService
+    //   .getJobOffer()
+    //   .subscribe((result: JobOffer[]) => (this.joboffers = result)));
     this.dataService.currentData.subscribe(data => {
       this.data = data;
     });
+    this.getOffers();
+  }
+  getOffers() {
+    this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
+      this.joboffers = result      
+    });
+
+  }
+  get joboffersToDisplay(): JobOffer[] {
+    return this.joboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+  }
+  
+  changePage(newPage: number) {
+    this.page = newPage;
+  }
+  showDetails(joboffer: JobOffer) {
+    this.selectedJobOffer = joboffer;
   }
 
   updateFilters(filters: {domain: string, location: string, jobtype: string}): void {
