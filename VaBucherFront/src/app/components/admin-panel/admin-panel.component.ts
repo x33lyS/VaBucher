@@ -1,13 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import { interval } from 'rxjs';
 import { JobOffer } from 'src/app/models/joboffer';
 import { User } from 'src/app/models/user';
 import { ApiDataService } from 'src/app/services/api-data.service';
 import { JobofferService } from 'src/app/services/joboffer.service';
 import { UserService } from 'src/app/services/user.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {SearchService} from "../../services/search.service";
 import {Search} from "../../models/search";
+import {JobtypeService} from "../../services/jobtype.service";
+import {JobType} from "../../models/jobtype";
 
 @Component({
   selector: 'app-admin-panel',
@@ -19,6 +21,7 @@ export class AdminPanelComponent implements OnInit {
   joboffers: JobOffer[] = [];
   users: User[] = [];
   search: Search[] = [];
+  jobType: JobType[] = [];
   data: any[] = [];
 
     @Input() user?: User;
@@ -27,7 +30,8 @@ export class AdminPanelComponent implements OnInit {
   constructor(private userService:UserService,private jobofferService: JobofferService,
               private dataService: ApiDataService,
               public dialog: MatDialog,
-              private searchService: SearchService
+              private searchService: SearchService,
+              private jobtypeService: JobtypeService
               ) {}
 
   ngOnInit(): void {
@@ -43,6 +47,9 @@ export class AdminPanelComponent implements OnInit {
     interval(2000).subscribe(() => this.searchService
       .getSearch()
       .subscribe((result: Search[]) => (this.search = result)));
+    interval(2000).subscribe(() => this.jobtypeService
+      .getJobType()
+      .subscribe((result: any[]) => (this.jobType = result)));
   }
 
   updateUser(user: User) {
@@ -92,6 +99,18 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
+  addSearch() {
+    const dialogRef = this.dialog.open(DialogAdd, {
+      width: '400px',
+      height: '400px',
+      data: { filter: '' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+  }
+
   deleteSearch(search: Search) {
     const dialogRef = this.dialog.open(DialogContentExampleDialog, {
       width: '250px',
@@ -102,6 +121,20 @@ export class AdminPanelComponent implements OnInit {
         this.searchService
           .deleteSearch(search)
           .subscribe((search: Search[]) => this.search = search);
+      }
+    });
+  }
+
+  deleteJobType(jobType: JobType) {
+    const dialogRef = this.dialog.open(DialogContentExampleDialog, {
+      width: '250px',
+      data: { message: 'Etes-vous sûr de vouloir supprimer cette offre d\'emploi ?' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.jobtypeService
+          .deleteJobType(jobType)
+          .subscribe((jobType: JobType[]) => this.jobType = jobType);
       }
     });
   }
@@ -119,4 +152,47 @@ export class AdminPanelComponent implements OnInit {
 })
 export class DialogContentExampleDialog {
 
+}
+
+
+@Component({
+  selector: 'dialog-add',
+  template:
+    '<h1 mat-dialog-title>Ajouter un filtre</h1>' +
+    '<mat-form-field appearance="fill">\n' +
+    '    <mat-label>Filter</mat-label>\n' +
+    '    <input matInput [(ngModel)]="filter">\n' +
+    ' </mat-form-field>' +
+    '<mat-dialog-actions align="center">' +
+    '  <button mat-button mat-dialog-close>Annuler</button>' +
+    '  <button mat-button (click)="addSearch()" [mat-dialog-close]="filter" cdkFocusInitial>Ajouter</button>' +
+    '</mat-dialog-actions>',
+  styles: ['mat-form-field { width: 100%; }' +
+  'mat-dialog-content { display: flex; flex-direction: column; }' +
+  'button { margin: 10px; width: 50%; }'+
+  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
+
+})
+export class DialogAdd {
+  search: Search[] = [];
+  filter: any;
+  constructor(
+    public dialogRef: MatDialogRef<DialogAdd>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogAdd,
+    private searchService: SearchService,
+    public dialog: MatDialog,
+  ) {
+  }
+
+  ngOnInit(): void {
+
+  }
+  addSearch() {
+      const newSearch = new Search();
+      newSearch.filter = this.filter;
+      console.log(newSearch)
+      this.searchService
+        .createSearch(newSearch)
+        .subscribe((search: Search[]) => this.search = search);
+  }
 }

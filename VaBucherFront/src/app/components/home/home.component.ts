@@ -50,9 +50,9 @@ export class HomeComponent implements OnInit {
         this.joboffers = result;
         this.allDomains = [...new Set(this.joboffers.map(offer => offer.domain))];
         this.allTypes = [...new Set(this.joboffers.map(offer => offer.types))];
-        if (this.currentUser.jobtype && this.currentUser.domain) {
+        if (this.currentUser.jobType && this.currentUser.domain) {
           const currentUserDomains = this.currentUser.domain.split(',');
-          const currentUserJobType = this.currentUser.jobtype;
+          const currentUserJobType = this.currentUser.jobType;
           if (currentUserJobType && currentUserDomains) {
             const isDomainMatch = currentUserDomains.some(domain => this.allDomains.includes(domain));
             const isJobTypeMatch = this.allTypes.some(type => type.includes(currentUserJobType));
@@ -72,8 +72,8 @@ export class HomeComponent implements OnInit {
               }
             }
           }
-        } else if (this.currentUser.jobtype) {
-          const currentUserJobType = this.currentUser.jobtype;
+        } else if (this.currentUser.jobType) {
+          const currentUserJobType = this.currentUser.jobType;
           this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
             this.joboffers = result.filter(joboffer => joboffer.types.includes(currentUserJobType));
             this.criteria = true;

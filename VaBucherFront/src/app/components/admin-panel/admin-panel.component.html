@@ -1,9 +1,12 @@
 <div class="container">
-  <div class="filter">
+  <div class="filter mat-elevation-z5">
     <h1>filter</h1>
   </div>
-  <div class="offers">
-    <h1>offers</h1>
+  <div class="offers mat-elevation-z5">
+    <div class="head">
+      <h1>Offers</h1>
+      <button class="add"><mat-icon>add</mat-icon></button>
+    </div>
     <table>
       <thead>
         <th>Title</th>
@@ -17,8 +20,7 @@
         <th></th>
       </thead>
       <tbody>
-
-        <tr *ngFor="let joboffer of joboffers.slice().reverse()">
+        <tr *ngFor="let joboffer of joboffers.slice().reverse()" class="tr mat-elevation-z3">
           <td>{{ joboffer.title }}</td>
           <td>{{ joboffer.description.slice(0, joboffer.description.slice(0, 500).lastIndexOf(' ')) + ' ...' }}</td>
           <td>{{ joboffer.salaire }}</td>
@@ -27,56 +29,78 @@
           <td>{{ joboffer.companyInfo }}</td>
           <td>{{ joboffer.domain }}</td>
           <td>{{ joboffer.isNew }}</td>
-          <td><button (click)="deleteOffer(joboffer)"><mat-icon>delete_forever</mat-icon></button></td>
+          <td><button class="delete" (click)="deleteOffer(joboffer)"><mat-icon>delete_forever</mat-icon></button></td>
         </tr>
       </tbody>
     </table>
   </div>
   <div class="content">
-    <div class="users">
-      <h1>users</h1>
+    <div class="users mat-elevation-z5">
+      <div class="head">
+        <h1>users</h1>
+        <button class="add"><mat-icon>add</mat-icon></button>
+      </div>
       <table>
         <thead>
-        <th>FirstName</th>
-        <th>LastName</th>
-        <th>email</th>
-        <th>Localisation</th>
-        <th>Domain</th>
-        <th>Job Type</th>
-        <th>Role</th>
-        <th>CV</th>
-        <th>Phone</th>
+          <th>FirstName</th>
+          <th>LastName</th>
+          <th>email</th>
+          <th>Localisation</th>
+          <th>Domain</th>
+          <th>Job Type</th>
+          <th>Role</th>
+          <th>CV</th>
+          <th>Phone</th>
         </thead>
-        <tr *ngFor="let user of users">
+        <tr *ngFor="let user of users" class="tr mat-elevation-z3">
           <td>{{user.firstname}}</td>
           <td>{{user.lastname}}</td>
           <td>{{user.email}}</td>
           <td>{{user.location}}</td>
           <td>{{user.domain}}</td>
-          <td>{{user.jobtype}}</td>
+          <td>{{user.jobType}}</td>
           <td>{{user.role}}</td>
           <td>{{user.cv}}</td>
           <td>{{user.phone}}</td>
-          <td><button (click)="deleteUser(user)"><mat-icon>delete_forever</mat-icon></button></td>
+          <td><button class="delete" (click)="deleteUser(user)"><mat-icon>delete_forever</mat-icon></button></td>
         </tr>
       </table>
     </div>
-    <div class="search">
-      <h1>search</h1>
-      <table>
-        <thead>
-        <th>Filter</th>
-        </thead>
-        <tr *ngFor="let search of search">
-          <td>
-            {{search.filter}}
-          </td>
-          <td><button (click)="deleteSearch(search)"><mat-icon>delete_forever</mat-icon></button></td>
-        </tr>
-      </table>
-    </div>
-    <div class="jobTypes">
-      <h1>jobtypes</h1>
+    <div class="content_search_jobtypes">
+      <div class="search mat-elevation-z5">
+        <div class="head">
+          <h1>Search</h1>
+          <button class="add" (click)="addSearch()"><mat-icon>add</mat-icon></button>
+        </div>
+        <table>
+          <thead>
+          <th>Filter</th>
+          </thead>
+          <tr *ngFor="let search of search" class="mat-elevation-z3">
+            <td>
+              {{search.filter}}
+            </td>
+            <td><button class="delete" (click)="deleteSearch(search)"><mat-icon>delete_forever</mat-icon></button></td>
+          </tr>
+        </table>
+      </div>
+      <div class="jobTypes mat-elevation-z5">
+        <div class="head">
+          <h1>Job Types</h1>
+          <button class="add"><mat-icon>add</mat-icon></button>
+        </div>
+        <table>
+          <thead>
+          <th>Jobs</th>
+          </thead>
+          <tr *ngFor="let jobtype of jobType" class="mat-elevation-z3" >
+            <td>
+              {{jobtype.jobs}}
+            </td>
+            <td><button class="delete" (click)="deleteJobType(jobtype)"><mat-icon>delete_forever</mat-icon></button></td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </div>

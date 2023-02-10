@@ -56,7 +56,7 @@ namespace VaBucherBack.Controllers
             dbUser.Lastname = user.Lastname;
             dbUser.Location = user.Location;
             dbUser.Password = user.Password;
-            dbUser.JobType = user.JobType;
+            dbUser.Jobtype = user.Jobtype;
             dbUser.Domain = user.Domain;
             dbUser.Role = user.Role;
             dbUser.CV = user.CV;

@@ -3,7 +3,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import {AdminPanelComponent, DialogContentExampleDialog} from './components/admin-panel/admin-panel.component';
+import {
+  AdminPanelComponent,
+  DialogAdd,
+  DialogContentExampleDialog
+} from './components/admin-panel/admin-panel.component';
 import { FormsModule } from '@angular/forms';
 import { JobofferComponent } from './components/joboffer/joboffer.component';
 import { HomeComponent } from './components/home/home.component';
@@ -48,6 +52,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProfilComponent,
     JobofferDetailComponent,
     DialogContentExampleDialog,
+    DialogAdd
   ],
   imports: [
     BrowserModule,

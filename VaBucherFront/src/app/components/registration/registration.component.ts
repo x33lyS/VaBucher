@@ -75,7 +75,7 @@ export class RegistrationComponent implements OnInit {
     user.password = this.registrationform.value.password;
     user.location = this.registrationform.value.location;
     user.domain = this.registrationform.value.domain.join(',');
-    user.jobtype = this.registrationform.value.jobtype.join(',');
+    user.jobType = this.registrationform.value.jobtype.join(',');
     user.role = this.registrationform.value.role;
     user.cv = this.registrationform.value.cv;
     user.phone = this.registrationform.value.phone;

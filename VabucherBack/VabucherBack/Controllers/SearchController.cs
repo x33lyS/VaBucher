@@ -43,6 +43,18 @@ namespace VaBucherBack.Controllers
                 return BadRequest("Un filtre existe déja");
             }
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<Search>>> DeleteSearch(int id)
+        {
+            var dbSearch = await _context.Searches.FindAsync(id);
+            if (dbSearch == null)
+                return BadRequest("Searches not found.");
+
+            _context.Searches.Remove(dbSearch);
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.Searches.ToListAsync());
+        }
 
     }
 }
