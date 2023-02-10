@@ -48,15 +48,10 @@ export class JobofferComponent implements OnInit {
     });
 
   }
-  // get joboffersToDisplay(): JobOffer[] {
-  //   console.log(this.joboffers.slice(0, 3));
-  //   return this.joboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
-  // }
+
   get joboffersToDisplay(): JobOffer[] {
     let filteredJoboffers = this.joboffers;
     filteredJoboffers = this.filter.transform(filteredJoboffers, this.domainFilter, this.locationFilter, this.jobtypefilter);
-    console.log(filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize));
-
     return filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
   }
 

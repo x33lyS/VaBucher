@@ -29,6 +29,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-detail.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FirstUppercasePipe } from './first-uppercase.pipe';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProfilComponent,
     JobofferDetailComponent,
     DialogContentExampleDialog,
+    FirstUppercasePipe,
   ],
   imports: [
     BrowserModule,
