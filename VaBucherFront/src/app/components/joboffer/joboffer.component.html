@@ -4,10 +4,10 @@
   <div class="offer-title">
     <h5 [ngClass]="{'padding-bottom': currentUser}">Quelques offres récentes</h5>
   </div>
-  <div class="offers">
+    <div class="offers">
     <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
-      <ng-container>
-        <div class="box" id="box-{{(joboffers.indexOf(joboffer) % 2) + 1}}">
+      <ng-container *ngIf="joboffersToDisplay.indexOf(joboffer) % 2 === 0">
+        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 4 === 0 ? 4 : 3}}">
           <h6>{{ joboffer.id}} {{ joboffer.title }}</h6>
           <button>Rémunération: {{ joboffer.salaire }}</button>
           <button>Type de poste: {{ joboffer.types }}</button>
@@ -16,13 +16,11 @@
         </div>
       </ng-container>
     </ng-container>
-
   </div>
   <div class="offers">
-
     <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
-      <ng-container>
-        <div class="box" id="box-{{(joboffers.indexOf(joboffer) % 2) + 3}}">
+      <ng-container *ngIf="joboffer && joboffersToDisplay.indexOf(joboffer) % 2 !== 0">
+        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 3 === 0 ? 1 : 2}}">
           <h6>{{ joboffer.id}} {{ joboffer.title }}</h6>
           <button>Rémunération: {{ joboffer.salaire }}</button>
           <button>Type de poste: {{ joboffer.types }}</button>
@@ -31,8 +29,8 @@
         </div>
       </ng-container>
     </ng-container>
-
   </div>
+
   <div class="pagination">
     <button class="left-button" (click)="changePage(page - 1)">&lt;</button>
     <span class="page-number">{{ page }}</span>

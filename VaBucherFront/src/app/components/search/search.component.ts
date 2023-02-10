@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { interval } from 'rxjs';
 import { JobOffer } from 'src/app/models/joboffer';
 import { Search } from 'src/app/models/search';
@@ -9,6 +9,7 @@ import { ApiDataService } from "../../services/api-data.service";
 import { SearchService } from 'src/app/services/search.service';
 import { JobtypeService } from 'src/app/services/jobtype.service';
 import { CurrentUser } from 'src/app/models/currentuser';
+import { JobofferComponent } from '../joboffer/joboffer.component';
 
 
 
@@ -28,11 +29,14 @@ export class SearchComponent {
   currentUser!: CurrentUser;
   currentUserData: string | null | undefined
   jobtypes: JobType[] = [];
+  joboffers: JobOffer[] = [];
+
 
 
   @Output() jobOffersUpdated = new EventEmitter<JobOffer[]>();
   @Output() filtersChanged = new EventEmitter<{ domain: string, location: string, jobtype: string }>();
   private token = 'qQXLAMeZBi0kgujYwkbGCuX4t_w';
+  @Input() jobofferComponent!: JobofferComponent;
 
   constructor(private jobofferService: JobofferService,
     private http: HttpClient,
@@ -53,16 +57,18 @@ export class SearchComponent {
       .getJobType()
       .subscribe((result: JobType[]) => (this.jobtypes = result));
       this.ngAfterInitUserProfil();
-     
+
   }
 
   ngAfterInitUserProfil() {
+    if (this.currentUser) {
     if (this.currentUser.domain) {
       this.domainFilter = this.currentUser.domain;
     }
     if (this.currentUser.location) {
       this.locationFilter = this.currentUser.location;
     }
+  }
     this.filterOptions();
   }
 
@@ -101,7 +107,7 @@ export class SearchComponent {
     console.log(1);
     this.filterJobOffers();
   }
-  
+
   filterOptions() {
     if (!this.domainFilter) {
       this.filteredSearches = this.searches;

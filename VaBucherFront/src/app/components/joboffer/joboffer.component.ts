@@ -28,10 +28,10 @@ export class JobofferComponent implements OnInit {
   allTypes: string[] = [];
   selectedJobOffer!: JobOffer;
   page = 1;
-pageSize = 3;
-  
+  pageSize = 6;
 
-  constructor(private jobofferService: JobofferService, private dataService: ApiDataService) { }
+
+  constructor(private jobofferService: JobofferService, private dataService: ApiDataService,private filter: FilterPipe) { }
 
   ngOnInit(): void {
     // interval(5000).subscribe(() => this.jobofferService
@@ -44,14 +44,22 @@ pageSize = 3;
   }
   getOffers() {
     this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
-      this.joboffers = result      
+      this.joboffers = result
     });
 
   }
+  // get joboffersToDisplay(): JobOffer[] {
+  //   console.log(this.joboffers.slice(0, 3));
+  //   return this.joboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+  // }
   get joboffersToDisplay(): JobOffer[] {
-    return this.joboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+    let filteredJoboffers = this.joboffers;
+    filteredJoboffers = this.filter.transform(filteredJoboffers, this.domainFilter, this.locationFilter, this.jobtypefilter);
+    console.log(filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize));
+
+    return filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
   }
-  
+
   changePage(newPage: number) {
     this.page = newPage;
   }
@@ -63,6 +71,7 @@ pageSize = 3;
     this.domainFilter = filters.domain;
     this.locationFilter = filters.location;
     this.jobtypefilter = filters.jobtype;
+    this.page = 1;
   }
 
 }
