@@ -63,7 +63,8 @@ export class SearchComponent {
   ngAfterInitUserProfil() {
     if (this.currentUser) {
     if (this.currentUser.domain) {
-      this.domainFilter = this.currentUser.domain;
+      this.domainFilter = this.currentUser.domain.split(',')[0];
+
     }
     if (this.currentUser.location) {
       this.locationFilter = this.currentUser.location;
@@ -104,7 +105,6 @@ export class SearchComponent {
     this.selectedJobTypes = jobType
     console.log(this.selectedJobTypes);
     this.jobtypefilter = this.selectedJobTypes.join(',');
-    console.log(1);
     this.filterJobOffers();
   }
 
