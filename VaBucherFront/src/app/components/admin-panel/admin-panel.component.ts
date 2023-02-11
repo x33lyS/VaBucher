@@ -125,6 +125,18 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
+  updateSearch(search: Search) {
+    const dialogRef = this.dialog.open(DialogUpdateSearch, {
+      width: '400px',
+      height: '400px',
+      data: search
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+  }
+
   deleteSearch(search: Search) {
     const dialogRef = this.dialog.open(DialogContentExampleDialog, {
       width: '250px',
@@ -180,7 +192,6 @@ export class DialogContentExampleDialog {
 
 }
 
-
 @Component({
   selector: 'dialog-add',
   template:
@@ -223,7 +234,49 @@ export class DialogAddSearch {
   }
 }
 
+@Component({
+  selector: 'dialog-add',
+  template:
+    '<h1 mat-dialog-title>Ajouter un filtre</h1>' +
+    '<mat-form-field appearance="fill">\n' +
+    '    <mat-label>Filter</mat-label>\n' +
+    '    <input matInput [value]="" [(ngModel)]="filter">\n' +
+    ' </mat-form-field>' +
+    '<mat-dialog-actions align="center">' +
+    '  <button mat-button mat-dialog-close>Annuler</button>' +
+    '  <button mat-button (click)="updateSearch()" [mat-dialog-close]="filter" cdkFocusInitial>Modifier</button>' +
+    '</mat-dialog-actions>',
+  styles: ['mat-form-field { width: 100%; }' +
+  'mat-dialog-content { display: flex; flex-direction: column; }' +
+  'button { margin: 10px; width: 50%; }'+
+  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
 
+})
+export class DialogUpdateSearch {
+  search: Search[] = [];
+  filter: any;
+  constructor(
+    public dialogRef: MatDialogRef<DialogAddSearch>,
+    @Inject(MAT_DIALOG_DATA) public data: Search,
+    private searchService: SearchService,
+    public dialog: MatDialog,
+  ) {
+    this.filter = data.filter;
+  }
+
+  ngOnInit(): void {
+
+  }
+  updateSearch() {
+      const newSearch = new Search();
+      newSearch.filter = this.filter;
+      newSearch.id = this.data.id;
+      console.log(newSearch)
+      this.searchService
+        .updateSearch(newSearch)
+        .subscribe((search: Search[]) => this.search = search);
+  }
+}
 
 @Component({
   selector: 'dialog-add',
@@ -276,31 +329,31 @@ export class DialogAddJobType {
     '</mat-form-field>'+
     '<mat-form-field appearance="outline">'+
       '<mat-label>Description</mat-label>'+
-      '<textarea matInput [value]="joboffers.description" [rows]="20"></textarea>'+
+      '<textarea matInput [value]="joboffers.description" [(ngModel)]="joboffers.description" [rows]="20"></textarea>'+
     '</mat-form-field>'+
     '<mat-form-field appearance="outline">'+
     '<mat-label>Salaire</mat-label>'+
-    '<input matInput [value]="joboffers.salaire">'+
+    '<input matInput [value]="joboffers.salaire" [(ngModel)]="joboffers.salaire">'+
     '</mat-form-field>'+
     '<mat-form-field appearance="outline">'+
     '<mat-label>Localisation</mat-label>'+
-    '<input matInput [value]="joboffers.localisation">'+
+    '<input matInput [value]="joboffers.localisation" [(ngModel)]="joboffers.localisation">'+
     '</mat-form-field>'+
     '<mat-form-field appearance="outline">'+
     '<mat-label>Types</mat-label>'+
-    '<input matInput [value]="joboffers.types">'+
+    '<input matInput [value]="joboffers.types" [(ngModel)]="joboffers.types">'+
     '</mat-form-field>'+
     '<mat-form-field appearance="outline">'+
     '<mat-label>Company Info</mat-label>'+
-    '<input matInput [value]="joboffers.companyInfo">'+
+    '<input matInput [value]="joboffers.companyInfo" [(ngModel)]="joboffers.companyInfo">'+
     '</mat-form-field>'+
     '<mat-form-field appearance="outline">'+
     '<mat-label>Domain</mat-label>'+
-    '<input matInput [value]="joboffers.domain">'+
+    '<input matInput [value]="joboffers.domain" [(ngModel)]="joboffers.domain">'+
     '</mat-form-field>'+
     '<mat-form-field appearance="outline">'+
     '<mat-label>Date</mat-label>'+
-    '<input matInput [value]="joboffers.isNew">'+
+    '<input matInput [value]="joboffers.isNew" [(ngModel)]="joboffers.isNew">'+
     '</mat-form-field>'+
     '<mat-dialog-actions align="center">'+
       '<button mat-button mat-dialog-close>Annuler</button>'+
@@ -324,12 +377,6 @@ export class DialogUpdateJobOffer {
   }
 
   ngOnInit(): void {
-    // const newSearch = new JobType();
-    // newSearch.jobs = this.jobtype;
-    // console.log(newSearch)
-    // this.jobtypeService
-    //   .createJobType(newSearch)
-    //   .subscribe((jobtype: JobType[]) => this.jobtype = jobtype);
   }
   updateJobOffer() {
     const newJobOffer = new JobOffer();

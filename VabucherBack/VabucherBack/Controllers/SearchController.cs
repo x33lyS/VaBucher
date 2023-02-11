@@ -43,6 +43,36 @@ namespace VaBucherBack.Controllers
                 return BadRequest("Un filtre existe déja");
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Search>> UpdateSearch(int id, Search search)
+        {
+            if (id != search.Id)
+                return BadRequest("Id in URL and Id in request body don't match.");
+
+            _context.Entry(search).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SearchExists(id))
+                    return NotFound("Search not found.");
+
+                throw;
+            }
+
+            return NoContent();
+        }
+
+        private bool SearchExists(int id)
+        {
+            return _context.Searches.Any(e => e.Id == id);
+        }
+
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Search>>> DeleteSearch(int id)
         {
