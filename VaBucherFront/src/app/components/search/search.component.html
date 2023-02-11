@@ -4,7 +4,6 @@
       <input type="text"
              aria-label="Domain"
              matInput
-             [value]="currentUser?.domain ? currentUser.domain : ''"
              (input)="filterOptions()"
              (click)="filterOptions()"
              [(ngModel)]="domainFilter"
@@ -15,7 +14,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Filter by location</mat-label>
-    <input matInput [value]="currentUser?.location ? currentUser.location : ''" [(ngModel)]="locationFilter" (input)="filterJobOffers()">
+    <input matInput [(ngModel)]="locationFilter" (input)="filterJobOffers()">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Filter by Job Types</mat-label>

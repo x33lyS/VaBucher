@@ -2,41 +2,40 @@
 <div class="recent-offers" id="section_3">
   <img class="image" src="../assets/blobGauche.png">
   <div class="offer-title">
-    <h5 [ngClass]="{'padding-bottom': currentUser}">Quelques offres récentes</h5>
+    <h5 [ngClass]="{'padding-bottom': currentUser}">Nos offres d'emploi</h5>
   </div>
+  <button *ngIf="currentPage > 1" (click)="setPage(currentPage -1)" class="pagination-button-left">&lt;</button>
+
   <div class="offers">
     <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
-      <ng-container>
-        <div class="box" id="box-{{(joboffers.indexOf(joboffer) % 2) + 1}}">
-          <h6>{{ joboffer.id}} {{ joboffer.title }}</h6>
-          <button>Rémunération: {{ joboffer.salaire }}</button>
-          <button>Type de poste: {{ joboffer.types }}</button>
-          <button>Domaine: {{ joboffer.domain }}</button>
-          <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }}</p>
+      <ng-container *ngIf="joboffer && joboffersToDisplay.indexOf(joboffer) % 2 !== 0">
+        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 3 === 0 ? 1 : 2}}">
+          <h6>{{ joboffer.title | firstUppercase}}</h6>
+          <button *ngIf="joboffer.salaire">Rémunération: {{ joboffer.salaire }}</button>
+          <button *ngIf="joboffer.types">Type de poste: {{ joboffer.types }}</button>
+          <button *ngIf="joboffer.domain">Domaine: {{ joboffer.domain }}</button>
+          <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 200).lastIndexOf(' ')) + ' ...' }}</p>
         </div>
       </ng-container>
     </ng-container>
-
   </div>
-  <div class="offers">
-
+    <div class="offers">
     <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
-      <ng-container>
-        <div class="box" id="box-{{(joboffers.indexOf(joboffer) % 2) + 3}}">
-          <h6>{{ joboffer.id}} {{ joboffer.title }}</h6>
-          <button>Rémunération: {{ joboffer.salaire }}</button>
-          <button>Type de poste: {{ joboffer.types }}</button>
-          <button>Domaine: {{ joboffer.domain }}</button>
-          <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }}</p>
+      <ng-container *ngIf="joboffersToDisplay.indexOf(joboffer) % 2 === 0">
+        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 4 === 0 ? 4 : 3}}">
+          <h6>{{ joboffer.title | firstUppercase}}</h6>
+          <button *ngIf="joboffer.salaire">Rémunération: {{ joboffer.salaire }}</button>
+          <button *ngIf="joboffer.types">Type de poste: {{ joboffer.types }}</button>
+          <button *ngIf="joboffer.domain">Domaine: {{ joboffer.domain }}</button>
+          <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 200).lastIndexOf(' ')) + ' ...' }}</p>
         </div>
       </ng-container>
     </ng-container>
-
   </div>
+  <button *ngIf="currentPage < pages.length" (click)="setPage(currentPage + 1)" class="pagination-button-right">&gt;</button>
+
   <div class="pagination">
-    <button class="left-button" (click)="changePage(page - 1)">&lt;</button>
-    <span class="page-number">{{ page }}</span>
-    <button class="right-button" (click)="changePage(page + 1)">&gt;</button>
+    <span *ngFor="let page of pages" [ngClass]="{'active': page === currentPage}" (click)="setPage(page)">&#9679;</span>
   </div>
 
 </div>
