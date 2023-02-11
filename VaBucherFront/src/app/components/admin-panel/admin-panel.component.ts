@@ -100,7 +100,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   addSearch() {
-    const dialogRef = this.dialog.open(DialogAdd, {
+    const dialogRef = this.dialog.open(DialogAddSearch, {
       width: '400px',
       height: '400px',
       data: { filter: '' }
@@ -121,6 +121,18 @@ export class AdminPanelComponent implements OnInit {
         this.searchService
           .deleteSearch(search)
           .subscribe((search: Search[]) => this.search = search);
+      }
+    });
+  }
+
+  addJobType() {
+    const dialogRef = this.dialog.open(DialogAddJobType, {
+      width: '400px',
+      height: '400px',
+      data: { filter: '' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
       }
     });
   }
@@ -173,12 +185,12 @@ export class DialogContentExampleDialog {
   'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
 
 })
-export class DialogAdd {
+export class DialogAddSearch {
   search: Search[] = [];
   filter: any;
   constructor(
-    public dialogRef: MatDialogRef<DialogAdd>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogAdd,
+    public dialogRef: MatDialogRef<DialogAddSearch>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogAddSearch,
     private searchService: SearchService,
     public dialog: MatDialog,
   ) {
@@ -194,5 +206,49 @@ export class DialogAdd {
       this.searchService
         .createSearch(newSearch)
         .subscribe((search: Search[]) => this.search = search);
+  }
+}
+
+
+
+@Component({
+  selector: 'dialog-add',
+  template:
+    '<h1 mat-dialog-title>Ajouter un type de contrat</h1>' +
+    '<mat-form-field appearance="outline">\n' +
+    '    <mat-label>Job Type</mat-label>\n' +
+    '    <input matInput [(ngModel)]="jobtype">\n' +
+    ' </mat-form-field>' +
+    '<mat-dialog-actions align="center">' +
+    '  <button mat-button mat-dialog-close>Annuler</button>' +
+    '  <button mat-button (click)="addSearch()" [mat-dialog-close]="jobtype" cdkFocusInitial>Ajouter</button>' +
+    '</mat-dialog-actions>',
+  styles: ['mat-form-field { width: 100%; }' +
+  'mat-dialog-content { display: flex; flex-direction: column; }' +
+  'button { margin: 10px; width: 50%; }'+
+  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
+
+})
+export class DialogAddJobType {
+  jobType: JobType[] = [];
+  jobtype: any;
+  constructor(
+    public dialogRef: MatDialogRef<DialogAddSearch>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogAddSearch,
+    private jobtypeService: JobtypeService,
+    public dialog: MatDialog,
+  ) {
+  }
+
+  ngOnInit(): void {
+
+  }
+  addSearch() {
+    const newSearch = new JobType();
+    newSearch.jobs = this.jobtype;
+    console.log(newSearch)
+    this.jobtypeService
+      .createJobType(newSearch)
+      .subscribe((jobtype: JobType[]) => this.jobtype = jobtype);
   }
 }

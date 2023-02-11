@@ -5,7 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import {
   AdminPanelComponent,
-  DialogAdd,
+  DialogAddSearch,
+  DialogAddJobType,
   DialogContentExampleDialog
 } from './components/admin-panel/admin-panel.component';
 import { FormsModule } from '@angular/forms';
@@ -52,7 +53,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProfilComponent,
     JobofferDetailComponent,
     DialogContentExampleDialog,
-    DialogAdd
+    DialogAddSearch,
+    DialogAddJobType
   ],
   imports: [
     BrowserModule,
