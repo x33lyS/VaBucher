@@ -79,7 +79,7 @@ namespace VaBucherBack.Controllers
                         firstname = dbUser.Firstname,
                         lastname = dbUser.Lastname,
                         location = dbUser.Location,
-                        jobtype = dbUser.JobType,
+                        jobtype = dbUser.Jobtype,
                         domain = dbUser.Domain,
                         role = dbUser.Role,
                         cv = dbUser.CV,

@@ -30,6 +30,7 @@
           <td>{{ joboffer.domain }}</td>
           <td>{{ joboffer.isNew }}</td>
           <td><button class="delete" (click)="deleteOffer(joboffer)"><mat-icon>delete_forever</mat-icon></button></td>
+          <td><button class="delete" (click)="updateOffer(joboffer)"><mat-icon>create</mat-icon></button></td>
         </tr>
       </tbody>
     </table>
@@ -58,7 +59,7 @@
           <td>{{user.email}}</td>
           <td>{{user.location}}</td>
           <td>{{user.domain}}</td>
-          <td>{{user.jobType}}</td>
+          <td>{{user.jobtype}}</td>
           <td>{{user.role}}</td>
           <td>{{user.cv}}</td>
           <td>{{user.phone}}</td>

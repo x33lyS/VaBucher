@@ -5,7 +5,7 @@ export class User {
     password!: string;
     location: string | null | undefined;
     domain: string | null | undefined;
-    jobType: string | null | undefined;
+    jobtype: string | null | undefined;
     role!: number;
     cv: string | null | undefined;
     email!: string;

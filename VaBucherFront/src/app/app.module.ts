@@ -7,7 +7,7 @@ import {
   AdminPanelComponent,
   DialogAddSearch,
   DialogAddJobType,
-  DialogContentExampleDialog
+  DialogContentExampleDialog, DialogUpdateJobOffer
 } from './components/admin-panel/admin-panel.component';
 import { FormsModule } from '@angular/forms';
 import { JobofferComponent } from './components/joboffer/joboffer.component';
@@ -54,7 +54,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     JobofferDetailComponent,
     DialogContentExampleDialog,
     DialogAddSearch,
-    DialogAddJobType
+    DialogAddJobType,
+    DialogUpdateJobOffer
   ],
   imports: [
     BrowserModule,

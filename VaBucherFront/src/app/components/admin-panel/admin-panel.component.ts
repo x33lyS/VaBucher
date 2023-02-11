@@ -83,6 +83,20 @@ export class AdminPanelComponent implements OnInit {
       );
   }
 
+  updateOffer(joboffer: JobOffer) {
+    const dialogRef = this.dialog.open(DialogUpdateJobOffer, {
+      width: '600px',
+      height: '600px',
+      data: joboffer
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+      }
+    });
+  }
+
   deleteOffer(joboffer: JobOffer) {
     const dialogRef = this.dialog.open(DialogContentExampleDialog, {
       width: '250px',
@@ -250,5 +264,87 @@ export class DialogAddJobType {
     this.jobtypeService
       .createJobType(newSearch)
       .subscribe((jobtype: JobType[]) => this.jobtype = jobtype);
+  }
+}
+
+@Component({
+  selector: 'dialog-add',
+  template:
+    '<mat-form-field appearance="outline">'+
+      '<mat-label>Titre</mat-label>'+
+      '<input matInput [value]="joboffers.title" [(ngModel)]="joboffers.title">'+
+    '</mat-form-field>'+
+    '<mat-form-field appearance="outline">'+
+      '<mat-label>Description</mat-label>'+
+      '<textarea matInput [value]="joboffers.description" [rows]="20"></textarea>'+
+    '</mat-form-field>'+
+    '<mat-form-field appearance="outline">'+
+    '<mat-label>Salaire</mat-label>'+
+    '<input matInput [value]="joboffers.salaire">'+
+    '</mat-form-field>'+
+    '<mat-form-field appearance="outline">'+
+    '<mat-label>Localisation</mat-label>'+
+    '<input matInput [value]="joboffers.localisation">'+
+    '</mat-form-field>'+
+    '<mat-form-field appearance="outline">'+
+    '<mat-label>Types</mat-label>'+
+    '<input matInput [value]="joboffers.types">'+
+    '</mat-form-field>'+
+    '<mat-form-field appearance="outline">'+
+    '<mat-label>Company Info</mat-label>'+
+    '<input matInput [value]="joboffers.companyInfo">'+
+    '</mat-form-field>'+
+    '<mat-form-field appearance="outline">'+
+    '<mat-label>Domain</mat-label>'+
+    '<input matInput [value]="joboffers.domain">'+
+    '</mat-form-field>'+
+    '<mat-form-field appearance="outline">'+
+    '<mat-label>Date</mat-label>'+
+    '<input matInput [value]="joboffers.isNew">'+
+    '</mat-form-field>'+
+    '<mat-dialog-actions align="center">'+
+      '<button mat-button mat-dialog-close>Annuler</button>'+
+      '<button mat-button (click)="updateJobOffer()" [mat-dialog-close]="joboffers" cdkFocusInitial>Modifier</button>'+
+    '</mat-dialog-actions>',
+  styles: ['mat-form-field { width: 100%; padding: 30px; }' +
+  'mat-dialog-content { display: flex; flex-direction: column; }' +
+  'button { margin: 10px; width: 50%; }'+
+  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
+})
+export class DialogUpdateJobOffer {
+  joboffers:  JobOffer | any = [];
+  jobOffer: any[] = [];
+  constructor(
+    public dialogRef: MatDialogRef<DialogAddSearch>,
+    @Inject(MAT_DIALOG_DATA) public data: JobOffer,
+    private jobofferService: JobofferService,
+    public dialog: MatDialog,
+  ) {
+    this.joboffers = data;
+  }
+
+  ngOnInit(): void {
+    // const newSearch = new JobType();
+    // newSearch.jobs = this.jobtype;
+    // console.log(newSearch)
+    // this.jobtypeService
+    //   .createJobType(newSearch)
+    //   .subscribe((jobtype: JobType[]) => this.jobtype = jobtype);
+  }
+  updateJobOffer() {
+    const newJobOffer = new JobOffer();
+    newJobOffer.id = this.joboffers.id;
+    newJobOffer.title = this.joboffers.title;
+    newJobOffer.description = this.joboffers.description;
+    newJobOffer.salaire = this.joboffers.salaire;
+    newJobOffer.localisation = this.joboffers.localisation;
+    newJobOffer.types = this.joboffers.types;
+    newJobOffer.companyInfo = this.joboffers.companyInfo;
+    newJobOffer.domain = this.joboffers.domain;
+    newJobOffer.isNew = this.joboffers.isNew;
+    console.log(newJobOffer)
+    this.jobofferService
+      .updateJobOffer(newJobOffer)
+      .subscribe(() => console.log('Job offer updated successfully.'));
   }
 }
