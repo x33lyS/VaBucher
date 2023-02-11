@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { interval } from 'rxjs';
 import { JobOffer } from 'src/app/models/joboffer';
 import { User } from 'src/app/models/user';
@@ -6,10 +6,10 @@ import { ApiDataService } from 'src/app/services/api-data.service';
 import { JobofferService } from 'src/app/services/joboffer.service';
 import { UserService } from 'src/app/services/user.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {SearchService} from "../../services/search.service";
-import {Search} from "../../models/search";
-import {JobtypeService} from "../../services/jobtype.service";
-import {JobType} from "../../models/jobtype";
+import { SearchService } from "../../services/search.service";
+import { Search } from "../../models/search";
+import { JobtypeService } from "../../services/jobtype.service";
+import { JobType } from "../../models/jobtype";
 
 @Component({
   selector: 'app-admin-panel',
@@ -24,32 +24,32 @@ export class AdminPanelComponent implements OnInit {
   jobType: JobType[] = [];
   data: any[] = [];
 
-    @Input() user?: User;
-    @Output() usersUpdated = new EventEmitter<User[]>();
+  @Input() user?: User;
+  @Output() usersUpdated = new EventEmitter<User[]>();
 
-  constructor(private userService:UserService,private jobofferService: JobofferService,
-              private dataService: ApiDataService,
-              public dialog: MatDialog,
-              private searchService: SearchService,
-              private jobtypeService: JobtypeService
-              ) {}
+  constructor(private userService: UserService, private jobofferService: JobofferService,
+    private dataService: ApiDataService,
+    public dialog: MatDialog,
+    private searchService: SearchService,
+    private jobtypeService: JobtypeService
+  ) { }
 
   ngOnInit(): void {
-    interval(2000).subscribe(() => this.jobofferService
-    .getJobOffer()
-    .subscribe((result: JobOffer[]) => (this.joboffers = result)));
-  this.dataService.currentData.subscribe(data => {
-    this.data = data;
-  });
-    interval(2000).subscribe(() => this.userService
+    this.jobofferService
+      .getJobOffer()
+      .subscribe((result: JobOffer[]) => (this.joboffers = result));
+    this.dataService.currentData.subscribe(data => {
+      this.data = data;
+    });
+    this.userService
       .getUser()
-      .subscribe((result: User[]) => (this.users = result)));
-    interval(2000).subscribe(() => this.searchService
+      .subscribe((result: User[]) => (this.users = result));
+    this.searchService
       .getSearch()
-      .subscribe((result: Search[]) => (this.search = result)));
-    interval(2000).subscribe(() => this.jobtypeService
+      .subscribe((result: Search[]) => (this.search = result));
+    this.jobtypeService
       .getJobType()
-      .subscribe((result: any[]) => (this.jobType = result)));
+      .subscribe((result: any[]) => (this.jobType = result));
   }
 
   updateUser(user: User) {
@@ -211,9 +211,9 @@ export class DialogContentExampleDialog {
     '  <button mat-button (click)="addSearch()" [mat-dialog-close]="filter" cdkFocusInitial>Ajouter</button>' +
     '</mat-dialog-actions>',
   styles: ['mat-form-field { width: 100%; }' +
-  'mat-dialog-content { display: flex; flex-direction: column; }' +
-  'button { margin: 10px; width: 50%; }'+
-  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
+    'mat-dialog-content { display: flex; flex-direction: column; }' +
+    'button { margin: 10px; width: 50%; }' +
+    'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
 
 })
 export class DialogAddSearch {
@@ -231,12 +231,12 @@ export class DialogAddSearch {
 
   }
   addSearch() {
-      const newSearch = new Search();
-      newSearch.filter = this.filter;
-      console.log(newSearch)
-      this.searchService
-        .createSearch(newSearch)
-        .subscribe((search: Search[]) => this.search = search);
+    const newSearch = new Search();
+    newSearch.filter = this.filter;
+    console.log(newSearch)
+    this.searchService
+      .createSearch(newSearch)
+      .subscribe((search: Search[]) => this.search = search);
   }
 }
 
@@ -253,9 +253,9 @@ export class DialogAddSearch {
     '  <button mat-button (click)="updateSearch()" [mat-dialog-close]="filter" cdkFocusInitial>Modifier</button>' +
     '</mat-dialog-actions>',
   styles: ['mat-form-field { width: 100%; }' +
-  'mat-dialog-content { display: flex; flex-direction: column; }' +
-  'button { margin: 10px; width: 50%; }'+
-  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
+    'mat-dialog-content { display: flex; flex-direction: column; }' +
+    'button { margin: 10px; width: 50%; }' +
+    'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
 
 })
 export class DialogUpdateSearch {
@@ -274,13 +274,13 @@ export class DialogUpdateSearch {
 
   }
   updateSearch() {
-      const newSearch = new Search();
-      newSearch.filter = this.filter;
-      newSearch.id = this.data.id;
-      console.log(newSearch)
-      this.searchService
-        .updateSearch(newSearch)
-        .subscribe((search: Search[]) => this.search = search);
+    const newSearch = new Search();
+    newSearch.filter = this.filter;
+    newSearch.id = this.data.id;
+    console.log(newSearch)
+    this.searchService
+      .updateSearch(newSearch)
+      .subscribe((search: Search[]) => this.search = search);
   }
 }
 
@@ -297,9 +297,9 @@ export class DialogUpdateSearch {
     '  <button mat-button (click)="updateJobType()" [mat-dialog-close]="jobtype" cdkFocusInitial>Modifier</button>' +
     '</mat-dialog-actions>',
   styles: ['mat-form-field { width: 100%; }' +
-  'mat-dialog-content { display: flex; flex-direction: column; }' +
-  'button { margin: 10px; width: 50%; }'+
-  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
+    'mat-dialog-content { display: flex; flex-direction: column; }' +
+    'button { margin: 10px; width: 50%; }' +
+    'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
 })
 export class DialogUpdateJobType {
   jobType: JobType[] = [];
@@ -340,9 +340,9 @@ export class DialogUpdateJobType {
     '  <button mat-button (click)="addSearch()" [mat-dialog-close]="jobtype" cdkFocusInitial>Ajouter</button>' +
     '</mat-dialog-actions>',
   styles: ['mat-form-field { width: 100%; }' +
-  'mat-dialog-content { display: flex; flex-direction: column; }' +
-  'button { margin: 10px; width: 50%; }'+
-  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
+    'mat-dialog-content { display: flex; flex-direction: column; }' +
+    'button { margin: 10px; width: 50%; }' +
+    'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
 
 })
 export class DialogAddJobType {
@@ -372,49 +372,49 @@ export class DialogAddJobType {
 @Component({
   selector: 'dialog-add',
   template:
-    '<mat-form-field appearance="outline">'+
-      '<mat-label>Titre</mat-label>'+
-      '<input matInput [value]="joboffers.title" [(ngModel)]="joboffers.title">'+
-    '</mat-form-field>'+
-    '<mat-form-field appearance="outline">'+
-      '<mat-label>Description</mat-label>'+
-      '<textarea matInput [value]="joboffers.description" [(ngModel)]="joboffers.description" [rows]="20"></textarea>'+
-    '</mat-form-field>'+
-    '<mat-form-field appearance="outline">'+
-    '<mat-label>Salaire</mat-label>'+
-    '<input matInput [value]="joboffers.salaire" [(ngModel)]="joboffers.salaire">'+
-    '</mat-form-field>'+
-    '<mat-form-field appearance="outline">'+
-    '<mat-label>Localisation</mat-label>'+
-    '<input matInput [value]="joboffers.localisation" [(ngModel)]="joboffers.localisation">'+
-    '</mat-form-field>'+
-    '<mat-form-field appearance="outline">'+
-    '<mat-label>Types</mat-label>'+
-    '<input matInput [value]="joboffers.types" [(ngModel)]="joboffers.types">'+
-    '</mat-form-field>'+
-    '<mat-form-field appearance="outline">'+
-    '<mat-label>Company Info</mat-label>'+
-    '<input matInput [value]="joboffers.companyInfo" [(ngModel)]="joboffers.companyInfo">'+
-    '</mat-form-field>'+
-    '<mat-form-field appearance="outline">'+
-    '<mat-label>Domain</mat-label>'+
-    '<input matInput [value]="joboffers.domain" [(ngModel)]="joboffers.domain">'+
-    '</mat-form-field>'+
-    '<mat-form-field appearance="outline">'+
-    '<mat-label>Date</mat-label>'+
-    '<input matInput [value]="joboffers.isNew" [(ngModel)]="joboffers.isNew">'+
-    '</mat-form-field>'+
-    '<mat-dialog-actions align="center">'+
-      '<button mat-button mat-dialog-close>Annuler</button>'+
-      '<button mat-button (click)="updateJobOffer()" [mat-dialog-close]="joboffers" cdkFocusInitial>Modifier</button>'+
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Titre</mat-label>' +
+    '<input matInput [value]="joboffers.title" [(ngModel)]="joboffers.title">' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Description</mat-label>' +
+    '<textarea matInput [value]="joboffers.description" [(ngModel)]="joboffers.description" [rows]="20"></textarea>' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Salaire</mat-label>' +
+    '<input matInput [value]="joboffers.salaire" [(ngModel)]="joboffers.salaire">' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Localisation</mat-label>' +
+    '<input matInput [value]="joboffers.localisation" [(ngModel)]="joboffers.localisation">' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Types</mat-label>' +
+    '<input matInput [value]="joboffers.types" [(ngModel)]="joboffers.types">' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Company Info</mat-label>' +
+    '<input matInput [value]="joboffers.companyInfo" [(ngModel)]="joboffers.companyInfo">' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Domain</mat-label>' +
+    '<input matInput [value]="joboffers.domain" [(ngModel)]="joboffers.domain">' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Date</mat-label>' +
+    '<input matInput [value]="joboffers.isNew" [(ngModel)]="joboffers.isNew">' +
+    '</mat-form-field>' +
+    '<mat-dialog-actions align="center">' +
+    '<button mat-button mat-dialog-close>Annuler</button>' +
+    '<button mat-button (click)="updateJobOffer()" [mat-dialog-close]="joboffers" cdkFocusInitial>Modifier</button>' +
     '</mat-dialog-actions>',
   styles: ['mat-form-field { width: 100%; padding: 30px; }' +
-  'mat-dialog-content { display: flex; flex-direction: column; }' +
-  'button { margin: 10px; width: 50%; }'+
-  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
+    'mat-dialog-content { display: flex; flex-direction: column; }' +
+    'button { margin: 10px; width: 50%; }' +
+    'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
 })
 export class DialogUpdateJobOffer {
-  joboffers:  JobOffer | any = [];
+  joboffers: JobOffer | any = [];
   jobOffer: any[] = [];
   constructor(
     public dialogRef: MatDialogRef<DialogAddSearch>,
