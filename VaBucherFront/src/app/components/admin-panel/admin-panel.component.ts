@@ -132,8 +132,6 @@ export class AdminPanelComponent implements OnInit {
       data: search
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
     });
   }
 
@@ -158,8 +156,16 @@ export class AdminPanelComponent implements OnInit {
       data: { filter: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
+    });
+  }
+
+  updateJobType(jobType: JobType) {
+    const dialogRef = this.dialog.open(DialogUpdateJobType, {
+      width: '400px',
+      height: '400px',
+      data: jobType
+    });
+    dialogRef.afterClosed().subscribe(result => {
     });
   }
 
@@ -275,6 +281,49 @@ export class DialogUpdateSearch {
       this.searchService
         .updateSearch(newSearch)
         .subscribe((search: Search[]) => this.search = search);
+  }
+}
+
+@Component({
+  selector: 'dialog-add',
+  template:
+    '<h1 mat-dialog-title>Ajouter un type de contrat</h1>' +
+    '<mat-form-field appearance="outline">\n' +
+    '    <mat-label>Job Type</mat-label>\n' +
+    '    <input matInput [(ngModel)]="jobtype">\n' +
+    ' </mat-form-field>' +
+    '<mat-dialog-actions align="center">' +
+    '  <button mat-button mat-dialog-close>Annuler</button>' +
+    '  <button mat-button (click)="updateJobType()" [mat-dialog-close]="jobtype" cdkFocusInitial>Modifier</button>' +
+    '</mat-dialog-actions>',
+  styles: ['mat-form-field { width: 100%; }' +
+  'mat-dialog-content { display: flex; flex-direction: column; }' +
+  'button { margin: 10px; width: 50%; }'+
+  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
+})
+export class DialogUpdateJobType {
+  jobType: JobType[] = [];
+  jobtype: any;
+  constructor(
+    public dialogRef: MatDialogRef<DialogAddSearch>,
+    @Inject(MAT_DIALOG_DATA) public data: JobType,
+    private jobtypeService: JobtypeService,
+    public dialog: MatDialog,
+  ) {
+    this.jobtype = data.jobs;
+    console.log(this.jobtype)
+  }
+
+  ngOnInit(): void {
+  }
+  updateJobType() {
+    const newJobType = new JobType();
+    newJobType.id = this.data.id;
+    newJobType.jobs = this.jobtype;
+    console.log(newJobType)
+    this.jobtypeService
+      .updateJobType(newJobType)
+      .subscribe(() => console.log('Job Type updated successfully.'));
   }
 }
 

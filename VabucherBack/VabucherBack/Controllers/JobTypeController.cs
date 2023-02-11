@@ -34,6 +34,34 @@ namespace VabucherBack.Controllers
                 return BadRequest("Un Job Type existe déja");
             }
         }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<JobType>> UpdateJobType(int id, JobType jobType)
+        {
+            if (id != jobType.Id)
+                return BadRequest();
+
+            _context.Entry(jobType).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!JobTypeExists(id))
+                    return NotFound();
+                else
+                    throw;
+            }
+
+            return NoContent();
+        }
+
+        private bool JobTypeExists(int id)
+        {
+            return _context.JobTypes.Any(e => e.Id == id);
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<JobType>>> DeleteJobType(int id)
         {

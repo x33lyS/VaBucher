@@ -22,6 +22,13 @@ export class JobtypeService {
     );
   }
 
+  public updateJobType(jobtype: JobType): Observable<JobType[]> {
+    return this.http.put<JobType[]>(
+      `${this.apiUrl}/${this.url}/${jobtype.id}`,
+      jobtype
+    );
+  }
+
   public deleteJobType(jobtype: JobType): Observable<JobType[]> {
     return this.http.delete<JobType[]>(
       `${this.apiUrl}/${this.url}/${jobtype.id}`
