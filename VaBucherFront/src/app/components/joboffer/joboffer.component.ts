@@ -29,19 +29,29 @@ export class JobofferComponent implements OnInit {
   selectedJobOffer!: JobOffer;
   page = 1;
   pageSize = 6;
+  currentPage = 1;
+  pages = [1];
 
 
   constructor(private jobofferService: JobofferService, private dataService: ApiDataService,private filter: FilterPipe) { }
 
   ngOnInit(): void {
-    // interval(5000).subscribe(() => this.jobofferService
-    //   .getJobOffer()
-    //   .subscribe((result: JobOffer[]) => (this.joboffers = result)));
+     interval(5000).subscribe(() => this.jobofferService
+       .getJobOffer()
+       .subscribe((result: JobOffer[]) => (this.joboffers = result)));
     this.dataService.currentData.subscribe(data => {
       this.data = data;
     });
     this.getOffers();
   }
+
+  setNumberPage(filteredJoboffers: JobOffer[]) {
+    this.pages = [];
+    for (let i = 1; i <= filteredJoboffers.length /6; i++) {
+      this.pages.push(i);
+    }
+  }
+
   getOffers() {
     this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
       this.joboffers = result
@@ -52,11 +62,13 @@ export class JobofferComponent implements OnInit {
   get joboffersToDisplay(): JobOffer[] {
     let filteredJoboffers = this.joboffers;
     filteredJoboffers = this.filter.transform(filteredJoboffers, this.domainFilter, this.locationFilter, this.jobtypefilter);
+    this.setNumberPage(filteredJoboffers);
     return filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
   }
 
-  changePage(newPage: number) {
-    this.page = newPage;
+  setPage(page: number) {
+    this.currentPage = page;
+    this.page = page;
   }
   showDetails(joboffer: JobOffer) {
     this.selectedJobOffer = joboffer;

@@ -103,7 +103,6 @@ export class SearchComponent {
 
   updateSelectedJobTypes(jobType: any) {
     this.selectedJobTypes = jobType
-    console.log(this.selectedJobTypes);
     this.jobtypefilter = this.selectedJobTypes.join(',');
     this.filterJobOffers();
   }

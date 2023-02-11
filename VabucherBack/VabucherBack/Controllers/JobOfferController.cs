@@ -58,8 +58,8 @@ namespace VabucherBack.Controllers
                         await Task.Delay(1000);
                         var submitButton = driver.FindElement(By.Id("onetrust-accept-btn-handler"));
                         submitButton.Click();
-                        var dbUser = await _context.Searches.FirstOrDefaultAsync(u => u.Filter == jobOffer.Domain);
-                        if (dbUser == null)
+                        var dbDomain = await _context.Searches.FirstOrDefaultAsync(u => u.Filter == jobOffer.Domain);
+                        if (dbDomain == null && jobOffer.Domain != null)
                         {
                             _context.Searches.Add(new Search { Filter = jobOffer.Domain });
                             await _context.SaveChangesAsync();

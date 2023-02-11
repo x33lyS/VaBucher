@@ -319,19 +319,3 @@
     }
   }
 }
-
-.reduced-width section {
-  float: left;
-  animation: example-animation 8s ease-in-out;
-  animation-fill-mode: forwards;
-
-  @keyframes example-animation {
-    from {
-      width: 100%;
-    }
-
-    to {
-      width: 50%;
-    }
-  }
-}
