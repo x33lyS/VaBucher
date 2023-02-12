@@ -24,6 +24,13 @@ export class SearchService {
     );
   }
 
+  public updateSearch(search: Search): Observable<Search[]> {
+    return this.http.put<Search[]>(
+      `${this.apiUrl}/${this.url}/${search.id}`,
+      search
+    );
+  }
+
   public deleteSearch(search: Search): Observable<Search[]> {
     return this.http.delete<Search[]>(
       `${this.apiUrl}/${this.url}/${search.id}`

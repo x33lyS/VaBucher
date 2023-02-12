@@ -3,7 +3,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import {AdminPanelComponent, DialogContentExampleDialog} from './components/admin-panel/admin-panel.component';
+import {
+  AdminPanelComponent,
+  DialogAddSearch,
+  DialogAddJobType,
+  DialogContentExampleDialog, DialogUpdateJobOffer, DialogUpdateSearch, DialogUpdateJobType
+} from './components/admin-panel/admin-panel.component';
 import { FormsModule } from '@angular/forms';
 import { JobofferComponent } from './components/joboffer/joboffer.component';
 import { HomeComponent } from './components/home/home.component';
@@ -49,6 +54,11 @@ import { FirstUppercasePipe } from './first-uppercase.pipe';
     ProfilComponent,
     JobofferDetailComponent,
     DialogContentExampleDialog,
+    DialogAddSearch,
+    DialogAddJobType,
+    DialogUpdateJobOffer,
+    DialogUpdateSearch,
+    DialogUpdateJobType
     FirstUppercasePipe,
   ],
   imports: [

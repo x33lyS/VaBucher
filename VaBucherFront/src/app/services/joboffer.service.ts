@@ -24,6 +24,14 @@ export class JobofferService {
     );
   }
 
+  public updateJobOffer(joboffer: JobOffer): Observable<JobOffer[]> {
+    return this.http.put<JobOffer[]>(
+      `${this.apiUrl}/${this.url}/${joboffer.id}`,
+      joboffer
+    );
+  }
+
+
   public deleteJobOffer(joboffer: JobOffer): Observable<JobOffer[]> {
     return this.http.delete<JobOffer[]>(
       `${this.apiUrl}/${this.url}/${joboffer.id}`
