@@ -22,8 +22,8 @@ namespace VabucherBack.Controllers
         [HttpPost]
         public async Task<ActionResult<List<JobType>>> CreateJobType(JobType jobType)
         {
-            var dbUser = await _context.JobTypes.FirstOrDefaultAsync(u => u.Jobs == jobType.Jobs);
-            if (dbUser == null)
+            var dbJobType = await _context.JobTypes.FirstOrDefaultAsync(u => u.Jobs == jobType.Jobs);
+            if (dbJobType == null)
             {
                 _context.JobTypes.Add(jobType);
                 await _context.SaveChangesAsync();
