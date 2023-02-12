@@ -1,4 +1,4 @@
 export class Search {
   id?: number;
-  filter = "";
+  filter: string = "";
 }
