@@ -58,7 +58,7 @@ import { FirstUppercasePipe } from './first-uppercase.pipe';
     DialogAddJobType,
     DialogUpdateJobOffer,
     DialogUpdateSearch,
-    DialogUpdateJobType
+    DialogUpdateJobType,
     FirstUppercasePipe,
   ],
   imports: [

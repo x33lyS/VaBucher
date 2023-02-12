@@ -34,6 +34,7 @@ export class AdminPanelComponent implements OnInit {
     private jobtypeService: JobtypeService
   ) { }
 
+
   ngOnInit(): void {
     this.jobofferService
       .getJobOffer()
@@ -91,9 +92,6 @@ export class AdminPanelComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-
-      }
     });
   }
 
@@ -117,10 +115,14 @@ export class AdminPanelComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogAddSearch, {
       width: '400px',
       height: '400px',
-      data: { filter: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result, 'result')
       if (result) {
+        this.searchService
+          .createSearch(result)
+          .subscribe((search: Search[]) => this.search = search);
+        console.log(this.search, "search")
       }
     });
   }
@@ -132,6 +134,11 @@ export class AdminPanelComponent implements OnInit {
       data: search
     });
     dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+            this.searchService
+            .updateSearch(result)
+            .subscribe((search: Search[]) => this.search = search);
+        }
     });
   }
 
@@ -153,9 +160,13 @@ export class AdminPanelComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogAddJobType, {
       width: '400px',
       height: '400px',
-      data: { filter: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.jobtypeService
+          .createJobType(result)
+          .subscribe((jobType: JobType[]) => this.jobType = jobType);
+      }
     });
   }
 
@@ -184,6 +195,8 @@ export class AdminPanelComponent implements OnInit {
   }
 
 }
+
+
 @Component({
   selector: 'dialog-content-example-dialog',
   template:
@@ -204,11 +217,11 @@ export class DialogContentExampleDialog {
     '<h1 mat-dialog-title>Ajouter un filtre</h1>' +
     '<mat-form-field appearance="fill">\n' +
     '    <mat-label>Filter</mat-label>\n' +
-    '    <input matInput [(ngModel)]="filter">\n' +
+    '    <input matInput [(ngModel)]="searchTerm">\n' +
     ' </mat-form-field>' +
     '<mat-dialog-actions align="center">' +
-    '  <button mat-button mat-dialog-close>Annuler</button>' +
-    '  <button mat-button (click)="addSearch()" [mat-dialog-close]="filter" cdkFocusInitial>Ajouter</button>' +
+    '  <button mat-button mat-dialog-close="false">Annuler</button>' +
+    '  <button mat-button (click)="addSearch()" [mat-dialog-close]="search" cdkFocusInitial>Ajouter</button>' +
     '</mat-dialog-actions>',
   styles: ['mat-form-field { width: 100%; }' +
     'mat-dialog-content { display: flex; flex-direction: column; }' +
@@ -217,8 +230,8 @@ export class DialogContentExampleDialog {
 
 })
 export class DialogAddSearch {
-  search: Search[] = [];
-  filter: any;
+  search: Search = new Search();
+  searchTerm = "";
   constructor(
     public dialogRef: MatDialogRef<DialogAddSearch>,
     @Inject(MAT_DIALOG_DATA) public data: DialogAddSearch,
@@ -230,23 +243,19 @@ export class DialogAddSearch {
   ngOnInit(): void {
 
   }
+
   addSearch() {
-    const newSearch = new Search();
-    newSearch.filter = this.filter;
-    console.log(newSearch)
-    this.searchService
-      .createSearch(newSearch)
-      .subscribe((search: Search[]) => this.search = search);
+    this.search.filter = this.searchTerm;
   }
 }
 
 @Component({
   selector: 'dialog-add',
   template:
-    '<h1 mat-dialog-title>Ajouter un filtre</h1>' +
+    '<h1 mat-dialog-title>Modifier un filtre</h1>' +
     '<mat-form-field appearance="fill">\n' +
     '    <mat-label>Filter</mat-label>\n' +
-    '    <input matInput [value]="" [(ngModel)]="filter">\n' +
+    '    <input matInput [value]="filter" [(ngModel)]="filter">\n' +
     ' </mat-form-field>' +
     '<mat-dialog-actions align="center">' +
     '  <button mat-button mat-dialog-close>Annuler</button>' +
@@ -259,7 +268,7 @@ export class DialogAddSearch {
 
 })
 export class DialogUpdateSearch {
-  search: Search[] = [];
+  search: Search[] | any = [];
   filter: any;
   constructor(
     public dialogRef: MatDialogRef<DialogAddSearch>,
@@ -278,9 +287,6 @@ export class DialogUpdateSearch {
     newSearch.filter = this.filter;
     newSearch.id = this.data.id;
     console.log(newSearch)
-    this.searchService
-      .updateSearch(newSearch)
-      .subscribe((search: Search[]) => this.search = search);
   }
 }
 
@@ -333,11 +339,11 @@ export class DialogUpdateJobType {
     '<h1 mat-dialog-title>Ajouter un type de contrat</h1>' +
     '<mat-form-field appearance="outline">\n' +
     '    <mat-label>Job Type</mat-label>\n' +
-    '    <input matInput [(ngModel)]="jobtype">\n' +
+    '    <input matInput [(ngModel)]="jobtypeTerm">\n' +
     ' </mat-form-field>' +
     '<mat-dialog-actions align="center">' +
     '  <button mat-button mat-dialog-close>Annuler</button>' +
-    '  <button mat-button (click)="addSearch()" [mat-dialog-close]="jobtype" cdkFocusInitial>Ajouter</button>' +
+    '  <button mat-button (click)="addSearch()" [mat-dialog-close]="jobType" cdkFocusInitial>Ajouter</button>' +
     '</mat-dialog-actions>',
   styles: ['mat-form-field { width: 100%; }' +
     'mat-dialog-content { display: flex; flex-direction: column; }' +
@@ -346,8 +352,8 @@ export class DialogUpdateJobType {
 
 })
 export class DialogAddJobType {
-  jobType: JobType[] = [];
-  jobtype: any;
+  jobType: JobType = new JobType();
+  jobtypeTerm?: "";
   constructor(
     public dialogRef: MatDialogRef<DialogAddSearch>,
     @Inject(MAT_DIALOG_DATA) public data: DialogAddSearch,
@@ -360,12 +366,7 @@ export class DialogAddJobType {
 
   }
   addSearch() {
-    const newSearch = new JobType();
-    newSearch.jobs = this.jobtype;
-    console.log(newSearch)
-    this.jobtypeService
-      .createJobType(newSearch)
-      .subscribe((jobtype: JobType[]) => this.jobtype = jobtype);
+    this.jobType.jobs = this.jobtypeTerm;
   }
 }
 
@@ -438,7 +439,7 @@ export class DialogUpdateJobOffer {
     newJobOffer.companyInfo = this.joboffers.companyInfo;
     newJobOffer.domain = this.joboffers.domain;
     newJobOffer.isNew = this.joboffers.isNew;
-    console.log(newJobOffer)
+    console.log(newJobOffer, "newJobOffer")
     this.jobofferService
       .updateJobOffer(newJobOffer)
       .subscribe(() => console.log('Job offer updated successfully.'));

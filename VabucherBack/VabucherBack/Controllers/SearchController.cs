@@ -31,12 +31,12 @@ namespace VaBucherBack.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Search>>> CreateSearch(Search search)
         {
-            var dbUser = await _context.Searches.FirstOrDefaultAsync(u => u.Filter == search.Filter);
-            if (dbUser == null)
+            var dbSearch = await _context.Searches.FirstOrDefaultAsync(u => u.Filter == search.Filter);
+            if (dbSearch == null)
             {
                 _context.Searches.Add(search);
                 await _context.SaveChangesAsync();
-                return Ok(await _context.Users.ToListAsync());
+                return Ok( await _context.Searches.ToListAsync());
             }
             else
             {
