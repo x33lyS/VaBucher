@@ -134,11 +134,7 @@ export class AdminPanelComponent implements OnInit {
       data: search
     });
     dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-            this.searchService
-            .updateSearch(result)
-            .subscribe((search: Search[]) => this.search = search);
-        }
+      window.location.reload();
     });
   }
 
@@ -177,6 +173,7 @@ export class AdminPanelComponent implements OnInit {
       data: jobType
     });
     dialogRef.afterClosed().subscribe(result => {
+      window.location.reload();
     });
   }
 
@@ -212,7 +209,7 @@ export class DialogContentExampleDialog {
 }
 
 @Component({
-  selector: 'dialog-add',
+  selector: 'dialog-add-search',
   template:
     '<h1 mat-dialog-title>Ajouter un filtre</h1>' +
     '<mat-form-field appearance="fill">\n' +
@@ -250,7 +247,7 @@ export class DialogAddSearch {
 }
 
 @Component({
-  selector: 'dialog-add',
+  selector: 'dialog-update-search',
   template:
     '<h1 mat-dialog-title>Modifier un filtre</h1>' +
     '<mat-form-field appearance="fill">\n' +
@@ -259,7 +256,7 @@ export class DialogAddSearch {
     ' </mat-form-field>' +
     '<mat-dialog-actions align="center">' +
     '  <button mat-button mat-dialog-close>Annuler</button>' +
-    '  <button mat-button (click)="updateSearch()" [mat-dialog-close]="filter" cdkFocusInitial>Modifier</button>' +
+    '  <button mat-button (click)="updateSearch()" [mat-dialog-close]="search" cdkFocusInitial>Modifier</button>' +
     '</mat-dialog-actions>',
   styles: ['mat-form-field { width: 100%; }' +
     'mat-dialog-content { display: flex; flex-direction: column; }' +
@@ -268,7 +265,7 @@ export class DialogAddSearch {
 
 })
 export class DialogUpdateSearch {
-  search: Search[] | any = [];
+  search: Search = new Search() ;
   filter: any;
   constructor(
     public dialogRef: MatDialogRef<DialogAddSearch>,
@@ -283,10 +280,11 @@ export class DialogUpdateSearch {
 
   }
   updateSearch() {
-    const newSearch = new Search();
-    newSearch.filter = this.filter;
-    newSearch.id = this.data.id;
-    console.log(newSearch)
+    this.search.filter = this.filter;
+    this.search.id = this.data.id;
+    this.searchService
+      .updateSearch(this.search)
+      .subscribe();
   }
 }
 
@@ -334,7 +332,7 @@ export class DialogUpdateJobType {
 }
 
 @Component({
-  selector: 'dialog-add',
+  selector: 'dialog-add-jobtype',
   template:
     '<h1 mat-dialog-title>Ajouter un type de contrat</h1>' +
     '<mat-form-field appearance="outline">\n' +
