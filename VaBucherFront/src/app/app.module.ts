@@ -34,6 +34,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-detail.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FirstUppercasePipe } from './first-uppercase.pipe';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     DialogUpdateJobOffer,
     DialogUpdateSearch,
     DialogUpdateJobType
+    FirstUppercasePipe,
   ],
   imports: [
     BrowserModule,
