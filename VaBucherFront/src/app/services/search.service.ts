@@ -20,6 +20,8 @@ export class SearchService {
   public getSearch(): Observable<Search[]> {
     return this.http.get<Search[]>(`${this.apiUrl}/${this.url}`);
   }
+
+  
   setCreatednewrandom(newrandom: { domain: any }) {
     this.newrandom.next(newrandom);
     this.createNewRandom.emit(newrandom);

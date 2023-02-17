@@ -50,20 +50,25 @@ export class SearchComponent {
     if (this.currentUserData) {
       this.currentUser = JSON.parse(this.currentUserData);
     }
-    interval(5000).subscribe(() => this.searchService
-      .getSearch()
-      .subscribe((result: Search[]) => (this.searches = result)));
     this.jobtypeService
       .getJobType()
       .subscribe((result: JobType[]) => (this.jobtypes = result));
-      this.searchService.createnewrandom.subscribe(newrandom => {
-        if (newrandom) {
-          const { domain, jobType } = newrandom;
-          console.log(domain, jobType);
-          this.domainFilter = domain.filter;
-          this.jobtypefilter = jobType.jobs;
-        }
-      });
+    interval(5000).subscribe(() => this.searchService
+      .getSearch()
+      .subscribe((result: Search[]) => (this.searches = result)));
+
+      this.searchService
+      .getSearch()
+      .subscribe((result: Search[]) => (this.searches = result));
+
+    this.searchService.createnewrandom.subscribe(newrandom => {
+      if (newrandom) {
+        const { domain, jobType } = newrandom;
+        console.log(domain, jobType);
+        this.domainFilter = domain.filter;
+        this.jobtypefilter = jobType.jobs;
+      }
+    });
     this.ngAfterInitUserProfil();
   }
 

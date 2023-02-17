@@ -18,6 +18,8 @@ namespace VaBucherBack
         public string Domain { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
+        public DateTime DateCreation { get; set; }
+        public DateTime DateLastConnection { get; set; }
 
     }
 }

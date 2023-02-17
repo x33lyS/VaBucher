@@ -73,12 +73,21 @@ export class RegistrationComponent implements OnInit {
     user.lastname = this.registrationform.value.lastname;
     user.email = this.registrationform.value.email;
     user.password = this.registrationform.value.password;
+    if (user.location) {
     user.location = this.registrationform.value.location;
+    }
+    if (user.domain) {
     user.domain = this.registrationform.value.domain.join(',');
+    }
+    if (user.jobtype) {
     user.jobtype = this.registrationform.value.jobtype.join(',');
-    user.role = this.registrationform.value.role;
+    }
+    if (user.cv) {
     user.cv = this.registrationform.value.cv;
+    }
+    if (user.phone) {
     user.phone = this.registrationform.value.phone;
+    }
     console.log(user);
 
     this.userService.createUser(user).subscribe(
