@@ -1,0 +1,122 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid;
+  padding: 10%;
+  .filter{
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+  }
+  .offers{
+    max-height: 700px;
+    overflow-y: scroll;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+  }
+  .content{
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    .users{
+      max-height: 700px;
+      overflow-y: scroll;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .content_search_jobtypes{
+      display: flex;
+      gap: 20px;
+      .search{
+        max-height: 700px;
+        overflow-y: scroll;
+        padding: 10px;
+        width: 50%;
+        border-radius: 8px;
+      }
+      .jobTypes{
+        max-height: 700px;
+        overflow-y: scroll;
+        padding: 10px;
+        width: 50%;
+        border-radius: 8px;
+      }
+    }
+  }
+}
+
+table{
+  width: 100%;
+  border-spacing: 20px;
+  th{
+    color: #E94A35;
+    text-align: left;
+  }
+  tr {
+    padding: 10px;
+    border-radius: 8px;
+    td{
+      padding: 10px;
+      &:last-child{
+        text-align: right;
+      }
+    }
+  }
+}
+.delete{
+  background: transparent;
+  border: none;
+    &:hover{
+      color: red;
+      animation: brr 0.5s ease-in-out infinite;;
+      @keyframes brr {
+        0% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(10deg);
+        }
+        50% {
+          transform: rotate(0deg);
+        }
+        75% {
+          transform: rotate(-10deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+    }
+  }
+
+
+.head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 20px;
+  .title{
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .add{
+    background: #E94A35;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    &:hover{
+      background: #E94A35;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      transform: scale(1.1);
+    }
+  }
+}

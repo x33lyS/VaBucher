@@ -1,10 +1,13 @@
-<div *ngIf="selectedJoboffer" class="selected-job-offer">
-  <h2>{{ selectedJoboffer.title }}</h2>
-  <p>{{ selectedJoboffer.description.slice(0, selectedJoboffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>
-  <p>Salaire: {{ selectedJoboffer.salaire }}</p>
-  <p>Localisation: {{ selectedJoboffer.localisation }}</p>
-  <p>Types: {{ selectedJoboffer.types }}</p>
-  <p>CompanyInfo: {{ selectedJoboffer.companyInfo }}</p>
-  <p>Domain: {{ selectedJoboffer.domain }}</p>
-  <p>Date: {{ selectedJoboffer.isNew }}</p>
+<div class="dialog-background">
+  <div class="selected-job-offer active">
+    <span class="close-button" (click)="onClose()">X</span>
+    <h2>{{ selectedJoboffer.title }}</h2>
+    <p>{{ selectedJoboffer.description.slice(0, selectedJoboffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>
+    <p>Salaire: {{ selectedJoboffer.salaire }}</p>
+    <p>Localisation: {{ selectedJoboffer.localisation }}</p>
+    <p>Types: {{ selectedJoboffer.types }}</p>
+    <p>CompanyInfo: {{ selectedJoboffer.companyInfo }}</p>
+    <p>Domain: {{ selectedJoboffer.domain }}</p>
+    <p>Date: {{ selectedJoboffer.isNew }}</p>
+  </div>
 </div>

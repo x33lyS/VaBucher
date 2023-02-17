@@ -62,6 +62,8 @@ namespace VaBucherBack.Controllers
 
                 var jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Jwt:Key"]));
                 var creds = new SigningCredentials(jwtKey, SecurityAlgorithms.HmacSha256);
+                dbUser.DateLastConnexion = DateTime.Now;
+                await _context.SaveChangesAsync();
 
                 var token = new JwtSecurityToken(Config["Jwt:Issuer"],
                                                  Config["Jwt:Issuer"],
@@ -76,15 +78,15 @@ namespace VaBucherBack.Controllers
                     {
                         id = dbUser.Id,
                         email = dbUser.Email,
-                        firstname = dbUser.FirstName,
-                        lastname = dbUser.LastName,
+                        firstname = dbUser.Firstname,
+                        lastname = dbUser.Lastname,
                         location = dbUser.Location,
-                        jobtype = dbUser.JobType,
+                        jobtype = dbUser.Jobtype,
                         domain = dbUser.Domain,
                         role = dbUser.Role,
                         cv = dbUser.CV,
                         phone = dbUser.Phone,
-                    }
+                    },
                     });
             }
             else

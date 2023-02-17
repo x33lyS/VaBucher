@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   allDomains: string[] = [];
   allTypes: string[] = [];
   criteria: boolean = false;
-  selectedJobOffer!: JobOffer;
+  selectedJobOffer: JobOffer | null = null;
   currentPage = 1;
   pages = [1];
 
@@ -29,6 +29,10 @@ export class HomeComponent implements OnInit {
 
   showDetails(joboffer: JobOffer) {
     this.selectedJobOffer = joboffer;
+  }
+
+  public closeJobOfferDetails() {
+    this.selectedJobOffer = null;
   }
   setPage(page: number) {
     this.currentPage = page;

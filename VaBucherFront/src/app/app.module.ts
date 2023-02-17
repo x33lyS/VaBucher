@@ -3,7 +3,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import {
+  AdminPanelComponent,
+  DialogAddSearch,
+  DialogAddJobType,
+  DialogContentExampleDialog, DialogUpdateJobOffer, DialogUpdateSearch, DialogUpdateJobType
+} from './components/admin-panel/admin-panel.component';
 import { FormsModule } from '@angular/forms';
 import { JobofferComponent } from './components/joboffer/joboffer.component';
 import { HomeComponent } from './components/home/home.component';
@@ -22,13 +27,14 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { FilterPipe } from './filter.pipe';
 import { MatSelectModule } from '@angular/material/select';
+import { FooterComponent } from './components/footer/footer.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { LoginComponent } from './components/login/login.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-detail.component';
-
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { FirstUppercasePipe } from './first-uppercase.pipe';
 
 
 @NgModule({
@@ -44,8 +50,16 @@ import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-d
     DashboardComponent,
     SearchComponent,
     FilterPipe,
+    FooterComponent,
     ProfilComponent,
-    JobofferDetailComponent
+    JobofferDetailComponent,
+    DialogContentExampleDialog,
+    DialogAddSearch,
+    DialogAddJobType,
+    DialogUpdateJobOffer,
+    DialogUpdateSearch,
+    DialogUpdateJobType,
+    FirstUppercasePipe,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +76,7 @@ import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-d
     RouterModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

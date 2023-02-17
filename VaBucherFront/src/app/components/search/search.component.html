@@ -1,13 +1,13 @@
 <div style="padding-top: 5%;">
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Filter by domain</mat-label>
-    <input type="text"
-           aria-label="Domain"
-           matInput
-           (input)="filterOptions()"
-           (click)="filterOptions()"
-           [(ngModel)]="domainFilter"
-           [matAutocomplete]="auto">
+      <input type="text"
+             aria-label="Domain"
+             matInput
+             (input)="filterOptions()"
+             (click)="filterOptions()"
+             [(ngModel)]="domainFilter"
+             [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let search of filteredSearches" [value]="search.filter" (click)="filterOptions()">{{ search.filter }}</mat-option>
     </mat-autocomplete>

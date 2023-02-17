@@ -34,6 +34,7 @@ namespace VaBucherBack.Controllers
             {
                 var salt = BCrypt.Net.BCrypt.GenerateSalt();
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
+                user.DateCreation = DateTime.Now;
 
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
@@ -52,11 +53,11 @@ namespace VaBucherBack.Controllers
             if (dbUser == null)
                 return BadRequest("User not found.");
 
-            dbUser.FirstName = user.FirstName;
-            dbUser.LastName = user.LastName;
+            dbUser.Firstname = user.Firstname;
+            dbUser.Lastname = user.Lastname;
             dbUser.Location = user.Location;
             dbUser.Password = user.Password;
-            dbUser.JobType = user.JobType;
+            dbUser.Jobtype = user.Jobtype;
             dbUser.Domain = user.Domain;
             dbUser.Role = user.Role;
             dbUser.CV = user.CV;

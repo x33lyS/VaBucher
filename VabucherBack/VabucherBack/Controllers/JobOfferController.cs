@@ -58,8 +58,8 @@ namespace VabucherBack.Controllers
                         await Task.Delay(1000);
                         var submitButton = driver.FindElement(By.Id("onetrust-accept-btn-handler"));
                         submitButton.Click();
-                        var dbUser = await _context.Searches.FirstOrDefaultAsync(u => u.Filter == jobOffer.Domain);
-                        if (dbUser == null)
+                        var dbDomain = await _context.Searches.FirstOrDefaultAsync(u => u.Filter == jobOffer.Domain);
+                        if (dbDomain == null && jobOffer.Domain != null)
                         {
                             _context.Searches.Add(new Search { Filter = jobOffer.Domain });
                             await _context.SaveChangesAsync();
@@ -116,6 +116,8 @@ namespace VabucherBack.Controllers
                                     var titleElement = driver.FindElement(By.ClassName("JobViewTitle"));
                                     offer.Title = titleElement.Text;
                                     offer.Domain = jobOffer.Domain;
+                                    offer.Url = driver.Url;
+
                                 }
                                 catch
                                 {
@@ -227,12 +229,41 @@ namespace VabucherBack.Controllers
             return Ok(response);
     }
 
-    [HttpDelete("{id}")]
+        [HttpPut("{id}")]
+        public async Task<ActionResult<JobOffer>> UpdateJobOffer(int id, JobOffer jobOffer)
+        {
+            if (id != jobOffer.Id)
+                return BadRequest("Id mismatch.");
+
+            _context.Entry(jobOffer).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!JobOfferExists(id))
+                    return NotFound("Job Offer not found.");
+                else
+                    throw;
+            }
+
+            return Ok(jobOffer);
+        }
+
+        private bool JobOfferExists(int id)
+        {
+            return _context.JobOffers.Any(e => e.Id == id);
+        }
+
+
+        [HttpDelete("{id}")]
     public async Task<ActionResult<List<JobOffer>>> DeleteJobOffer(int id)
     {
         var dbJobOffer = await _context.JobOffers.FindAsync(id);
         if (dbJobOffer == null)
-            return BadRequest("User not found.");
+            return BadRequest("Job Offer not found.");
 
         _context.JobOffers.Remove(dbJobOffer);
         await _context.SaveChangesAsync();
