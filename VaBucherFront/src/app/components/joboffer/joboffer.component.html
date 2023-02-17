@@ -2,7 +2,7 @@
 <div class="recent-offers" id="section_3">
   <img class="image" src="../assets/blobGauche.png">
   <div class="offer-title">
-    <h5 [ngClass]="{'padding-bottom': currentUser}">Nos offres d'emploi</h5>
+    <h5 *ngIf="joboffersToDisplay.length > 0" [ngClass]="{'padding-bottom': currentUser}">Nos offres d'emploi</h5>
   </div>
   <button *ngIf="currentPage > 1" (click)="setPage(currentPage -1)" class="pagination-button-left">&lt;</button>
 
@@ -33,10 +33,12 @@
     </ng-container>
   </div>
   <div class="job-offers">
-    <div *ngIf="joboffersToDisplay.length === 0" class="no-offers">
-      <div class="logo"></div>
-      <h6>Aucune offre à afficher</h6>
-      <button class="search-button">Rechercher des offres</button>
+    <div *ngIf="joboffersToDisplay.length === 0" class="offer-title no-offers">
+      <h5>Aucune offre à afficher</h5>
+      <div class="button-start">
+        <span class="mas">Rechercher des offres</span>
+        <button type="button" name="Hover" (click)="searchNewOffer()">Rechercher des offres</button>
+      </div>
     </div>
     <div class="box" id="box-2">
       <!-- Votre code HTML pour afficher les offres d'emploi -->

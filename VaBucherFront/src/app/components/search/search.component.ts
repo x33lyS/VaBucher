@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { interval } from 'rxjs';
+import { interval, take } from 'rxjs';
 import { JobOffer } from 'src/app/models/joboffer';
 import { Search } from 'src/app/models/search';
 import { JobType } from 'src/app/models/jobtype';
@@ -46,30 +46,37 @@ export class SearchComponent {
 
 
   ngOnInit(): void {
-      this.currentUserData = localStorage.getItem('currentUser');
-      if (this.currentUserData) {
-        this.currentUser = JSON.parse(this.currentUserData);
-      }
+    this.currentUserData = localStorage.getItem('currentUser');
+    if (this.currentUserData) {
+      this.currentUser = JSON.parse(this.currentUserData);
+    }
     interval(5000).subscribe(() => this.searchService
       .getSearch()
       .subscribe((result: Search[]) => (this.searches = result)));
     this.jobtypeService
       .getJobType()
       .subscribe((result: JobType[]) => (this.jobtypes = result));
-      this.ngAfterInitUserProfil();
-
+      this.searchService.createnewrandom.subscribe(newrandom => {
+        if (newrandom) {
+          const { domain, jobType } = newrandom;
+          console.log(domain, jobType);
+          this.domainFilter = domain.filter;
+          this.jobtypefilter = jobType.jobs;
+        }
+      });
+    this.ngAfterInitUserProfil();
   }
 
   ngAfterInitUserProfil() {
     if (this.currentUser) {
-    if (this.currentUser.domain) {
-      this.domainFilter = this.currentUser.domain.split(',')[0];
+      if (this.currentUser.domain) {
+        this.domainFilter = this.currentUser.domain.split(',')[0];
 
+      }
+      if (this.currentUser.location) {
+        this.locationFilter = this.currentUser.location;
+      }
     }
-    if (this.currentUser.location) {
-      this.locationFilter = this.currentUser.location;
-    }
-  }
     this.filterOptions();
   }
 
@@ -118,7 +125,6 @@ export class SearchComponent {
     );
     this.filterJobOffers()
   }
-
   filterJobOffers() {
     this.filtersChanged.emit({ domain: this.domainFilter, location: this.locationFilter, jobtype: this.jobtypefilter });
   }

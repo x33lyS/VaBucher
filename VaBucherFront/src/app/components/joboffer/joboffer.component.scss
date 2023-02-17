@@ -1,3 +1,17 @@
+@mixin button($bcolor,
+  $url,
+  $x1,
+  $y1,
+  $bor,
+  $col) {
+  background: $bcolor;
+  -webkit-mask: url($url);
+  mask: url($url);
+  -webkit-mask-size: $x1 $y1;
+  mask-size: $x1 $y1;
+  border: $bor;
+  color: $col;
+}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -155,28 +169,104 @@ table {
       margin-top: 1rem;
     }
 
-    .logo {
-      width: 5rem;
-      height: 5rem;
-      background-image: url('/assets/nooffer.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      margin-bottom: 1rem;
+    .button-start {
+      position: relative;
+      width: 250px;
+      height: 75px;
+      margin-top: 6vh;
+      overflow: hidden;
+      border: 1px solid #ED6A5A;
+      font-weight: 300;
+      transition: 0.5s;
+      letter-spacing: 1px;
+      border-radius: 10px;
+
+      button {
+        width: 101%;
+        height: 100%;
+        font-weight: 300;
+        letter-spacing: 1px;
+        font-weight: bold;
+        font-size: 20px;
+        color: #fff;
+        border-radius: 10px;
+
+        @include button(#ED6A5A, "https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png",
+          3000%,
+          100%,
+          none,
+          #fff);
+        cursor: pointer;
+        -webkit-animation: ani2 0.7s steps(22) forwards;
+        animation: ani2 0.7s steps(22) forwards;
+
+        &:hover {
+         -webkit-animation: ani 0.7s steps(22) forwards;
+         animation: ani 0.7s steps(22) forwards;
+        }
+      }
     }
 
-    .search-button {
-      padding: 1rem 2rem;
-      background-color: #ED6A5A;
-      color: #fff;
-      border: none;
-      border-radius: 0.25rem;
-      cursor: pointer;
-      font-size: 1.25rem;
-      transition: background-color 0.3s ease;
-      margin-top: 1rem;
 
-      &:hover {
-        background-color: #ED6A5A;
+    .mas {
+      position: absolute;
+      color: #ED6A5A;
+      text-align: center;
+      width: 101%;
+      font-weight: 300;
+      position: absolute;
+      font-size: 20px;
+      margin-top: 24px;
+      overflow: hidden;
+      font-weight: bold;
+
+    }
+
+    @-webkit-keyframes ani {
+      from {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+      }
+
+      to {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+      }
+    }
+
+    @keyframes ani {
+      from {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+      }
+
+      to {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+      }
+    }
+
+    @-webkit-keyframes ani2 {
+      from {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+      }
+
+      to {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+      }
+    }
+
+    @keyframes ani2 {
+      from {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+      }
+
+      to {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
       }
     }
   }
