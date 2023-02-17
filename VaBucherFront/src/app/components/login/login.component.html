@@ -1,28 +1,28 @@
-<form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+<div class="signin">
+  <div class="container">
+    <div class="form">
+      <div class="image">  
+        <img src="../assets/home-inverse.png"> 
+      </div>
+      <form class="_form" [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+        <h3>Sign In</h3>
 
-  <div>
-    <div class="input-container">
-      <label>Email Address</label>
-      <input type="text" formControlName="Email" name="Email"
-             required>
-      <small *ngIf="signInForm.get('Email')?.value.length <= 0">Email required</small>
-      <mat-error *ngIf="signInForm.get('Email')?.hasError('Email') && !signInForm.get('Email')?.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
+        <!-- <label class="form__label">Email Address</label> -->
+        <input type="text"formControlName="Email" name="Email" placeholder="Email"  required><br />
+        <small class="small" *ngIf="signInForm.get('Email')?.value.length <= 0">Email required</small>
+        <mat-error *ngIf="signInForm.get('Email')?.hasError('Email') && !signInForm.get('Email')?.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+
+        <br />
+
+        <!-- <label>Password</label> -->
+        <input type="password" formControlName="Password" name="Password" placeholder="Password" required><br />
+        <small *ngIf="signInForm.get('Password')?.value.length <= 0">Password required</small><br />
+      
+        <button type="submit" [disabled]="!signInForm.valid">Sign in</button>
+      </form>
     </div>
-
-    <br>
-
-    <div class="input-container">
-      <label>Password</label>
-      <input type="password" formControlName="Password" name="Password"
-              required>
-      <small *ngIf="signInForm.get('Password')?.value.length <= 0">Password required</small>
-    </div>
-
-    <br>
-
-    <button type="submit" [disabled]="!signInForm.valid">Sign in</button>
   </div>
+</div>
 
-</form>

@@ -1,3 +1,10 @@
+.signin {
+  margin: 150px auto;
+  width: 30vw;
+  height: 150px;
+  background-color: red;
+}
+
 @mixin button($bcolor,
   $url,
   $x1,
