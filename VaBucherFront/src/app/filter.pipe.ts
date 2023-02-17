@@ -7,6 +7,7 @@ import { JobOffer } from 'src/app/models/joboffer';
 export class FilterPipe implements PipeTransform {
 
   transform(joboffers: JobOffer[], domainFilter: string, locationFilter: string, jobtypefilter: string): JobOffer[] {
+
     if (!joboffers) { return []; }
     if (!domainFilter && !locationFilter && !jobtypefilter) { return joboffers; }
     return joboffers.filter(joboffer => {
@@ -66,7 +67,7 @@ export class FilterPipe implements PipeTransform {
       return false;
     }
   }
-      
+
       return true;
     });
   }

@@ -1,143 +1,183 @@
 table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
 
-    th {
-      text-align: left;
-      background: #f5f5f5;
-      padding: 10px;
-      border-bottom: 1px solid #e5e5e5;
-    }
+  th {
+    text-align: left;
+    background: #f5f5f5;
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+  }
 
-    td {
-      padding: 10px;
-      border-bottom: 1px solid #e5e5e5;
-    }
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+  }
 
-    tr:nth-child(even) {
-      background: #f9f9f9;
-    }
+  tr:nth-child(even) {
+    background: #f9f9f9;
+  }
 
-    .highlight {
-      background: #ffc107;
+  .highlight {
+    background: #ffc107;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+
+  span {
+    font-size: 24px;
+    margin: 0 10px;
+    cursor: pointer;
+
+    &.active {
+      color: #ED6A5A;
     }
   }
-  .pagination {
+}
+
+
+.recent-offers {
+  background: var(--section-bg-color);
+  min-height: 85vh;
+  position: relative;
+
+  .image {
+    position: absolute;
+    left: 0;
+    height: 60%;
+  }
+
+  .offer-title {
+    h5 {
+      text-transform: uppercase;
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    h5.padding-bottom {
+      padding-bottom: 10px;
+    }
+
+    p {
+      text-align: center;
+      padding: 0 0 30px;
+    }
+  }
+
+  .pagination-button-left,
+  .pagination-button-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 35px;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #333;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+
+
+    &:hover {
+      color: #000;
+    }
+  }
+
+  .pagination-button-left {
+    left: 1%;
+  }
+
+  .pagination-button-right {
+    right: 2%;
+  }
+
+  .offers {
+    margin: 0 auto;
+    width: 90vw;
     display: flex;
-    justify-content: center;
+    height: 37vh;
 
-    span {
-      font-size: 24px;
-      margin: 0 10px;
-      cursor: pointer;
+    .box {
+      margin: 10px;
+      border-radius: 12px;
 
-      &.active {
-        color: #333;
+      h6,
+      p {
+        color: #fff;
+        padding: 25px 15px 10px 20px;
       }
+
+      p {
+        padding: 0 15px 15px 15px;
+      }
+
+      button {
+        border: 1px solid white;
+        color: white;
+        background: var(--primary-color);
+        border-radius: 10px;
+        padding: 5px 10px;
+        margin: 5px 0 10px 15px;
+      }
+
+      background: var(--primary-color);
+      padding-left: 0.25rem;
+      padding-right: 0.25rem;
     }
   }
 
+  #box-2,
+  #box-3 {
+    flex: 0 0 30%;
+  }
+}
+.job-offers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 
-  .recent-offers {
-    background: var(--section-bg-color);
-    min-height: 85vh;
-    position: relative;
+  .no-offers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    .image {
-      position: absolute;
-      left: 0;
-      height: 60%;
+    h6 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 0;
+      margin-top: 1rem;
     }
-    .offer-title {
-      h5 {
-        text-transform: uppercase;
-        text-align: center;
-        padding: 30px 0;
-      }
-      h5.padding-bottom {
-        padding-bottom: 10px;
-      }
-      p {
-        text-align: center;
-        padding: 0  0 30px;
-      }
+
+    .logo {
+      width: 5rem;
+      height: 5rem;
+      background-image: url('/assets/nooffer.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-bottom: 1rem;
     }
-    .pagination-button-left,
-    .pagination-button-right {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 35px;
-      padding: 10px 20px;
-      cursor: pointer;
-      color: #333;
-      width: 50px;
-      height: 50px;
-      background-color: transparent;
+
+    .search-button {
+      padding: 1rem 2rem;
+      background-color: #ED6A5A;
+      color: #fff;
       border: none;
-
+      border-radius: 0.25rem;
+      cursor: pointer;
+      font-size: 1.25rem;
+      transition: background-color 0.3s ease;
+      margin-top: 1rem;
 
       &:hover {
-        color: #000;
+        background-color: #ED6A5A;
       }
-    }
-    .pagination-button-left {
-      left: 1%;
-    }
-    .pagination-button-right {
-      right: 2%;
-    }
-
-    .offers {
-      margin: 0 auto;
-      width: 90vw;
-      display: flex;
-      height: 37vh;
-
-      .box {
-        margin: 10px;
-        border-radius: 12px;
-
-        h6,
-        p {
-          color: #fff;
-          padding: 25px 15px 10px 20px;
-        }
-
-        p {
-          padding: 0 15px 15px 15px;
-        }
-        button {
-          border: 1px solid white;
-          color: white;
-          background: var(--primary-color);
-          border-radius: 10px;
-          padding: 5px 10px;
-          margin: 5px 0 10px 15px;
-        }
-
-        background: var(--primary-color);
-        padding-left: 0.25rem;
-        padding-right: 0.25rem;
-      }
-    }
-
-    #box-2,
-    #box-3 {
-      flex: 0 0 30%;
-    }
-  }
-.reduced-width section {
-  float: left;
-  animation: example-animation 8s ease-in-out;
-  animation-fill-mode: forwards;
-  @keyframes example-animation {
-    from {
-      width: 100%;
-    }
-    to {
-      width: 50%;
     }
   }
 }

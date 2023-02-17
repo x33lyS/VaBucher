@@ -108,7 +108,7 @@ export class SearchComponent {
   }
 
   filterOptions() {
-    if (!this.domainFilter) {
+    if (this.domainFilter == undefined) {
       this.filteredSearches = this.searches;
       return;
     }
