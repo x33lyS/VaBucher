@@ -62,7 +62,7 @@ namespace VaBucherBack.Controllers
 
                 var jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Jwt:Key"]));
                 var creds = new SigningCredentials(jwtKey, SecurityAlgorithms.HmacSha256);
-                dbUser.DateLastConnection = DateTime.Now;
+                dbUser.DateLastConnexion = DateTime.Now;
                 await _context.SaveChangesAsync();
 
                 var token = new JwtSecurityToken(Config["Jwt:Issuer"],
