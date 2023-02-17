@@ -2,14 +2,14 @@
 <div class="recent-offers" id="section_3">
   <img class="image" src="../assets/blobGauche.png">
   <div class="offer-title">
-    <h5 [ngClass]="{'padding-bottom': currentUser}">Nos offres d'emploi</h5>
+    <h5 *ngIf="joboffersToDisplay.length > 0" [ngClass]="{'padding-bottom': currentUser}">Nos offres d'emploi</h5>
   </div>
   <button *ngIf="currentPage > 1" (click)="setPage(currentPage -1)" class="pagination-button-left">&lt;</button>
 
-  <div class="offers">
+  <div class="offers" *ngIf="joboffersToDisplay.length > 0">
     <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
       <ng-container *ngIf="joboffer && joboffersToDisplay.indexOf(joboffer) % 2 !== 0">
-        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 3 === 0 ? 1 : 2}}">
+        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 3 === 0 ? 1 : 2}}" (click)="showDetails(joboffer)">
           <h6>{{ joboffer.title | firstUppercase}}</h6>
           <button *ngIf="joboffer.salaire">Rémunération: {{ joboffer.salaire }}</button>
           <button *ngIf="joboffer.types">Type de poste: {{ joboffer.types }}</button>
@@ -19,10 +19,10 @@
       </ng-container>
     </ng-container>
   </div>
-    <div class="offers">
+    <div class="offers" *ngIf="joboffersToDisplay.length > 0">
     <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
       <ng-container *ngIf="joboffersToDisplay.indexOf(joboffer) % 2 === 0">
-        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 4 === 0 ? 4 : 3}}">
+        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 4 === 0 ? 4 : 3}}" (click)="showDetails(joboffer)">
           <h6>{{ joboffer.title | firstUppercase}}</h6>
           <button *ngIf="joboffer.salaire">Rémunération: {{ joboffer.salaire }}</button>
           <button *ngIf="joboffer.types">Type de poste: {{ joboffer.types }}</button>
@@ -32,6 +32,19 @@
       </ng-container>
     </ng-container>
   </div>
+  <div class="job-offers">
+    <div *ngIf="joboffersToDisplay.length === 0" class="offer-title no-offers">
+      <h5>Aucune offre à afficher</h5>
+      <div class="button-start">
+        <span class="mas">Rechercher d'autres offres</span>
+        <button type="button" name="Hover" (click)="searchNewOffer()">Rechercher d'autres offres</button>
+      </div>
+    </div>
+    <div class="box" id="box-2">
+      <!-- Votre code HTML pour afficher les offres d'emploi -->
+    </div>
+  </div>
+
   <button *ngIf="currentPage < pages.length" (click)="setPage(currentPage + 1)" class="pagination-button-right">&gt;</button>
 
   <div class="pagination">
@@ -39,6 +52,8 @@
   </div>
 
 </div>
+<app-joboffer-detail *ngIf="selectedJobOffer" [selectedJoboffer]="selectedJobOffer" (close)="closeJobOfferDetails()"></app-joboffer-detail>
+
 <!--<div *ngFor="let data of data">-->
 <!--  {{ data.intitule }}-->
 <!--</div>-->

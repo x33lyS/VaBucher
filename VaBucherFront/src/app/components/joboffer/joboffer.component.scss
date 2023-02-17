@@ -1,143 +1,273 @@
+@mixin button($bcolor,
+  $url,
+  $x1,
+  $y1,
+  $bor,
+  $col) {
+  background: $bcolor;
+  -webkit-mask: url($url);
+  mask: url($url);
+  -webkit-mask-size: $x1 $y1;
+  mask-size: $x1 $y1;
+  border: $bor;
+  color: $col;
+}
 table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
 
-    th {
-      text-align: left;
-      background: #f5f5f5;
-      padding: 10px;
-      border-bottom: 1px solid #e5e5e5;
-    }
+  th {
+    text-align: left;
+    background: #f5f5f5;
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+  }
 
-    td {
-      padding: 10px;
-      border-bottom: 1px solid #e5e5e5;
-    }
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+  }
 
-    tr:nth-child(even) {
-      background: #f9f9f9;
-    }
+  tr:nth-child(even) {
+    background: #f9f9f9;
+  }
 
-    .highlight {
-      background: #ffc107;
+  .highlight {
+    background: #ffc107;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+
+  span {
+    font-size: 24px;
+    margin: 0 10px;
+    cursor: pointer;
+
+    &.active {
+      color: #ED6A5A;
     }
   }
-  .pagination {
+}
+
+
+.recent-offers {
+  background: var(--section-bg-color);
+  min-height: 85vh;
+  position: relative;
+
+  .image {
+    position: absolute;
+    left: 0;
+    height: 60%;
+  }
+
+  .offer-title {
+    h5 {
+      text-transform: uppercase;
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    h5.padding-bottom {
+      padding-bottom: 10px;
+    }
+
+    p {
+      text-align: center;
+      padding: 0 0 30px;
+    }
+  }
+
+  .pagination-button-left,
+  .pagination-button-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 35px;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #333;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+
+
+    &:hover {
+      color: #000;
+    }
+  }
+
+  .pagination-button-left {
+    left: 1%;
+  }
+
+  .pagination-button-right {
+    right: 2%;
+  }
+
+  .offers {
+    margin: 0 auto;
+    width: 90vw;
     display: flex;
-    justify-content: center;
+    height: 37vh;
 
-    span {
-      font-size: 24px;
-      margin: 0 10px;
-      cursor: pointer;
+    .box {
+      margin: 10px;
+      border-radius: 12px;
 
-      &.active {
-        color: #333;
-      }
-    }
-  }
-
-
-  .recent-offers {
-    background: var(--section-bg-color);
-    min-height: 85vh;
-    position: relative;
-
-    .image {
-      position: absolute;
-      left: 0;
-      height: 60%;
-    }
-    .offer-title {
-      h5 {
-        text-transform: uppercase;
-        text-align: center;
-        padding: 30px 0;
-      }
-      h5.padding-bottom {
-        padding-bottom: 10px;
-      }
+      h6,
       p {
-        text-align: center;
-        padding: 0  0 30px;
+        color: #fff;
+        padding: 25px 15px 10px 20px;
       }
-    }
-    .pagination-button-left,
-    .pagination-button-right {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 35px;
-      padding: 10px 20px;
-      cursor: pointer;
-      color: #333;
-      width: 50px;
-      height: 50px;
-      background-color: transparent;
-      border: none;
 
-
-      &:hover {
-        color: #000;
+      p {
+        padding: 0 15px 15px 15px;
       }
-    }
-    .pagination-button-left {
-      left: 1%;
-    }
-    .pagination-button-right {
-      right: 2%;
-    }
 
-    .offers {
-      margin: 0 auto;
-      width: 90vw;
-      display: flex;
-      height: 37vh;
-
-      .box {
-        margin: 10px;
-        border-radius: 12px;
-
-        h6,
-        p {
-          color: #fff;
-          padding: 25px 15px 10px 20px;
-        }
-
-        p {
-          padding: 0 15px 15px 15px;
-        }
-        button {
-          border: 1px solid white;
-          color: white;
-          background: var(--primary-color);
-          border-radius: 10px;
-          padding: 5px 10px;
-          margin: 5px 0 10px 15px;
-        }
-
+      button {
+        border: 1px solid white;
+        color: white;
         background: var(--primary-color);
-        padding-left: 0.25rem;
-        padding-right: 0.25rem;
+        border-radius: 10px;
+        padding: 5px 10px;
+        margin: 5px 0 10px 15px;
       }
-    }
 
-    #box-2,
-    #box-3 {
-      flex: 0 0 30%;
+      background: var(--primary-color);
+      padding-left: 0.25rem;
+      padding-right: 0.25rem;
     }
   }
-.reduced-width section {
-  float: left;
-  animation: example-animation 8s ease-in-out;
-  animation-fill-mode: forwards;
-  @keyframes example-animation {
-    from {
-      width: 100%;
+
+  #box-2,
+  #box-3 {
+    flex: 0 0 30%;
+  }
+}
+.job-offers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .no-offers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h6 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 0;
+      margin-top: 1rem;
     }
-    to {
-      width: 50%;
+
+    .button-start {
+      position: relative;
+      width: 250px;
+      height: 75px;
+      margin-top: 6vh;
+      overflow: hidden;
+      border: 1px solid #ED6A5A;
+      font-weight: 300;
+      transition: 0.5s;
+      letter-spacing: 1px;
+      border-radius: 10px;
+
+      button {
+        width: 101%;
+        height: 100%;
+        font-weight: 300;
+        letter-spacing: 1px;
+        font-weight: bold;
+        font-size: 20px;
+        color: #fff;
+        border-radius: 10px;
+
+        @include button(#ED6A5A, "https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png",
+          3000%,
+          100%,
+          none,
+          #fff);
+        cursor: pointer;
+        -webkit-animation: ani2 0.7s steps(22) forwards;
+        animation: ani2 0.7s steps(22) forwards;
+
+        &:hover {
+         -webkit-animation: ani 0.7s steps(22) forwards;
+         animation: ani 0.7s steps(22) forwards;
+        }
+      }
+    }
+
+
+    .mas {
+      position: absolute;
+      color: #ED6A5A;
+      text-align: center;
+      width: 101%;
+      font-weight: 300;
+      position: absolute;
+      font-size: 20px;
+      margin-top: 12px;
+      overflow: hidden;
+      font-weight: bold;
+
+    }
+
+    @-webkit-keyframes ani {
+      from {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+      }
+
+      to {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+      }
+    }
+
+    @keyframes ani {
+      from {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+      }
+
+      to {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+      }
+    }
+
+    @-webkit-keyframes ani2 {
+      from {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+      }
+
+      to {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+      }
+    }
+
+    @keyframes ani2 {
+      from {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+      }
+
+      to {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+      }
     }
   }
 }

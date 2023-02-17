@@ -34,6 +34,7 @@ namespace VaBucherBack.Controllers
             {
                 var salt = BCrypt.Net.BCrypt.GenerateSalt();
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
+                user.DateCreation = DateTime.Now;
 
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
