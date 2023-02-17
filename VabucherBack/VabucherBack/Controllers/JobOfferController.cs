@@ -116,6 +116,8 @@ namespace VabucherBack.Controllers
                                     var titleElement = driver.FindElement(By.ClassName("JobViewTitle"));
                                     offer.Title = titleElement.Text;
                                     offer.Domain = jobOffer.Domain;
+                                    offer.Url = driver.Url;
+
                                 }
                                 catch
                                 {
