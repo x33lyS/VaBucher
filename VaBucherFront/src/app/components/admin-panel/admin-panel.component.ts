@@ -19,6 +19,12 @@ import { JobType } from "../../models/jobtype";
 export class AdminPanelComponent implements OnInit {
 
   joboffers: JobOffer[] = [];
+  filteredJobOffers: JobOffer[] = [];
+  filteredUser: User[] = [];
+  filteredSearches: Search[] = [];
+  filteredJobType: JobType[] = [];
+
+  filter: string = '';
   users: User[] = [];
   search: Search[] = [];
   jobType: JobType[] = [];
@@ -38,20 +44,62 @@ export class AdminPanelComponent implements OnInit {
   ngOnInit(): void {
     this.jobofferService
       .getJobOffer()
-      .subscribe((result: JobOffer[]) => (this.joboffers = result));
+      .subscribe((result: JobOffer[]) => {
+        this.joboffers = result
+        this.filteredJobOffers = result;
+      });
     this.dataService.currentData.subscribe(data => {
       this.data = data;
     });
     this.userService
       .getUser()
-      .subscribe((result: User[]) => (this.users = result));
+      .subscribe((result: User[]) => {
+        this.users = result
+        this.filteredUser = result;
+      });
     this.searchService
       .getSearch()
-      .subscribe((result: Search[]) => (this.search = result));
+      .subscribe((result: Search[]) => {
+        this.search = result
+        this.filteredSearches = result;
+      });
     this.jobtypeService
       .getJobType()
-      .subscribe((result: any[]) => (this.jobType = result));
+      .subscribe((result: JobType[]) => {
+        this.jobType = result
+        this.filteredJobType = result;
+      });
   }
+  applyFilter(event: Event | KeyboardEvent) {
+    const filterValue = (event.target as HTMLInputElement)?.value;
+    this.filter = filterValue.toLowerCase();
+    this.filteredJobOffers = this.joboffers.filter((joboffer) =>
+      joboffer.title.toLowerCase().includes(this.filter) ||
+      joboffer.description.toLowerCase().includes(this.filter) ||
+      joboffer.salaire.toLowerCase().includes(this.filter) ||
+      joboffer.localisation.toLowerCase().includes(this.filter) ||
+      joboffer.types.toLowerCase().includes(this.filter) ||
+      joboffer.companyInfo.toLowerCase().includes(this.filter) ||
+      joboffer.domain.toLowerCase().includes(this.filter) ||
+      joboffer.isNew.toLowerCase().includes(this.filter)
+    );
+
+    this.filteredUser = this.users.filter((user) =>
+      user.firstname.toLowerCase().includes(this.filter) ||
+      user.lastname.toLowerCase().includes(this.filter) ||
+      user.email.toLowerCase().includes(this.filter) ||
+      user.role.toString().toLowerCase().includes(this.filter)
+    );
+    this.filteredSearches = this.search.filter((search) =>
+      search.filter.toLowerCase().includes(this.filter)
+    );
+    this.filteredJobType = this.jobType.filter((jobtype) =>
+      jobtype.jobs.toLowerCase().includes(this.filter));
+
+
+  }
+
+
 
   updateUser(user: User) {
     this.userService
@@ -265,7 +313,7 @@ export class DialogAddSearch {
 
 })
 export class DialogUpdateSearch {
-  search: Search = new Search() ;
+  search: Search = new Search();
   filter: any;
   constructor(
     public dialogRef: MatDialogRef<DialogAddSearch>,
@@ -364,7 +412,9 @@ export class DialogAddJobType {
 
   }
   addSearch() {
-    this.jobType.jobs = this.jobtypeTerm;
+    if (this.jobtypeTerm) {
+      this.jobType.jobs = this.jobtypeTerm;
+    }
   }
 }
 
