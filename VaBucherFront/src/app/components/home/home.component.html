@@ -82,5 +82,6 @@
   </div>
 
 </div>
-<app-joboffer-detail *ngIf="selectedJobOffer" [selectedJoboffer]="selectedJobOffer"></app-joboffer-detail>
+<app-joboffer-detail *ngIf="selectedJobOffer" [selectedJoboffer]="selectedJobOffer" (close)="closeJobOfferDetails()"></app-joboffer-detail>
+
 

@@ -27,17 +27,16 @@ export class JobofferComponent implements OnInit {
   jobtypefilter!: string;
   filters: any = {};
   data: any[] = [];
-  selectedJoboffer: any;
   currentUser!: CurrentUser;
   allDomains: string[] = [];
   allTypes: string[] = [];
-  selectedJobOffer!: JobOffer;
   page = 1;
   pageSize = 6;
   currentPage = 1;
   pages = [1];
   jobtypes!: JobType[];
   searches!: Search[];
+  selectedJobOffer: JobOffer | null = null;
 
 
   constructor(private jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService, private dataService: ApiDataService, private filter: FilterPipe) { }
@@ -56,6 +55,9 @@ export class JobofferComponent implements OnInit {
     this.getOffers();
   }
 
+  public closeJobOfferDetails() {
+    this.selectedJobOffer = null;
+  }
   setNumberPage(filteredJoboffers: JobOffer[]) {
     this.pages = [];
     for (let i = 1; i <= filteredJoboffers.length / 6; i++) {
