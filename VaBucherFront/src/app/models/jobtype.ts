@@ -1,4 +1,4 @@
 export class JobType {
     id?: number;
-    jobs: "" | undefined = "";
+    jobs: string = "";
   }
