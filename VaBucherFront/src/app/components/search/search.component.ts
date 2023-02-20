@@ -64,9 +64,7 @@ export class SearchComponent {
     this.searchService.createnewrandom.subscribe(newrandom => {
       if (newrandom) {
         const { domain, jobType } = newrandom;
-        console.log(domain, jobType);
         this.domainFilter = domain.filter;
-        this.jobtypefilter = jobType.jobs;
       }
     });
     this.ngAfterInitUserProfil();

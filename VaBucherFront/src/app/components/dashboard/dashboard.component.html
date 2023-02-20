@@ -1,2 +1,5 @@
 <app-joboffer></app-joboffer>
+<button *ngIf="jobofferService.getSavedJobOffers().length > 0" (click)="openSavedJobOffers()">Voir mes offres enregistrées</button>
+
+
 

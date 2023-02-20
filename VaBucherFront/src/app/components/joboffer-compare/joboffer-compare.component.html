@@ -1,0 +1,11 @@
+<div *ngFor="let jobOffer of savedJobOffers">
+    <h2>{{ jobOffer.title }}</h2>
+    <p>{{ jobOffer.description.slice(0, jobOffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>
+    <p>Salaire: {{ jobOffer.salaire }}</p>
+    <p>Localisation: {{ jobOffer.localisation }}</p>
+    <p>Types: {{ jobOffer.types }}</p>
+    <p>CompanyInfo: {{ jobOffer.companyInfo }}</p>
+    <p>Domain: {{ jobOffer.domain }}</p>
+    <p>Date: {{ jobOffer.isNew }}</p>
+  </div>
+  
