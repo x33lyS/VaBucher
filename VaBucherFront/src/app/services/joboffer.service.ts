@@ -9,13 +9,32 @@ import { JobOffer } from '../models/joboffer';
 export class JobofferService {
   private url= "joboffer";
   private apiUrl = "https://localhost:7059/api"
+  savedJobOffers: any[] = [];
+
 
 
   constructor(private http: HttpClient) { }
 
+
+  saveJobOffer(jobOffer: JobOffer) {
+    const savedJobOffers = this.getSavedJobOffers();
+    const jobOfferIndex = savedJobOffers.findIndex(o => o.id === jobOffer.id);
+    if (jobOfferIndex === -1) {
+      savedJobOffers.push(jobOffer);
+    }
+  }
+  
+  getSavedJobOffers() {
+  return this.savedJobOffers;
+}
+
+
+
   public getJobOffer() : Observable<JobOffer[]> {
     return this.http.get<JobOffer[]>(`${this.apiUrl}/${this.url}`);
   }
+
+  
 
   public createJobOffer(joboffer: JobOffer): Observable<JobOffer[]> {
     return this.http.post<JobOffer[]>(
