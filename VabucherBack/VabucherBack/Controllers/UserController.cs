@@ -7,6 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using VaBucherBack.Data;
 using BCrypt.Net;
+using System.Net.Mail;
+using System.Net;
+
 
 namespace VaBucherBack.Controllers
 {
@@ -38,6 +41,24 @@ namespace VaBucherBack.Controllers
 
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
+
+                // Générer un code de confirmation unique
+                var confirmationCode = Guid.NewGuid().ToString();
+
+                // Stocker le code de confirmation dans la base de données
+                user.codeValidation = confirmationCode;
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+
+                // Envoyer un e-mail de confirmation à l'utilisateur
+                var confirmationLink = $"{this.Request.Scheme}://{this.Request.Host}/api/user/confirm?code={confirmationCode}";
+                var emailBody = $"Cliquez sur ce lien pour confirmer votre compte : {confirmationLink}";
+                // Remplacez les variables 'email' et 'password' par les vraies informations de votre serveur d'envoi d'email
+                // Remplacez les valeurs 'smtpServer', 'smtpPort', 'username' et 'password' par les vraies informations de votre serveur d'envoi d'email
+                var emailService = new EmailService("smtp.gmail.com", "swebystudio@gmail.com", "4>$@fAdam", 587);
+                await emailService.SendEmailAsync(user.Email, "Confirmation de compte", emailBody);
+
+
                 return Ok(await _context.Users.ToListAsync());
             }
             else
@@ -85,4 +106,44 @@ namespace VaBucherBack.Controllers
 
 
     }
+
+
+    public class EmailService
+    {
+        public readonly string _smtpServer;
+        public readonly int _smtpPort;
+        private readonly string _username;
+        private readonly string _password;
+
+        public EmailService(string smtpServer, string username, string password, int smtpPort)
+        {
+            _smtpServer = "smtp.gmail.com";
+            _smtpPort = 587;
+            _username = "swebystudio@gmail.com";
+            _password = "4>$@fAdam";
+        }
+
+        public async Task SendEmailAsync(string toEmail, string subject, string body)
+        {
+            var client = new SmtpClient(_smtpServer, _smtpPort)
+            {
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(_username, _password),
+                EnableSsl = true
+            };
+
+            var message = new MailMessage
+            {
+                From = new MailAddress(_username),
+                Subject = subject,
+                Body = body
+            };
+
+            message.To.Add(toEmail);
+
+            await client.SendMailAsync(message);
+        }
+    }
+
+
 }
