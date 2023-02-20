@@ -18,7 +18,9 @@ export class UserService {
   public getUser() : Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/${this.url}`);
   }
-  public updateUser(user: User): Observable<User[]> {
+  // j'ai mis type any pour le moment car on ne renvoi pas l'id et le role pour update, l'user de devrait pas y avoir accès
+  // voir si on fait les vérif en back
+  public updateUser(user: any): Observable<User[]> {
     return this.http.put<User[]>(
       `${this.apiUrl}/${this.url}`,
       user

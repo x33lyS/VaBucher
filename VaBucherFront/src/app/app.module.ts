@@ -70,6 +70,7 @@ import { FirstUppercasePipe } from './first-uppercase.pipe';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
     MatSelectModule,
     AppRoutingModule,
     MatAutocompleteModule,

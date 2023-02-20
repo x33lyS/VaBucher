@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CurrentUser } from 'src/app/models/currentuser';
-import { UserService } from 'src/app/services/user.service';
+import {Component,OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {CurrentUser} from 'src/app/models/currentuser';
+import {UserService} from 'src/app/services/user.service';
+import {FormControl,Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-profil',
@@ -10,23 +11,43 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProfilComponent implements OnInit {
   currentUser!: CurrentUser;
-  currentUserData: string | null | undefined;
+  passwordFormControl = new FormControl('',[
+    Validators.required,
+    Validators.minLength(6)
+  ]);
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService,private router: Router) {
+  }
 
   ngOnInit() {
-    this.currentUserData = localStorage.getItem('currentUser');
-    if (!this.currentUserData) {
+    let currentUserData = localStorage.getItem('currentUser');
+    if (!currentUserData) {
       this.router.navigate(['/registration']);
     } else {
-      this.currentUser = JSON.parse(this.currentUserData);
+      this.currentUser = JSON.parse(currentUserData);
+    }
+  }
+
+  updateCurrentUser() {
+
+    let newUser = this.currentUser;
+
+    for (let key in newUser) {
+      // @ts-ignore
+      if (newUser[key] === null || newUser[key] === undefined || newUser[key] === '') {
+        // @ts-ignore
+        delete newUser[key];
+      }
     }
 
+    this.userService.updateUser(newUser).subscribe({
+      next: (result) => {
+    console.log(result, 'result');
+    // TODO : Refactor le updateUser du Backend pour qu'il retourne le bon user
+      }
+    });
   }
-  updateCurrentUser() {
-    this.userService.updateUser(this.currentUser)
-      .subscribe(data => {
-        localStorage.setItem('currentUser', JSON.stringify(data));
-      });
-  }
+
 }
+
+
