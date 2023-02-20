@@ -14,16 +14,14 @@ export class AdminGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      interval(100).subscribe(() => {
         this.currentUserData = localStorage.getItem('currentUser');
         if (this.currentUserData) {
           this.currentUser = JSON.parse(this.currentUserData);
-        }
-      }); 
+        } 
       if (this.currentUser && this.currentUser.role === 3) {
         return true;
       } else {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/login']);
         return false;
       }
   }
