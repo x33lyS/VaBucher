@@ -15,6 +15,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Support;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using System.Text.RegularExpressions;
 
 namespace VabucherBack.Controllers
 {
@@ -168,7 +169,21 @@ namespace VabucherBack.Controllers
                                 try
                                 {
                                     var isNewElement = driver.FindElement(By.XPath("//div[@data-test-id='svx-jobview-posted']"));
-                                    offer.IsNew = isNewElement.Text;
+                                    string pattern = @"\d+";
+                                    Match match = Regex.Match(isNewElement.Text, pattern);
+                                    if (match.Success)
+                                    {
+                                        int number = int.Parse(match.Value);
+                                        DateTime today = DateTime.Today; // Obtenez la date d'aujourd'hui
+                                        DateTime dateXDaysAgo = today.AddDays(-number);
+                                        // Enregistrez la date il y a X jours dans la base de données
+                                        offer.IsNew = dateXDaysAgo.ToString("dd/MM/yyyy");
+                                    }
+                                    else
+                                    {
+                                        offer.IsNew = DateTime.Today.ToString("dd/MM/yyyy");
+                                    }
+                                    
                                 }
                                 catch
                                 {
