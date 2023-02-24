@@ -15,16 +15,13 @@ import { UnAuthGuard } from './services/unauth.guard';
 
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent
-  },
+  { path: '', component: HomeComponent},
   { path: 'registration', component: RegistrationComponent, canActivate: [UnAuthGuard]},
   { path: 'dashboard', component: DashboardComponent },
   { path: 'login', component: LoginComponent, canActivate: [UnAuthGuard]},
   { path: 'profil', component: ProfilComponent , canActivate: [AuthGuard] },
   { path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]},
-  { path: 'compare', component: JobofferCompareComponent,  canActivate: [AuthGuard] }
+  { path: 'compare', component: JobofferCompareComponent,  canActivate: [AuthGuard] },
 ];
 
 @NgModule({
