@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from "../models/user";
 import { CurrentUser } from '../models/currentuser';
@@ -11,8 +11,20 @@ import { CurrentUser } from '../models/currentuser';
 export class AuthenticationService {
 
   private apiUrl = "https://localhost:7059/api"
+  private currentUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public currentUser$: Observable<any> = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
+
+
+  public setCurrentUser(user: any): void {
+    this.currentUserSubject.next(user);
+  }
+  public removeCurrentUser(): void {
+    this.currentUserSubject.next(null);
+  }
+  public getCurrentUser(): any {
+    return this.currentUserSubject.getValue();
   }
 
   login(user: User): Observable<{ token: string, currentUser: string }> {
@@ -30,6 +42,7 @@ export class AuthenticationService {
 
   public logout() {
     localStorage.removeItem('access_token');
+    this.removeCurrentUser();
   }
 
   public checkToken() {

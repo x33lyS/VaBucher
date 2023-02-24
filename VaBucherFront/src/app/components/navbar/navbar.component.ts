@@ -12,7 +12,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class NavbarComponent implements OnInit {
   currentUser!: CurrentUser;
-  currentUserData: string | null | undefined;
 
   constructor(private authentificationService: AuthenticationService) { }
 
@@ -27,16 +26,12 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    interval(100).subscribe(() => {
-      this.currentUserData = localStorage.getItem('currentUser');
-      if (this.currentUserData) {
-        this.currentUser = JSON.parse(this.currentUserData);
-      }
-    });    
+    this.authentificationService.currentUser$.subscribe((currentUser) => {
+      this.currentUser = currentUser;
+    });
   }
 
   disconnect() {
-    localStorage.removeItem('currentUser');
     this.authentificationService.logout();
     // setTimeout(() => {
     //   this.currentUser = localStorage.getItem('currentUser');

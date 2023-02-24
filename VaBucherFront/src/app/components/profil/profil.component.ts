@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CurrentUser } from 'src/app/models/currentuser';
 import { UserService } from 'src/app/services/user.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+
 
 @Component({
   selector: 'app-profil',
@@ -10,23 +12,15 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProfilComponent implements OnInit {
   currentUser!: CurrentUser;
-  currentUserData: string | null | undefined;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService,private authentificationService: AuthenticationService,private router: Router) { }
 
   ngOnInit() {
-    this.currentUserData = localStorage.getItem('currentUser');
-    if (!this.currentUserData) {
-      this.router.navigate(['/registration']);
-    } else {
-      this.currentUser = JSON.parse(this.currentUserData);
-    }
-
+    this.authentificationService.currentUser$.subscribe((currentUser) => {
+      this.currentUser = currentUser;
+    });
   }
   updateCurrentUser() {
     this.userService.updateUser(this.currentUser)
-      .subscribe(data => {
-        localStorage.setItem('currentUser', JSON.stringify(data));
-      });
   }
 }

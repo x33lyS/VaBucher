@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
 
           let currentUser = result.currentUser as unknown as CurrentUser;
           this.currentUser = currentUser;
-          localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+          this.authentService.setCurrentUser(this.currentUser)
           this.router.navigate(['/dashboard']);
 
           // il faut protéger la route home aves un guard dans le futur pour ne pas pouvoir y accéder sans être connecté
