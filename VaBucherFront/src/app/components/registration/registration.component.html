@@ -106,7 +106,10 @@
           <input type="text" formControlName="location" name="location">
         </div>
       </div>
-      <br>
+      <br/>
+
+      <mat-checkbox formControlName="staySignedIn">Stay signed in</mat-checkbox>
+      <br />
     </div>
     <button type="submit" [disabled]="!submit()">Sign up</button>
     <div class="error-message">

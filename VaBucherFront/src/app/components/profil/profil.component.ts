@@ -12,6 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class ProfilComponent implements OnInit {
   currentUser!: CurrentUser;
+  currentUserData: string | null | undefined;
 
   constructor(private userService: UserService,private authentificationService: AuthenticationService,private router: Router) { }
 
@@ -19,8 +20,17 @@ export class ProfilComponent implements OnInit {
     this.authentificationService.currentUser$.subscribe((currentUser) => {
       this.currentUser = currentUser;
     });
+    this.currentUserData = sessionStorage.getItem('currentUser');
+    if (this.currentUserData) {
+      this.currentUser = JSON.parse(this.currentUserData);
+    }
   }
   updateCurrentUser() {
     this.userService.updateUser(this.currentUser)
+    .subscribe(data => {
+      if (this.currentUserData) {
+      sessionStorage.setItem('currentUser', JSON.stringify(data));
+      }
+    });
   }
 }

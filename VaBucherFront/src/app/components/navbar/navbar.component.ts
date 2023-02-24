@@ -26,16 +26,16 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Subscribe to the currentUser$ BehaviorSubject
     this.authentificationService.currentUser$.subscribe((currentUser) => {
-      this.currentUser = currentUser;
+      this.currentUser = currentUser || this.authentificationService.getCurrentUser();
+      // Si currentUser est null, on appelle getCurrentUser() pour chercher l'utilisateur dans le sessionStorage
     });
   }
 
+
   disconnect() {
     this.authentificationService.logout();
-    // setTimeout(() => {
-    //   this.currentUser = localStorage.getItem('currentUser');
-    // });
   }
 
 }

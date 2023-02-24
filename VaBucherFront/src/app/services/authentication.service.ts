@@ -14,29 +14,47 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public currentUser$: Observable<any> = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.checkToken();
+  }
 
-
-  public setCurrentUser(user: any): void {
+  public setCurrentUser(user: CurrentUser): void {
     this.currentUserSubject.next(user);
   }
+
   public removeCurrentUser(): void {
+    sessionStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
-  public getCurrentUser(): any {
-    return this.currentUserSubject.getValue();
+  public getCurrentUser(): CurrentUser | null {
+    const user = this.currentUserSubject.getValue();
+    const storedUser = sessionStorage.getItem('currentUser');
+    if (user) {
+      return user;
+    } else if (storedUser) {
+      return JSON.parse(storedUser);
+    } else {
+      return null;
+    }
   }
 
-  login(user: User): Observable<{ token: string, currentUser: string }> {
+
+  login(user: User): Observable<{ token: string, currentUser: CurrentUser }> {
 
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     let basicAuthHeaderString = 'Basic' + window.btoa(user.email + ':' + user.password);
     headers = headers.set('Authorization', basicAuthHeaderString);
 
-    return this.http.post<{ token: string, currentUser: string }>(`${this.apiUrl}/Auth/login`, {
+    return this.http.post<{ token: string, currentUser: CurrentUser }>(`${this.apiUrl}/Auth/login`, {
       email: user.email,
       password: user.password
-    }, { headers });
+    }, { headers })
+      .pipe(
+        tap(response => {
+          localStorage.setItem('access_token', response.token);
+          this.setCurrentUser(response.currentUser);
+        })
+      );
 
   }
 
@@ -52,7 +70,8 @@ export class AuthenticationService {
       headers = headers.set('Authorization', basic);
       this.http.post(`${this.apiUrl}/Auth/verifyToken`, { headers })
         .pipe(tap((userData: any) => {
-          console.log(userData);
+          const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+          this.setCurrentUser(currentUser);
         }));
     }
   }
