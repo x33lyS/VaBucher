@@ -107,14 +107,13 @@ export class JobofferComponent implements OnInit {
 
   searchNewOffer() {
     const randomDomain = this.searches[Math.floor(Math.random() * this.searches.length)];
-    const randomJobType = this.jobtypes[Math.floor(Math.random() * this.jobtypes.length)];
 
     this.searchService.setCreatednewrandom({ domain: randomDomain });
 
     this.updateFilters({
       domain: randomDomain.filter,
       location: "",
-      jobtype: randomJobType.jobs
+      jobtype: ""
     });
   }
 
