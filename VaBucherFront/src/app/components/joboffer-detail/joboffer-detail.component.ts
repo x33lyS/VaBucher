@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CurrentUser } from 'src/app/models/currentuser';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { JobofferService } from 'src/app/services/joboffer.service';
 
 @Component({
@@ -10,12 +12,17 @@ export class JobofferDetailComponent {
   @Input() selectedJoboffer: any;
   @Output() close = new EventEmitter<void>();
   @Output() saved = new EventEmitter();
+  currentUser!: CurrentUser | null;
+  access: boolean = false
 
-
-
-  constructor(private jobOfferService: JobofferService) { }
+  
+  constructor(private jobOfferService: JobofferService, private authService: AuthenticationService ) { }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.getCurrentUser();
+    if (this.currentUser) {
+      this.access = true;
+    }
     console.log(this.selectedJoboffer);
 
   }

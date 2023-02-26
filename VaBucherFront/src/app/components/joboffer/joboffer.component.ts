@@ -10,6 +10,7 @@ import { JobtypeService } from 'src/app/services/jobtype.service';
 import { JobType } from 'src/app/models/jobtype';
 import { SearchService } from 'src/app/services/search.service';
 import { Search } from 'src/app/models/search';
+import { Router } from '@angular/router';
 
 
 
@@ -40,7 +41,7 @@ export class JobofferComponent implements OnInit {
   showLoader: boolean = true;
 
 
-  constructor(private jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService, private dataService: ApiDataService, private filter: FilterPipe) { }
+  constructor(private router: Router,public jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService, private dataService: ApiDataService, private filter: FilterPipe) { }
 
   ngOnInit(): void {
     this.getOffers();
@@ -67,6 +68,11 @@ export class JobofferComponent implements OnInit {
     for (let i = 1; i <= filteredJoboffers.length / 6; i++) {
       this.pages.push(i);
     }
+  }
+
+  openSavedJobOffers() {
+    const savedJobOffers = this.jobofferService.getSavedJobOffers();
+    this.router.navigate(['/compare'], { state: { savedJobOffers } });
   }
 
   getOffers() {
