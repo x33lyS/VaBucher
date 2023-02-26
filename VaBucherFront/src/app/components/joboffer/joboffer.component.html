@@ -1,4 +1,5 @@
 <app-search (filtersChanged)="updateFilters($event)"></app-search>
+<app-loader *ngIf="showLoader"></app-loader>
 <div class="recent-offers" id="section_3">
   <img class="image" src="../assets/blobGauche.png">
   <div class="offer-title">
@@ -32,7 +33,7 @@
       </ng-container>
     </ng-container>
   </div>
-  <div class="job-offers">
+ <div *ngIf="!showLoader" class="job-offers">
     <div *ngIf="joboffersToDisplay.length === 0" class="offer-title no-offers">
       <h5>Aucune offre à afficher</h5>
       <div class="button-start">

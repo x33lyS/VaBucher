@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JobOffer } from 'src/app/models/joboffer';
 import { EventEmitter, Input, Output } from '@angular/core';
-import { interval } from 'rxjs';
+import { interval, timer } from 'rxjs';
 import { JobofferService } from 'src/app/services/joboffer.service';
 import { FilterPipe } from 'src/app/filter.pipe';
 import { ApiDataService } from "../../services/api-data.service";
@@ -37,11 +37,16 @@ export class JobofferComponent implements OnInit {
   jobtypes!: JobType[];
   searches!: Search[];
   selectedJobOffer: JobOffer | null = null;
+  showLoader: boolean = true;
 
 
   constructor(private jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService, private dataService: ApiDataService, private filter: FilterPipe) { }
 
   ngOnInit(): void {
+    this.getOffers();
+    timer(1000).subscribe(() => {
+      this.showLoader = false;
+    });
     interval(5000).subscribe(() => this.jobofferService
       .getJobOffer()
       .subscribe((result: JobOffer[]) => (this.joboffers = result)));
@@ -52,7 +57,6 @@ export class JobofferComponent implements OnInit {
       .getJobType()
       .subscribe((result: JobType[]) => (this.jobtypes = result));
     this.searchService.getSearch().subscribe((result: Search[]) => (this.searches = result));
-    this.getOffers();
   }
 
   public closeJobOfferDetails() {
@@ -92,6 +96,7 @@ export class JobofferComponent implements OnInit {
     this.locationFilter = filters.location;
     this.jobtypefilter = filters.jobtype;
     this.page = 1;
+    this.currentPage = 1  
   }
 
   searchNewOffer() {
