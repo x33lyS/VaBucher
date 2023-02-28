@@ -265,7 +265,7 @@ export class DialogContentExampleDialog {
     '    <input matInput [(ngModel)]="searchTerm">\n' +
     ' </mat-form-field>' +
     '<mat-dialog-actions align="center">' +
-    '  <button mat-button mat-dialog-close="false">Annuler</button>' +
+    '  <button mat-button mat-dialog-close>Annuler</button>' +
     '  <button mat-button (click)="addSearch()" [mat-dialog-close]="search" cdkFocusInitial>Ajouter</button>' +
     '</mat-dialog-actions>',
   styles: ['mat-form-field { width: 100%; }' +

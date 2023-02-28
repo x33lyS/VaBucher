@@ -9,7 +9,8 @@ using VaBucherBack.Data;
 using BCrypt.Net;
 using System.Net.Mail;
 using System.Net;
-
+using Mailgun.Api;
+using Mailgun.Models;
 
 namespace VaBucherBack.Controllers
 {
@@ -33,39 +34,41 @@ namespace VaBucherBack.Controllers
         public async Task<ActionResult<List<User>>> CreateUser(User user)
         {
             var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
-            if (dbUser == null)
-            {
-                var salt = BCrypt.Net.BCrypt.GenerateSalt();
-                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
-                user.DateCreation = DateTime.Now;
-
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-
-                // Générer un code de confirmation unique
-                var confirmationCode = Guid.NewGuid().ToString();
-
-                // Stocker le code de confirmation dans la base de données
-                user.codeValidation = confirmationCode;
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-
-                // Envoyer un e-mail de confirmation à l'utilisateur
-                var confirmationLink = $"{this.Request.Scheme}://{this.Request.Host}/api/user/confirm?code={confirmationCode}";
-                var emailBody = $"Cliquez sur ce lien pour confirmer votre compte : {confirmationLink}";
-                // Remplacez les variables 'email' et 'password' par les vraies informations de votre serveur d'envoi d'email
-                // Remplacez les valeurs 'smtpServer', 'smtpPort', 'username' et 'password' par les vraies informations de votre serveur d'envoi d'email
-                var emailService = new EmailService("smtp.gmail.com", "swebystudio@gmail.com", "4>$@fAdam", 587);
-                await emailService.SendEmailAsync(user.Email, "Confirmation de compte", emailBody);
-
-
-                return Ok(await _context.Users.ToListAsync());
-            }
-            else
+            if (dbUser != null)
             {
                 return BadRequest("Un utilisateur avec cet e-mail existe déjà.");
             }
+
+            var salt = BCrypt.Net.BCrypt.GenerateSalt();
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
+            user.DateCreation = DateTime.Now;
+
+            // Générer un code de confirmation unique
+            var confirmationCode = Guid.NewGuid().ToString();
+
+            user.codeValidation = confirmationCode;
+            user.isConfirmed = false;
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            // Envoyer un e-mail de confirmation à l'utilisateur
+            var confirmationLink = $"{this.Request.Scheme}://{this.Request.Host}/api/user/confirm?code={confirmationCode}";
+            var emailBody = $"Cliquez sur ce lien pour confirmer votre compte : {confirmationLink}";
+
+            try
+            {
+                var emailService = new EmailService("in-v3.mailjet.com", "897578992d20afc47f3c4a01aca28ca6", "f113914ba6f30d5c74a9a0650cc7e104", 587);
+                await emailService.SendEmailAsync(user.Email, "Confirmation de compte", emailBody);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de l'envoi de l'e-mail de confirmation : {ex.Message}");
+            }
+
+            return Ok(user);
         }
+
 
         [HttpPut]
         public async Task<ActionResult<List<User>>> UpdateUser(User user)
@@ -110,40 +113,27 @@ namespace VaBucherBack.Controllers
 
     public class EmailService
     {
-        public readonly string _smtpServer;
-        public readonly int _smtpPort;
-        private readonly string _username;
-        private readonly string _password;
+        private readonly MailgunApi _mailgunApi;
 
-        public EmailService(string smtpServer, string username, string password, int smtpPort)
+        public EmailService(string apiKey, string domain)
         {
-            _smtpServer = "smtp.gmail.com";
-            _smtpPort = 587;
-            _username = "swebystudio@gmail.com";
-            _password = "4>$@fAdam";
+            _mailgunApi = new MailgunApi(apiKey, domain);
         }
 
         public async Task SendEmailAsync(string toEmail, string subject, string body)
         {
-            var client = new SmtpClient(_smtpServer, _smtpPort)
+            var message = new SendMessageRequest
             {
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(_username, _password),
-                EnableSsl = true
-            };
-
-            var message = new MailMessage
-            {
-                From = new MailAddress(_username),
+                FromEmail = "adam.haouzi31@gmail.com",
+                ToEmail = toEmail,
                 Subject = subject,
-                Body = body
+                Text = body
             };
 
-            message.To.Add(toEmail);
-
-            await client.SendMailAsync(message);
+            await _mailgunApi.Messages.SendAsync(message);
         }
     }
+
 
 
 }
