@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { CurrentUser } from 'src/app/models/currentuser';
 import { UserService } from 'src/app/services/user.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import {FormControl,Validators} from "@angular/forms";
+
 
 
 @Component({
@@ -12,7 +14,11 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class ProfilComponent implements OnInit {
   currentUser!: CurrentUser;
-  currentUserData: string | null | undefined;
+  passwordFormControl = new FormControl('',[
+    Validators.required,
+    Validators.minLength(6)
+  ]);
+
 
   constructor(private userService: UserService,private authentificationService: AuthenticationService,private router: Router) { }
 
@@ -25,7 +31,18 @@ export class ProfilComponent implements OnInit {
       this.currentUser = JSON.parse(this.currentUserData);
     }
   }
+
   updateCurrentUser() {
+
+    let newUser = this.currentUser;
+
+    for (let key in newUser) {
+      // @ts-ignore
+      if (newUser[key] === null || newUser[key] === undefined || newUser[key] === '') {
+        // @ts-ignore
+        delete newUser[key];
+      }
+    }
     this.userService.updateUser(this.currentUser)
     .subscribe(data => {
       if (this.currentUserData) {
@@ -33,4 +50,7 @@ export class ProfilComponent implements OnInit {
       }
     });
   }
+
 }
+
+
