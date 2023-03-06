@@ -1,8 +1,11 @@
-import {Component,OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {CurrentUser} from 'src/app/models/currentuser';
-import {UserService} from 'src/app/services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CurrentUser } from 'src/app/models/currentuser';
+import { UserService } from 'src/app/services/user.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import {FormControl,Validators} from "@angular/forms";
+
+
 
 @Component({
   selector: 'app-profil',
@@ -16,15 +19,16 @@ export class ProfilComponent implements OnInit {
     Validators.minLength(6)
   ]);
 
-  constructor(private userService: UserService,private router: Router) {
-  }
+
+  constructor(private userService: UserService,private authentificationService: AuthenticationService,private router: Router) { }
 
   ngOnInit() {
-    let currentUserData = localStorage.getItem('currentUser');
-    if (!currentUserData) {
-      this.router.navigate(['/registration']);
-    } else {
-      this.currentUser = JSON.parse(currentUserData);
+    this.authentificationService.currentUser$.subscribe((currentUser) => {
+      this.currentUser = currentUser;
+    });
+    this.currentUserData = sessionStorage.getItem('currentUser');
+    if (this.currentUserData) {
+      this.currentUser = JSON.parse(this.currentUserData);
     }
   }
 
@@ -39,11 +43,10 @@ export class ProfilComponent implements OnInit {
         delete newUser[key];
       }
     }
-
-    this.userService.updateUser(newUser).subscribe({
-      next: (result) => {
-    console.log(result, 'result');
-    // TODO : Refactor le updateUser du Backend pour qu'il retourne le bon user
+    this.userService.updateUser(this.currentUser)
+    .subscribe(data => {
+      if (this.currentUserData) {
+      sessionStorage.setItem('currentUser', JSON.stringify(data));
       }
     });
   }

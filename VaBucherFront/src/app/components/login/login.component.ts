@@ -15,10 +15,12 @@ export class LoginComponent implements OnInit {
 
   currentUser: CurrentUser | undefined;
 
-  signInForm: FormGroup<{ Email: FormControl; Password: FormControl; }> =
+
+  signInForm: FormGroup<{ Email: FormControl; Password: FormControl; staySignedIn: FormControl; }> =
     this._formBuilder.group({
       Email: ['', [Validators.required, Validators.email]],
-      Password: ['', [Validators.required, Validators.minLength(8)]]
+      Password: ['', [Validators.required, Validators.minLength(8)]],
+      staySignedIn: [false]
     });
 
   constructor(private authentService: AuthenticationService, private _formBuilder: FormBuilder, private router: Router, private userService: UserService) {
@@ -27,7 +29,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.signInForm = this._formBuilder.group({
       Email: ['', [Validators.required, Validators.email]],
-      Password: ['', Validators.required]
+      Password: ['', Validators.required],
+      staySignedIn: [false]
     });
   }
 
@@ -43,7 +46,10 @@ export class LoginComponent implements OnInit {
 
           let currentUser = result.currentUser as unknown as CurrentUser;
           this.currentUser = currentUser;
-          localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+          this.authentService.setCurrentUser(this.currentUser)
+          if (this.signInForm.value.staySignedIn) {
+            sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+          }
           this.router.navigate(['/dashboard']);
 
           // il faut protéger la route home aves un guard dans le futur pour ne pas pouvoir y accéder sans être connecté

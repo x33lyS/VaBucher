@@ -35,6 +35,7 @@ import { ProfilComponent } from './components/profil/profil.component';
 import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-detail.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FirstUppercasePipe } from './first-uppercase.pipe';
+import { JobofferCompareComponent } from './components/joboffer-compare/joboffer-compare.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { FirstUppercasePipe } from './first-uppercase.pipe';
     DialogUpdateSearch,
     DialogUpdateJobType,
     FirstUppercasePipe,
+    JobofferCompareComponent,
   ],
   imports: [
     BrowserModule,

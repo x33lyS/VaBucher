@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrentUser } from 'src/app/models/currentuser';
 import { JobOffer } from 'src/app/models/joboffer';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { JobofferService } from 'src/app/services/joboffer.service';
 
 @Component({
@@ -11,19 +12,20 @@ import { JobofferService } from 'src/app/services/joboffer.service';
 export class HomeComponent implements OnInit {
 
   joboffers: JobOffer[] = [];
-  currentUser!: CurrentUser;
   allDomains: string[] = [];
   allTypes: string[] = [];
   criteria: boolean = false;
   selectedJobOffer: JobOffer | null = null;
   currentPage = 1;
   pages = [1];
+  currentUser: CurrentUser | null = null;
 
 
-  constructor(private jobofferService: JobofferService) { }
+  constructor(private jobofferService: JobofferService, private authentificationService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.getOffers();
+    // this.getOffers();
+      this.getOffers();
   }
 
 
@@ -47,16 +49,16 @@ export class HomeComponent implements OnInit {
   }
 
   getOffers() {
-    const currentUserString = localStorage.getItem('currentUser');
-    if (currentUserString) {
-      this.currentUser = JSON.parse(currentUserString);
+    const currentUser = this.authentificationService.getCurrentUser();
+    this.currentUser = currentUser;
+    if (currentUser) {
       this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
         this.joboffers = result;
         this.allDomains = [...new Set(this.joboffers.map(offer => offer.domain))];
         this.allTypes = [...new Set(this.joboffers.map(offer => offer.types))];
-        if (this.currentUser.jobtype && this.currentUser.domain) {
-          const currentUserDomains = this.currentUser.domain.split(',');
-          const currentUserJobType = this.currentUser.jobtype;
+        if (currentUser.jobtype && currentUser.domain) {
+          const currentUserDomains = currentUser.domain.split(',');
+          const currentUserJobType = currentUser.jobtype;
           if (currentUserJobType && currentUserDomains) {
             const isDomainMatch = currentUserDomains.some(domain => this.allDomains.includes(domain));
             const isJobTypeMatch = this.allTypes.some(type => type.includes(currentUserJobType));
@@ -76,8 +78,8 @@ export class HomeComponent implements OnInit {
               }
             }
           }
-        } else if (this.currentUser.jobtype) {
-          const currentUserJobType = this.currentUser.jobtype;
+        } else if (currentUser.jobtype) {
+          const currentUserJobType = currentUser.jobtype;
           this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
             this.joboffers = result.filter(joboffer => joboffer.types.includes(currentUserJobType));
             this.criteria = true;
@@ -89,8 +91,8 @@ export class HomeComponent implements OnInit {
             }
 
           });
-        } else if (this.currentUser.domain) {
-          const currentUserDomains = this.currentUser.domain.split(',');
+        } else if (currentUser.domain) {
+          const currentUserDomains = currentUser.domain.split(',');
           this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
             this.joboffers = result.filter(joboffer => currentUserDomains.includes(joboffer.domain));
             this.criteria = true;

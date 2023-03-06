@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JobOffer } from 'src/app/models/joboffer';
 import { EventEmitter, Input, Output } from '@angular/core';
-import { interval } from 'rxjs';
+import { interval, timer } from 'rxjs';
 import { JobofferService } from 'src/app/services/joboffer.service';
 import { FilterPipe } from 'src/app/filter.pipe';
 import { ApiDataService } from "../../services/api-data.service";
@@ -10,6 +10,7 @@ import { JobtypeService } from 'src/app/services/jobtype.service';
 import { JobType } from 'src/app/models/jobtype';
 import { SearchService } from 'src/app/services/search.service';
 import { Search } from 'src/app/models/search';
+import { Router } from '@angular/router';
 
 
 
@@ -37,11 +38,16 @@ export class JobofferComponent implements OnInit {
   jobtypes!: JobType[];
   searches!: Search[];
   selectedJobOffer: JobOffer | null = null;
+  showLoader: boolean = true;
 
 
-  constructor(private jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService, private dataService: ApiDataService, private filter: FilterPipe) { }
+  constructor(private router: Router,public jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService, private dataService: ApiDataService, private filter: FilterPipe) { }
 
   ngOnInit(): void {
+    this.getOffers();
+    timer(1000).subscribe(() => {
+      this.showLoader = false;
+    });
     interval(5000).subscribe(() => this.jobofferService
       .getJobOffer()
       .subscribe((result: JobOffer[]) => (this.joboffers = result)));
@@ -52,7 +58,6 @@ export class JobofferComponent implements OnInit {
       .getJobType()
       .subscribe((result: JobType[]) => (this.jobtypes = result));
     this.searchService.getSearch().subscribe((result: Search[]) => (this.searches = result));
-    this.getOffers();
   }
 
   public closeJobOfferDetails() {
@@ -63,6 +68,11 @@ export class JobofferComponent implements OnInit {
     for (let i = 1; i <= filteredJoboffers.length / 6; i++) {
       this.pages.push(i);
     }
+  }
+
+  openSavedJobOffers() {
+    const savedJobOffers = this.jobofferService.getSavedJobOffers();
+    this.router.navigate(['/compare'], { state: { savedJobOffers } });
   }
 
   getOffers() {
@@ -92,18 +102,18 @@ export class JobofferComponent implements OnInit {
     this.locationFilter = filters.location;
     this.jobtypefilter = filters.jobtype;
     this.page = 1;
+    this.currentPage = 1  
   }
 
   searchNewOffer() {
     const randomDomain = this.searches[Math.floor(Math.random() * this.searches.length)];
-    const randomJobType = this.jobtypes[Math.floor(Math.random() * this.jobtypes.length)];
 
     this.searchService.setCreatednewrandom({ domain: randomDomain });
 
     this.updateFilters({
       domain: randomDomain.filter,
       location: "",
-      jobtype: randomJobType.jobs
+      jobtype: ""
     });
   }
 

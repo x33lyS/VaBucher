@@ -50,7 +50,8 @@ export class RegistrationComponent implements OnInit {
       jobtype: '',
       role: 1,
       cv: '',
-      phone: ''
+      phone: '',
+      staySignedIn: false
   })
 }
 
@@ -99,7 +100,10 @@ export class RegistrationComponent implements OnInit {
 
             let currentUser = result.currentUser as unknown as CurrentUser;
             this.currentUser = currentUser;
-            localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+            this.authentService.setCurrentUser(this.currentUser)
+            if (this.registrationform.value.staySignedIn) {
+              sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+            }
             this.router.navigate(['/dashboard']);
 
             // il faut protéger la route home aves un guard dans le futur pour ne pas pouvoir y accéder sans être connecté
