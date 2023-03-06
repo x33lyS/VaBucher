@@ -72,6 +72,7 @@ import { JobofferCompareComponent } from './components/joboffer-compare/joboffer
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
     MatSelectModule,
     AppRoutingModule,
     MatAutocompleteModule,
