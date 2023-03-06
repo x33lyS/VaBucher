@@ -11,6 +11,7 @@
     <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
       <ng-container *ngIf="joboffer && joboffersToDisplay.indexOf(joboffer) % 2 !== 0">
         <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 3 === 0 ? 1 : 2}}" (click)="showDetails(joboffer)">
+          <button (click)="saveHistory(joboffer)"><mat-icon>star_border</mat-icon></button>
           <h6>{{ joboffer.title | firstUppercase}}</h6>
           <button *ngIf="joboffer.salaire">Rémunération: {{ joboffer.salaire }}</button>
           <button *ngIf="joboffer.types">Type de poste: {{ joboffer.types }}</button>
@@ -24,6 +25,7 @@
     <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
       <ng-container *ngIf="joboffersToDisplay.indexOf(joboffer) % 2 === 0">
         <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 4 === 0 ? 4 : 3}}" (click)="showDetails(joboffer)">
+          <button (click)="saveHistory(joboffer)"><mat-icon>star_border</mat-icon></button>
           <h6>{{ joboffer.title | firstUppercase}}</h6>
           <button *ngIf="joboffer.salaire">Rémunération: {{ joboffer.salaire }}</button>
           <button *ngIf="joboffer.types">Type de poste: {{ joboffer.types }}</button>

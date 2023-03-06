@@ -45,3 +45,19 @@
     <button class="submit-btn" mat-raised-button (click)="updateCurrentUser()">Save</button>
   </form>
 </div>
+
+<div *ngFor="let favoris of jobofferhistory">
+  <div class="offers">
+        <div class="box">
+          <div>
+            <h6>{{ favoris.title | firstUppercase}}</h6>
+            <button (click)="deleteHistory(favoris)"><mat-icon>delete_outline</mat-icon></button>
+          </div>
+
+          <button>Rémunération: {{ favoris.salaire }}</button>
+          <button>Type de poste: {{ favoris.types }}</button>
+          <button>Domaine: {{ favoris.domain }}</button>
+          <p>{{ favoris.description}}</p>
+        </div>
+  </div>
+</div>

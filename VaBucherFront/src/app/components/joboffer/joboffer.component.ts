@@ -11,6 +11,7 @@ import { JobType } from 'src/app/models/jobtype';
 import { SearchService } from 'src/app/services/search.service';
 import { Search } from 'src/app/models/search';
 import { Router } from '@angular/router';
+import {JobhistoryService} from "../../services/jobhistory.service";
 
 
 
@@ -41,7 +42,8 @@ export class JobofferComponent implements OnInit {
   showLoader: boolean = true;
 
 
-  constructor(private router: Router,public jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService, private dataService: ApiDataService, private filter: FilterPipe) { }
+  constructor(private router: Router,public jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService,
+              private dataService: ApiDataService, private filter: FilterPipe, private jobhistory: JobhistoryService) { }
 
   ngOnInit(): void {
     this.getOffers();
@@ -59,6 +61,23 @@ export class JobofferComponent implements OnInit {
       .subscribe((result: JobType[]) => (this.jobtypes = result));
     this.searchService.getSearch().subscribe((result: Search[]) => (this.searches = result));
   }
+
+  saveHistory(joboffer: JobOffer) {
+    // @ts-ignore
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    const currentUserId = currentUser.id;
+    const currentJobOfferId = joboffer.id;
+    console.log('Creating job history for user', currentUserId, 'and job offer', currentJobOfferId);
+    this.jobhistory.createJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
+      jobHistoryList => {
+        console.log('Job history created successfully:', jobHistoryList);
+      },
+      error => {
+        console.error('Error creating job history:', error);
+      }
+    );
+  }
+
 
   public closeJobOfferDetails() {
     this.selectedJobOffer = null;
@@ -102,7 +121,7 @@ export class JobofferComponent implements OnInit {
     this.locationFilter = filters.location;
     this.jobtypefilter = filters.jobtype;
     this.page = 1;
-    this.currentPage = 1  
+    this.currentPage = 1
   }
 
   searchNewOffer() {
