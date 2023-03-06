@@ -28,8 +28,25 @@ namespace VabucherBack.Controllers
                 _context.JobHistories.Add(jobHistory);
                 await _context.SaveChangesAsync();
                 return Ok(await _context.JobHistories.ToListAsync());
+        }
+
+        [HttpDelete("{userId}/{jobOfferId}")]
+        public async Task<IActionResult> DeleteJobHistory(int userId, int jobOfferId)
+        {
+            var jobHistory = await _context.JobHistories
+                .SingleOrDefaultAsync(jh => jh.IdUser == userId && jh.IdOffer == jobOfferId);
+
+            if (jobHistory == null)
+            {
+                return NotFound();
             }
-           
+
+            _context.JobHistories.Remove(jobHistory);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
     }
 }
      

@@ -63,6 +63,7 @@ namespace VaBucherBack.Controllers
                            $"Cliquez sur ce lien pour confirmer votre compte : <a href='{confirmationLink}'>{confirmationLink}</a>";
 
             var smtpClient = new SmtpClient("smtp.gmail.com")
+
             {
                 Port = 587,
                 Credentials = new NetworkCredential(fromMail, fromPassword),
@@ -114,6 +115,4 @@ namespace VaBucherBack.Controllers
 
 
     }
-
-
 }
