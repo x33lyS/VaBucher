@@ -20,5 +20,8 @@ namespace VaBucherBack
         public string Phone { get; set; } = string.Empty;
         public DateTime DateCreation { get; set; }
         public DateTime DateLastConnexion { get; set; }
+        public string codeValidation { get; set; } = string.Empty;
+        public bool isConfirmed { get; set; } = false;
+
     }
 }

@@ -7,6 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using VaBucherBack.Data;
 using BCrypt.Net;
+using System.Net.Mail;
+using System.Net;
+using Mailgun.Api;
+using Mailgun.Models;
 
 namespace VaBucherBack.Controllers
 {
@@ -30,21 +34,41 @@ namespace VaBucherBack.Controllers
         public async Task<ActionResult<List<User>>> CreateUser(User user)
         {
             var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
-            if (dbUser == null)
-            {
-                var salt = BCrypt.Net.BCrypt.GenerateSalt();
-                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
-                user.DateCreation = DateTime.Now;
-
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-                return Ok(await _context.Users.ToListAsync());
-            }
-            else
+            if (dbUser != null)
             {
                 return BadRequest("Un utilisateur avec cet e-mail existe déjà.");
             }
+
+            var salt = BCrypt.Net.BCrypt.GenerateSalt();
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
+            user.DateCreation = DateTime.Now;
+
+            // Générer un code de confirmation unique
+            var confirmationCode = Guid.NewGuid().ToString();
+
+            user.codeValidation = confirmationCode;
+            user.isConfirmed = false;
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            // Envoyer un e-mail de confirmation à l'utilisateur
+            var confirmationLink = $"{this.Request.Scheme}://{this.Request.Host}/api/user/confirm?code={confirmationCode}";
+            var emailBody = $"Cliquez sur ce lien pour confirmer votre compte : {confirmationLink}";
+
+            try
+            {
+                var emailService = new EmailService("in-v3.mailjet.com", "897578992d20afc47f3c4a01aca28ca6", "f113914ba6f30d5c74a9a0650cc7e104", 587);
+                await emailService.SendEmailAsync(user.Email, "Confirmation de compte", emailBody);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de l'envoi de l'e-mail de confirmation : {ex.Message}");
+            }
+
+            return Ok(user);
         }
+
 
         [HttpPut]
         public async Task<ActionResult<List<User>>> UpdateUser(User user)
@@ -85,4 +109,31 @@ namespace VaBucherBack.Controllers
 
 
     }
+
+
+    public class EmailService
+    {
+        private readonly MailgunApi _mailgunApi;
+
+        public EmailService(string apiKey, string domain)
+        {
+            _mailgunApi = new MailgunApi(apiKey, domain);
+        }
+
+        public async Task SendEmailAsync(string toEmail, string subject, string body)
+        {
+            var message = new SendMessageRequest
+            {
+                FromEmail = "adam.haouzi31@gmail.com",
+                ToEmail = toEmail,
+                Subject = subject,
+                Text = body
+            };
+
+            await _mailgunApi.Messages.SendAsync(message);
+        }
+    }
+
+
+
 }
