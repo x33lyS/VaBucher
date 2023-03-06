@@ -9,8 +9,6 @@ using VaBucherBack.Data;
 using BCrypt.Net;
 using System.Net.Mail;
 using System.Net;
-//using Mailgun.Api;
-//using Mailgun.Models;
 
 namespace VaBucherBack.Controllers
 {
@@ -53,19 +51,27 @@ namespace VaBucherBack.Controllers
             await _context.SaveChangesAsync();
 
             // Envoyer un e-mail de confirmation à l'utilisateur
-            //var confirmationLink = $"{this.Request.Scheme}://{this.Request.Host}/api/user/confirm?code={confirmationCode}";
-            //var emailBody = $"Cliquez sur ce lien pour confirmer votre compte : {confirmationLink}";
+            var confirmationLink = $"{this.Request.Scheme}://{this.Request.Host}/api/user/confirm?code={confirmationCode}";
+            var fromMail = "swebystudio@gmail.com";
+            var fromPassword = "vjoopqgghpnlqkfp";
 
-            try
-            {
-                //var emailService = new EmailService("in-v3.mailjet.com", "897578992d20afc47f3c4a01aca28ca6", "f113914ba6f30d5c74a9a0650cc7e104", 587);
-                //await emailService.SendEmailAsync(user.Email, "Confirmation de compte", emailBody);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Erreur lors de l'envoi de l'e-mail de confirmation : {ex.Message}");
-            }
+            MailMessage message = new MailMessage();
+            message.From = new MailAddress(fromMail);
+            message.Subject = "Confirmation de compte";
+            message.To.Add(new MailAddress(user.Email));
+            message.Body = $"Bonjour {user.Firstname},<br><br>" +
+                           $"Cliquez sur ce lien pour confirmer votre compte : <a href='{confirmationLink}'>{confirmationLink}</a>";
 
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+
+            {
+                Port = 587,
+                Credentials = new NetworkCredential(fromMail, fromPassword),
+                EnableSsl= true
+            };
+            smtpClient.Send(message);
+
+            // Si l'email est envoyé avec succès, renvoyer la réponse OK
             return Ok(user);
         }
 
@@ -109,31 +115,4 @@ namespace VaBucherBack.Controllers
 
 
     }
-
-
-    //public class EmailService
-    //{
-    //    private readonly MailgunApi _mailgunApi;
-
-    //    public EmailService(string apiKey, string domain)
-    //    {
-    //        _mailgunApi = new MailgunApi(apiKey, domain);
-    //    }
-
-    //    public async Task SendEmailAsync(string toEmail, string subject, string body)
-    //    {
-    //        var message = new SendMessageRequest
-    //        {
-    //            FromEmail = "adam.haouzi31@gmail.com",
-    //            ToEmail = toEmail,
-    //            Subject = subject,
-    //            Text = body
-    //        };
-
-    //        await _mailgunApi.Messages.SendAsync(message);
-    //    }
-    //}
-
-
-
 }
