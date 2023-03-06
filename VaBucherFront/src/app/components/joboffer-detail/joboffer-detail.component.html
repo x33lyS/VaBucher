@@ -2,7 +2,7 @@
   <div class="selected-job-offer active">
     <span class="close-button" (click)="onClose()">X</span>
     <h2>{{ selectedJoboffer.title }}</h2>
-    <p>{{ selectedJoboffer.description.slice(0, selectedJoboffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>
+    <p>{{ selectedJoboffer.description }} </p>
     <p>Salaire: {{ selectedJoboffer.salaire }}</p>
     <p>Localisation: {{ selectedJoboffer.localisation }}</p>
     <p>Types: {{ selectedJoboffer.types }}</p>
