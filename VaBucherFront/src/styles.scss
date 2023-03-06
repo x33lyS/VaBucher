@@ -1,26 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;400;700&display=swap');
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 *{
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  // background-color: var(--white-color);
-  background-color: rgb(87, 82, 82);
-  font-family: var(--body-font-family); 
+  font-family: var(--body-font-family);
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar{
+  display: none;
 }
 
 a, button{
   cursor: pointer;
 }
 /*---------------------------------------
-  CUSTOM PROPERTIES ( VARIABLES )             
+  CUSTOM PROPERTIES ( VARIABLES )
 -----------------------------------------*/
 :root {
   --white-color:                  #FDEFED;
   --primary-color:                #F47068;
-  --secondary-color:              #ED6A5A;
-  --section-bg-color:             #f0f8ff;
+  --secondary-color:              #F39F95;
+  --section-bg-color:             #fdefed;
   --custom-btn-bg-color:          #E94A35;
   --custom-btn-bg-hover-color:    #c01f27;
   --dark-color:                   #000000;
@@ -51,7 +55,7 @@ a, button{
 
 
 /*---------------------------------------
-  TYPOGRAPHY               
+  TYPOGRAPHY
 -----------------------------------------*/
 
 h2,
@@ -107,7 +111,7 @@ ul li {
   font-weight: var(--font-weight-light);
 }
 
-a, 
+a,
 button {
   touch-action: manipulation;
   transition: all 0.3s;

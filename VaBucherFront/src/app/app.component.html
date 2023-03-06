@@ -1,5 +1,21 @@
+<div class="container">
 <app-navbar></app-navbar>
-<app-home></app-home>
+  <router-outlet></router-outlet>
+  <app-footer></app-footer>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!--<div *ngIf="true">-->
 <!--<button (click)="initNewUser()">Create New User</button>-->
 
@@ -16,8 +32,8 @@
 <!--  </thead>-->
 <!--  <tbody>-->
 <!--    <tr *ngFor="let user of users">-->
-<!--      <td>{{ user.firstName }}</td>-->
-<!--      <td>{{ user.lastName }}</td>-->
+<!--      <td>{{ user.firstname }}</td>-->
+<!--      <td>{{ user.lastname }}</td>-->
 <!--      <td>{{ user.password }}</td>-->
 <!--      <td>{{ user.location }}</td>-->
 <!--      <td>{{ user.cv }}</td>-->

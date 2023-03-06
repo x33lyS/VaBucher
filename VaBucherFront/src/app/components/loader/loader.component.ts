@@ -11,7 +11,7 @@ export class LoaderComponent implements OnInit {
   public isVisible: boolean = true;
 
   constructor() {
-    timer(3000).subscribe(() => {
+    timer(1200).subscribe(() => {
       this.isVisible = false;
     });
   }

@@ -1,0 +1,63 @@
+<div class="profile" *ngIf="currentUser">
+  <h1>Profile</h1>
+  <form class="profile-form">
+    <mat-form-field>
+      <mat-label class="label">First Name</mat-label>
+      <input [value]="currentUser.firstname" matInput placeholder="New firstname" value="currentUser.firstname">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label class="label">Last Name</mat-label>
+      <input [value]="currentUser.lastname" matInput placeholder="New lastname">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label class="label">Location</mat-label>
+      <input [value]="currentUser.location" matInput placeholder="New location">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label class="label">Domain</mat-label>
+      <input [value]="currentUser.domain" matInput placeholder="New domain">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label class="label">Job Type</mat-label>
+      <input [value]="currentUser.jobtype" matInput placeholder="New job type">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label class="label">CV</mat-label>
+      <input [value]="currentUser.cv" matInput placeholder="New CV">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label class="label">Email</mat-label>
+      <input [value]="currentUser.email" matInput placeholder="New email">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label class="label">Phone</mat-label>
+      <input [value]="currentUser.phone" matInput placeholder="New phone">
+    </mat-form-field>
+
+<!--  TODO :  il faudra surement faire une partie a part pour le poasswor, plus propre-->
+<!--    <mat-form-field>-->
+<!--      <mat-label class="label">Password</mat-label>-->
+<!--      <input [formControl]="passwordFormControl" [value]="currentUser.password"  matInput placeholder="New password">-->
+<!--      <mat-error *ngIf="passwordFormControl.hasError('minlength')">Password should be at least 8 characters</mat-error>-->
+<!--    </mat-form-field>-->
+
+
+    <button class="submit-btn" mat-raised-button (click)="updateCurrentUser()">Save</button>
+  </form>
+</div>
+
+<div *ngFor="let favoris of jobofferhistory">
+  <div class="offers">
+        <div class="box">
+          <div>
+            <h6>{{ favoris.title | firstUppercase}}</h6>
+            <button (click)="deleteHistory(favoris)"><mat-icon>delete_outline</mat-icon></button>
+          </div>
+
+          <button>Rémunération: {{ favoris.salaire }}</button>
+          <button>Type de poste: {{ favoris.types }}</button>
+          <button>Domaine: {{ favoris.domain }}</button>
+          <p>{{ favoris.description}}</p>
+        </div>
+  </div>
+</div>

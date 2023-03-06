@@ -7,4 +7,6 @@ export class JobOffer {
     types= "";
     companyInfo = "";
     domain = "";
+    isNew = "";
+    url = "";
 }

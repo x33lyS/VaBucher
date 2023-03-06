@@ -1,5 +1,7 @@
 .vs/*
 .idea/*
 VabucherBack/.vs/*
-Crawler/nodes-modules/*
-VabucherBack/VabucherBack/Migrations/*
+VabucherBack/VabucherBack/obj/*
+VabucherBack/VabucherBack/bin/*
+VabucherBack/VabucherBack/VabucherBack.csproj.user
+VabucherBack/VabucherBack/appsettings.json

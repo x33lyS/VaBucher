@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { environment } from 'src/environments/environment';
 import { JobOffer } from '../models/joboffer';
 
 @Injectable({
@@ -9,17 +8,52 @@ import { JobOffer } from '../models/joboffer';
 })
 export class JobofferService {
   private url= "joboffer";
+  private apiUrl = "https://localhost:7059/api"
+  savedJobOffers: any[] = [];
+
 
 
   constructor(private http: HttpClient) { }
 
-  public getJobOffer() : Observable<JobOffer[]> {
-    return this.http.get<JobOffer[]>(`${environment.apiUrl}/${this.url}`);
+
+  saveJobOffer(jobOffer: JobOffer) {
+    const savedJobOffers = this.getSavedJobOffers();
+    const jobOfferIndex = savedJobOffers.findIndex(o => o.id === jobOffer.id);
+    if (jobOfferIndex === -1) {
+      savedJobOffers.push(jobOffer);
+    }
   }
+  
+  getSavedJobOffers() {
+  return this.savedJobOffers;
+}
+
+
+
+  public getJobOffer() : Observable<JobOffer[]> {
+    return this.http.get<JobOffer[]>(`${this.apiUrl}/${this.url}`);
+  }
+
+  
+
+  public createJobOffer(joboffer: JobOffer): Observable<JobOffer[]> {
+    return this.http.post<JobOffer[]>(
+      `${this.apiUrl}/${this.url}`,
+      joboffer
+    );
+  }
+
+  public updateJobOffer(joboffer: JobOffer): Observable<JobOffer[]> {
+    return this.http.put<JobOffer[]>(
+      `${this.apiUrl}/${this.url}/${joboffer.id}`,
+      joboffer
+    );
+  }
+
 
   public deleteJobOffer(joboffer: JobOffer): Observable<JobOffer[]> {
     return this.http.delete<JobOffer[]>(
-      `${environment.apiUrl}/${this.url}/${joboffer.id}`
+      `${this.apiUrl}/${this.url}/${joboffer.id}`
     );
   }
 }

@@ -1,0 +1,120 @@
+<div class="container">
+  <form [formGroup]="registrationform" (ngSubmit)="onSubmit()" >
+    <div>
+      <div class="input-container">
+        <div style="display: flex; gap: 20px; width: 100%;">
+          <div>
+            <label>Firstname*:</label>
+            <input type="text" formControlName="firstname" name="firstname" required>
+            <small *ngIf="registrationform.value.firstname.length === 0 && registrationform.get('firstname')?.touched">Firstname required</small>
+          </div>
+          <div>
+            <label>Lastname*:</label>
+            <input type="text" formControlName="lastname" name="lastname" required>
+            <small *ngIf="registrationform.value.lastname.length === 0 && registrationform.get('lastname')?.touched">Lastname required</small>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <br>
+      <div class="input-container">
+        <label>Email*:</label>
+        <input type="email" formControlName="email" name="email" required>
+        <small *ngIf="registrationform.value.email.length === 0 && registrationform.get('email')?.touched">Email required</small>
+        <mat-error *ngIf="registrationform.get('email')?.hasError('email') && !registrationform.get('email')?.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+      </div>
+
+      <br>
+      <div class="input-container">
+        <label>Password*:</label>
+        <input type="password" formControlName="password" name="password" required>
+        <small *ngIf="registrationform.value.password.length === 0 && registrationform.get('password')?.touched">Password required</small>
+        <!-- Affichez un message d'erreur si le mot de passe a moins de 8 caractères -->
+      </div>
+      <div class="validate-password">
+         <span *ngIf="registrationform.value.password.length < 8; else passwordErrorlength">
+            <mat-icon>close</mat-icon>
+            <p>Le mot de passe doit avoir au moins 8 caractères.</p>
+          </span>
+        <ng-template #passwordErrorlength>
+            <span>
+              <mat-icon>done</mat-icon>
+              <p>Le mot de passe doit avoir au moins 8 caractères.</p>
+            </span>
+        </ng-template>
+        <!-- Affichez un message d'erreur si le mot de passe ne respecte pas les critères -->
+        <span *ngIf="!checkPassword() else passwordValidMessage" >
+              <mat-icon>close</mat-icon>
+              <p>The password must contain at least one uppercase letter, one lowercase letter, and one special character.</p>
+            </span>
+        <ng-template #passwordValidMessage>
+            <span>
+              <mat-icon>done</mat-icon>
+              <p>The password meets the criteria.</p>
+            </span>
+        </ng-template>
+      </div>
+      <br>
+
+      <div class="input-container">
+        <label>Confirm password*:</label>
+        <input type="password" formControlName="confirmPassword" name="confirmPassword" required>
+        <small *ngIf="registrationform.value.confirmPassword.length === 0 && registrationform.get('confirmPassword')?.touched">Confirm Password required</small>
+        <div *ngIf="registrationform.value.confirmPassword.length > 0 && registrationform.get('confirmPassword')?.touched && !validatePasswords()">
+        <span>
+          <mat-icon>close</mat-icon>
+          <p>Passwords do not match.</p>
+        </span>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="input-container">
+        <label>Domaine:</label>
+          <mat-select [value]="selectedJobTypes" multiple formControlName="domain" name="domain">
+            <mat-option *ngFor="let search of searches" [value]="search.filter">
+              {{ search.filter }}</mat-option>
+          </mat-select>
+      </div>
+
+      <br>
+
+      <div class="input-container">
+        <label>Type de Job:</label>
+          <mat-select [value]="selectedJobTypes" multiple formControlName="jobtype" name="jobtype">
+            <mat-option *ngFor="let jobType of jobtypes" [value]="jobType.jobs">
+             {{jobType.jobs}}
+            </mat-option>
+          </mat-select>
+      </div>
+
+      <br>
+      <div style="display: flex; gap: 20px">
+        <div class="input-container">
+          <label>Phone:</label>
+          <input type="tel" formControlName="phone" name="phone">
+        </div>
+
+        <br>
+        <div class="input-container">
+          <label>Location:</label>
+          <input type="text" formControlName="location" name="location">
+        </div>
+      </div>
+      <br/>
+
+      <mat-checkbox formControlName="staySignedIn">Stay signed in</mat-checkbox>
+      <br />
+    </div>
+    <button type="submit" [disabled]="!submit()">Sign up</button>
+    <div class="error-message">
+      {{message}}
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,48 @@
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+jobs:
+  build-dotnet:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/dotnet/sdk:latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build .NET application
+      run: |
+        cd ./VabucherBack
+        dotnet restore
+        dotnet build --configuration Release
+      
+  build-angular:
+    runs-on: ubuntu-latest
+    container: node:18
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+    - name: Install depedencies and build
+      run: | 
+        cd ./VaBucherFront
+        npm install
+        ng build
+    - name: Run Angular tests
+      run: |
+        cd ./VaBucherFront
+        ng test
+     
+  release:
+    needs: [build-dotnet, build-angular]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and push Docker images
+      run: |
+        docker build -t docker.io/adamoccidevops/vabucherback:v1 ./VabucherBack
+        docker build -t docker.io/adamoccidevops/vabucherfront:v1 ./VaBucherFront
+        echo "Alternance2022" | docker login --username adamoccidevops --password-stdin
+        docker push docker.io/adamoccidevops/vabucherback:v1
+        docker push docker.io/adamoccidevops/vabucherfront:v1
+        
+
