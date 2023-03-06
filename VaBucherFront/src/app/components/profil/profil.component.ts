@@ -18,6 +18,7 @@ export class ProfilComponent implements OnInit {
     Validators.required,
     Validators.minLength(6)
   ]);
+  currentUserData: string | null = '';
 
 
   constructor(private userService: UserService,private authentificationService: AuthenticationService,private router: Router) { }
