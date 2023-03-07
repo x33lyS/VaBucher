@@ -3,24 +3,52 @@
   flex-wrap: wrap;
   margin-top: 5%;
   padding: 5%;
-  .header{
-    display: flex;
+  .offers{
+    padding: 50px;
+    flex-basis: 50%;
     justify-content: space-between;
-    h2{
-      font-size: 2em;
-      font-weight: 600;
+    .header{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      h2{
+        font-size: 2em;
+        font-weight: 600;
+      }
+      button{
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        &:hover{
+          color: red;
+        }
+      }
     }
-    button{
-      cursor: pointer;
-      background: transparent;
-      border: none;
-      &:hover{
-        color: red;
+    .content{
+      .content-type{
+        display: flex;
+        margin: 20px 0;
+        .salaire{
+        }
+        p{
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          width: 100%;
+          span{
+            font-weight: lighter;
+          }
+        }
+      }
+      p{
+        color: black;
+        font-weight: bolder;
       }
     }
   }
-  .offers{
-    flex-basis: 50%;
-    justify-content: space-between;
-  }
+}
+.hovered{
+  color: red;
 }

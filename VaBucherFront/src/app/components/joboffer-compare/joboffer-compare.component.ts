@@ -9,6 +9,7 @@ import { JobofferService } from 'src/app/services/joboffer.service';
 export class JobofferCompareComponent {
   jobofferService: JobofferService;
   savedJobOffers: any;
+  hoveredIndexes: number[] = [];
 
   constructor(jobofferService: JobofferService) {
     this.jobofferService = jobofferService;
@@ -29,5 +30,13 @@ export class JobofferCompareComponent {
     }
   }
 
-
+  takeIndex() {
+    const indexs = this.savedJobOffers.length;
+    for (let i = 0; i < indexs; i++) {
+      if (!this.hoveredIndexes.includes(i)) {
+        this.hoveredIndexes.push(i);
+      }
+      console.log(this.hoveredIndexes);
+    }
+  }
 }
