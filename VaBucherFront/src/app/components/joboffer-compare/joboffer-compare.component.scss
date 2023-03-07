@@ -1,0 +1,26 @@
+.container{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5%;
+  padding: 5%;
+  .header{
+    display: flex;
+    justify-content: space-between;
+    h2{
+      font-size: 2em;
+      font-weight: 600;
+    }
+    button{
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      &:hover{
+        color: red;
+      }
+    }
+  }
+  .offers{
+    flex-basis: 50%;
+    justify-content: space-between;
+  }
+}

@@ -1,14 +1,17 @@
-<div *ngFor="let jobOffer of savedJobOffers">
-  <div>
-    <h2>{{ jobOffer.title }}</h2>
-    <button (click)="deleteCompare(jobOffer)"><mat-icon>delete_outline</mat-icon></button>
+<div  class="container">
+  <div *ngFor="let jobOffer of savedJobOffers" class="offers mat-elevation-z5" >
+    <div class="header">
+      <h2>{{ jobOffer.title }}</h2>
+      <button (click)="deleteCompare(jobOffer)"><mat-icon>delete_outline</mat-icon></button>
+    </div>
+    <div>
+      <p>{{ jobOffer.description.slice(0, jobOffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>
+      <p>Salaire: {{ jobOffer.salaire }}</p>
+      <p>Localisation: {{ jobOffer.localisation }}</p>
+      <p>Types: {{ jobOffer.types }}</p>
+      <p>CompanyInfo: {{ jobOffer.companyInfo }}</p>
+      <p>Domain: {{ jobOffer.domain }}</p>
+      <p>Date: {{ jobOffer.isNew }}</p>
+    </div>
   </div>
-
-    <p>{{ jobOffer.description.slice(0, jobOffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>
-    <p>Salaire: {{ jobOffer.salaire }}</p>
-    <p>Localisation: {{ jobOffer.localisation }}</p>
-    <p>Types: {{ jobOffer.types }}</p>
-    <p>CompanyInfo: {{ jobOffer.companyInfo }}</p>
-    <p>Domain: {{ jobOffer.domain }}</p>
-    <p>Date: {{ jobOffer.isNew }}</p>
-  </div>
+</div>
