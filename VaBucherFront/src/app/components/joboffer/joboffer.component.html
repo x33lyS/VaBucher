@@ -50,7 +50,7 @@
   </div>
 
   <button *ngIf="currentPage < pages.length" (click)="setPage(currentPage + 1)" class="pagination-button-right">&gt;</button>
-<button *ngIf="jobofferService.getSavedJobOffers().length > 0" (click)="openSavedJobOffers()">Voir mes offres enregistrées</button>
+<button *ngIf="jobofferService.getSavedJobOffers().length > 0" (click)="openSavedJobOffers()">{{jobofferService.getSavedJobOffers().length}} offres à comparer </button>
 
 
   <div class="pagination">

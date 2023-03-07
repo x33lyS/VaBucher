@@ -1,5 +1,9 @@
 <div *ngFor="let jobOffer of savedJobOffers">
+  <div>
     <h2>{{ jobOffer.title }}</h2>
+    <button (click)="deleteCompare(jobOffer)"><mat-icon>delete_outline</mat-icon></button>
+  </div>
+
     <p>{{ jobOffer.description.slice(0, jobOffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>
     <p>Salaire: {{ jobOffer.salaire }}</p>
     <p>Localisation: {{ jobOffer.localisation }}</p>
@@ -8,4 +12,3 @@
     <p>Domain: {{ jobOffer.domain }}</p>
     <p>Date: {{ jobOffer.isNew }}</p>
   </div>
-  

@@ -18,14 +18,16 @@ export class JobofferService {
 
   saveJobOffer(jobOffer: JobOffer) {
     const savedJobOffers = this.getSavedJobOffers();
-    const jobOfferIndex = savedJobOffers.findIndex(o => o.id === jobOffer.id);
+    const jobOfferIndex = savedJobOffers.findIndex((o: { id: number | undefined; }) => o.id === jobOffer.id);
     if (jobOfferIndex === -1) {
       savedJobOffers.push(jobOffer);
+      localStorage.setItem('savedForCompareJobOffers', JSON.stringify(savedJobOffers));
     }
   }
-  
+
   getSavedJobOffers() {
-  return this.savedJobOffers;
+  // @ts-ignore
+    return localStorage.getItem('savedForCompareJobOffers') ? JSON.parse(localStorage.getItem('savedForCompareJobOffers')) : [];
 }
 
 
@@ -34,7 +36,7 @@ export class JobofferService {
     return this.http.get<JobOffer[]>(`${this.apiUrl}/${this.url}`);
   }
 
-  
+
 
   public createJobOffer(joboffer: JobOffer): Observable<JobOffer[]> {
     return this.http.post<JobOffer[]>(
