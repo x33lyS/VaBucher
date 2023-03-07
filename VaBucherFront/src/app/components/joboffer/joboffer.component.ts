@@ -12,6 +12,7 @@ import { SearchService } from 'src/app/services/search.service';
 import { Search } from 'src/app/models/search';
 import { Router } from '@angular/router';
 import {JobhistoryService} from "../../services/jobhistory.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 
 
@@ -43,9 +44,13 @@ export class JobofferComponent implements OnInit {
 
 
   constructor(private router: Router,public jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService,
-              private dataService: ApiDataService, private filter: FilterPipe, private jobhistory: JobhistoryService) { }
+              private dataService: ApiDataService, private filter: FilterPipe, private jobhistory: JobhistoryService, private authentificationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.authentificationService.currentUser$.subscribe((currentUser) => {
+      this.currentUser = currentUser || this.authentificationService.getCurrentUser();
+      // Si currentUser est null, on appelle getCurrentUser() pour chercher l'utilisateur dans le sessionStorage
+    });
     this.getOffers();
     timer(1000).subscribe(() => {
       this.showLoader = false;
