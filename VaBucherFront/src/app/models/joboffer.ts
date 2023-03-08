@@ -9,4 +9,5 @@ export class JobOffer {
     domain = "";
     isNew = "";
     url = "";
+    hovered?: boolean;
 }

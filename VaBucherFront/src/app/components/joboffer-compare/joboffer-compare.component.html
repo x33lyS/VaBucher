@@ -1,14 +1,31 @@
-<div *ngFor="let jobOffer of savedJobOffers">
-  <div>
-    <h2>{{ jobOffer.title }}</h2>
-    <button (click)="deleteCompare(jobOffer)"><mat-icon>delete_outline</mat-icon></button>
+<div  class="container">
+  <div class="offers mat-elevation-z5" *ngFor="let jobOffer of savedJobOffers; let i = index" >
+    <div class="header">
+      <h2>{{ jobOffer.title }}</h2>
+      <button (click)="deleteCompare(jobOffer)"><mat-icon>delete_outline</mat-icon></button>
+    </div>
+    <div class="content">
+<!--      <p class="description">{{ jobOffer.description.slice(0, jobOffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>-->
+      <div class="content-type">
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexSalary()" [ngClass]="{'hovered': hoveredIndexesSalary.includes(i)}" (mouseleave)="leaveIndex()">
+          Salaire: <span>{{ jobOffer.salaire }}</span>
+        </p>
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexLocation()" [ngClass]="{'hovered': hoveredIndexesLocation.includes(i)}" (mouseleave)="leaveIndex()">
+          Localisation:  <span>{{ jobOffer.localisation }}</span>
+        </p>
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexType()" [ngClass]="{'hovered': hoveredIndexesType.includes(i)}" (mouseleave)="leaveIndex()">
+          Types: <span>{{ jobOffer.types }}</span>
+        </p>
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexCompanyInfo()" [ngClass]="{'hovered': hoveredIndexesCompanyInfo.includes(i)}" (mouseleave)="leaveIndex()">
+          CompanyInfo: <span>{{ jobOffer.companyInfo }}</span>
+        </p>
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexDomain()" [ngClass]="{'hovered': hoveredIndexesDomain.includes(i)}" (mouseleave)="leaveIndex()">
+          Domain: <span>{{ jobOffer.domain }}</span>
+        </p>
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexDate()" [ngClass]="{'hovered': hoveredIndexesDate.includes(i)}" (mouseleave)="leaveIndex()">
+          Date: <span>{{ jobOffer.isNew }}</span>
+        </p>
+      </div>
+    </div>
   </div>
-
-    <p>{{ jobOffer.description.slice(0, jobOffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>
-    <p>Salaire: {{ jobOffer.salaire }}</p>
-    <p>Localisation: {{ jobOffer.localisation }}</p>
-    <p>Types: {{ jobOffer.types }}</p>
-    <p>CompanyInfo: {{ jobOffer.companyInfo }}</p>
-    <p>Domain: {{ jobOffer.domain }}</p>
-    <p>Date: {{ jobOffer.isNew }}</p>
-  </div>
+</div>

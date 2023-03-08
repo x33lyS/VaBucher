@@ -9,6 +9,12 @@ import { JobofferService } from 'src/app/services/joboffer.service';
 export class JobofferCompareComponent {
   jobofferService: JobofferService;
   savedJobOffers: any;
+  hoveredIndexesSalary: number[] = [];
+  hoveredIndexesLocation: number[] = [];
+  hoveredIndexesType: number[] = [];
+  hoveredIndexesCompanyInfo: number[] = [];
+  hoveredIndexesDomain: number[] = [];
+  hoveredIndexesDate: number[] = [];
 
   constructor(jobofferService: JobofferService) {
     this.jobofferService = jobofferService;
@@ -29,5 +35,70 @@ export class JobofferCompareComponent {
     }
   }
 
+  takeIndexSalary() {
+    const indexs = this.savedJobOffers.length;
+    for (let i = 0; i < indexs; i++) {
+      if (!this.hoveredIndexesSalary.includes(i)) {
+        this.hoveredIndexesSalary.push(i);
+      }
+      console.log(this.hoveredIndexesSalary);
+    }
+  }
+  leaveIndex() {
+    this.hoveredIndexesSalary = [];
+    this.hoveredIndexesLocation = [];
+    this.hoveredIndexesType = [];
+    this.hoveredIndexesCompanyInfo = [];
+    this.hoveredIndexesDomain = [];
+    this.hoveredIndexesDate = [];
+  }
 
+  takeIndexLocation() {
+    const indexs = this.savedJobOffers.length;
+    for (let i = 0; i < indexs; i++) {
+      if (!this.hoveredIndexesLocation.includes(i)) {
+        this.hoveredIndexesLocation.push(i);
+      }
+      console.log(this.hoveredIndexesLocation);
+    }
+  }
+
+  takeIndexType() {
+    const indexs = this.savedJobOffers.length;
+    for (let i = 0; i < indexs; i++) {
+      if (!this.hoveredIndexesType.includes(i)) {
+        this.hoveredIndexesType.push(i);
+      }
+      console.log(this.hoveredIndexesType);
+    }
+  }
+
+  takeIndexCompanyInfo() {
+    const indexs = this.savedJobOffers.length;
+    for (let i = 0; i < indexs; i++) {
+      if (!this.hoveredIndexesCompanyInfo.includes(i)) {
+        this.hoveredIndexesCompanyInfo.push(i);
+      }
+      console.log(this.hoveredIndexesCompanyInfo);
+    }
+  }
+
+  takeIndexDomain() {
+    const indexs = this.savedJobOffers.length;
+    for (let i = 0; i < indexs; i++) {
+      if (!this.hoveredIndexesDomain.includes(i)) {
+        this.hoveredIndexesDomain.push(i);
+      }
+      console.log(this.hoveredIndexesDomain);
+    }
+  }
+  takeIndexDate() {
+    const indexs = this.savedJobOffers.length;
+    for (let i = 0; i < indexs; i++) {
+      if (!this.hoveredIndexesDate.includes(i)) {
+        this.hoveredIndexesDate.push(i);
+      }
+      console.log(this.hoveredIndexesDate);
+    }
+  }
 }
