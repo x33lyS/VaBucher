@@ -50,8 +50,9 @@
   </div>
 
   <button *ngIf="currentPage < pages.length" (click)="setPage(currentPage + 1)" class="pagination-button-right">&gt;</button>
-<button class="compare-button" mat-fab extended  *ngIf="jobofferService.getSavedJobOffers().length > 0" (click)="openSavedJobOffers()">{{jobofferService.getSavedJobOffers().length}} offres à comparer </button>
-
+  <ng-container *ngIf="currentUser" >
+    <button class="compare-button" mat-fab extended   *ngIf="jobofferService.getSavedJobOffers().length > 0 " (click)="openSavedJobOffers()">{{jobofferService.getSavedJobOffers().length}} offres à comparer </button>
+  </ng-container>
 
   <div class="pagination">
     <span *ngFor="let page of pages" [ngClass]="{'active': page === currentPage}" (click)="setPage(page)">&#9679;</span>

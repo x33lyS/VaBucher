@@ -5,16 +5,26 @@
       <button (click)="deleteCompare(jobOffer)"><mat-icon>delete_outline</mat-icon></button>
     </div>
     <div class="content">
-      <p class="description">{{ jobOffer.description.slice(0, jobOffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>
+<!--      <p class="description">{{ jobOffer.description.slice(0, jobOffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>-->
       <div class="content-type">
-        <p class="salaire" (mouseenter)="takeIndex()" [ngClass]="{'hovered': hoveredIndexes.includes(i)}">
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexSalary()" [ngClass]="{'hovered': hoveredIndexesSalary.includes(i)}" (mouseleave)="leaveIndex()">
           Salaire: <span>{{ jobOffer.salaire }}</span>
         </p>
-        <p>Localisation:  <span>{{ jobOffer.localisation }}</span></p>
-        <p>Types: <span>{{ jobOffer.types }}</span> </p>
-        <p>CompanyInfo: <span>{{ jobOffer.companyInfo }}</span> </p>
-        <p>Domain: <span>{{ jobOffer.domain }}</span> </p>
-        <p>Date: <span>{{ jobOffer.isNew }}</span> </p>
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexLocation()" [ngClass]="{'hovered': hoveredIndexesLocation.includes(i)}" (mouseleave)="leaveIndex()">
+          Localisation:  <span>{{ jobOffer.localisation }}</span>
+        </p>
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexType()" [ngClass]="{'hovered': hoveredIndexesType.includes(i)}" (mouseleave)="leaveIndex()">
+          Types: <span>{{ jobOffer.types }}</span>
+        </p>
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexCompanyInfo()" [ngClass]="{'hovered': hoveredIndexesCompanyInfo.includes(i)}" (mouseleave)="leaveIndex()">
+          CompanyInfo: <span>{{ jobOffer.companyInfo }}</span>
+        </p>
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexDomain()" [ngClass]="{'hovered': hoveredIndexesDomain.includes(i)}" (mouseleave)="leaveIndex()">
+          Domain: <span>{{ jobOffer.domain }}</span>
+        </p>
+        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexDate()" [ngClass]="{'hovered': hoveredIndexesDate.includes(i)}" (mouseleave)="leaveIndex()">
+          Date: <span>{{ jobOffer.isNew }}</span>
+        </p>
       </div>
     </div>
   </div>

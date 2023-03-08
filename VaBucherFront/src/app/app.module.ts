@@ -36,6 +36,7 @@ import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-d
 import { MatDialogModule } from '@angular/material/dialog';
 import { FirstUppercasePipe } from './first-uppercase.pipe';
 import { JobofferCompareComponent } from './components/joboffer-compare/joboffer-compare.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -63,24 +64,25 @@ import { JobofferCompareComponent } from './components/joboffer-compare/joboffer
     FirstUppercasePipe,
     JobofferCompareComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    MatIconModule,
-    FormsModule,
-    MatCheckboxModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    AppRoutingModule,
-    MatAutocompleteModule,
-    RouterModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    MatDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        MatIconModule,
+        FormsModule,
+        MatCheckboxModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        AppRoutingModule,
+        MatAutocompleteModule,
+        RouterModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(),
+        MatDialogModule,
+        MatTooltipModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

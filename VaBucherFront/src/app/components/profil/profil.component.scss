@@ -36,3 +36,50 @@
   }
 
 }
+
+
+.history_container{
+  padding: 50px;
+  .offers{
+    background: #F47068;
+    border-radius: 8px;
+    padding: 20px;
+   .box{
+     .header{
+       display: flex;
+       align-items: center;
+       gap: 20px;
+       button{
+         cursor: pointer;
+         background: transparent;
+         border: none;
+         padding: 20px;
+         border-radius: 50%;
+         transition: all 0.2s ease-in-out;
+         &:hover{
+           background: #E94A35;
+           color: white;
+         }
+       }
+     }
+     .chips{
+       display:flex;
+       gap: 20px;
+       button{
+         border-radius: 8px;
+         border:none;
+         background: #4E4D66;
+         color: white;
+         padding: 10px 30px;
+       }
+     }
+     .description{
+       margin: 20px 0;
+       p{
+         font-size: 1.6em;
+         color: white;
+       }
+     }
+   }
+  }
+}

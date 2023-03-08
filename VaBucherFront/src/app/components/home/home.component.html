@@ -83,5 +83,8 @@
 
 </div>
 <app-joboffer-detail *ngIf="selectedJobOffer" [selectedJoboffer]="selectedJobOffer" (close)="closeJobOfferDetails()"></app-joboffer-detail>
+<ng-container *ngIf="currentUser" >
+  <button class="compare-button" mat-fab extended   *ngIf="jobofferService.getSavedJobOffers().length > 0 " (click)="openSavedJobOffers()">{{jobofferService.getSavedJobOffers().length}} offres à comparer </button>
+</ng-container>
 
 

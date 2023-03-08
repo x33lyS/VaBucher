@@ -46,18 +46,21 @@
   </form>
 </div>
 
-<div *ngFor="let favoris of jobofferhistory">
+<div class="history_container" *ngFor="let favoris of jobofferhistory">
   <div class="offers">
         <div class="box">
-          <div>
-            <h6>{{ favoris.title | firstUppercase}}</h6>
-            <button (click)="deleteHistory(favoris)"><mat-icon>delete_outline</mat-icon></button>
+          <div class="header">
+            <h6>{{ favoris.title | uppercase}}</h6>
+            <button matTooltip="Supprimer" (click)="deleteHistory(favoris)"><mat-icon>delete_outline</mat-icon></button>
           </div>
-
-          <button>Rémunération: {{ favoris.salaire }}</button>
-          <button>Type de poste: {{ favoris.types }}</button>
-          <button>Domaine: {{ favoris.domain }}</button>
-          <p>{{ favoris.description}}</p>
+          <div class="chips">
+            <button>Rémunération: {{ favoris.salaire | uppercase }}</button>
+            <button>Type de poste: {{ favoris.types | uppercase}}</button>
+            <button>Domaine: {{ favoris.domain | uppercase}}</button>
+          </div>
+          <div class="description">
+            <p>{{ favoris.description}}</p>
+          </div>
         </div>
   </div>
 </div>
