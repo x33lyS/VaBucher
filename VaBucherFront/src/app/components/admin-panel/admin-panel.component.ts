@@ -10,11 +10,25 @@ import { SearchService } from "../../services/search.service";
 import { Search } from "../../models/search";
 import { JobtypeService } from "../../services/jobtype.service";
 import { JobType } from "../../models/jobtype";
+import {animate, state, style, transition, trigger} from "@angular/animations";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.scss']
+  styleUrls: ['./admin-panel.component.scss'],
+  animations: [
+    trigger('deleteAnimation', [
+      state('deleted', style({
+        opacity: 0,
+        transform: 'translateX(-100%)',
+        display: 'none'
+      })),
+      transition('* => deleted', [
+        animate('300ms ease-out')
+      ])
+    ])
+  ]
 })
 export class AdminPanelComponent implements OnInit {
 
@@ -37,7 +51,8 @@ export class AdminPanelComponent implements OnInit {
     private dataService: ApiDataService,
     public dialog: MatDialog,
     private searchService: SearchService,
-    private jobtypeService: JobtypeService
+    private jobtypeService: JobtypeService,
+              public toastr: ToastrService
   ) { }
 
 
@@ -102,6 +117,7 @@ export class AdminPanelComponent implements OnInit {
 
 
   updateUser(user: User) {
+    this.toastr.warning('Utilisateur modifié avec succès');
     this.userService
       .updateUser(user)
       .subscribe((users: User[]) => this.usersUpdated.emit(users));
@@ -116,9 +132,11 @@ export class AdminPanelComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
       if (result) {
+        user.state = 'deleted';
         this.userService
           .deleteUser(user)
           .subscribe((users: User[]) => this.usersUpdated.emit(users));
+        this.toastr.error('Utilisateur supprimé avec succès');
       }
     });
   }
@@ -130,6 +148,7 @@ export class AdminPanelComponent implements OnInit {
         // @ts-ignore
         (users: User[]) => this.usersUpdated.emit(users),
       );
+    this.toastr.success('Utilisateur ajouté avec succès');
   }
 
   updateOffer(joboffer: JobOffer) {
@@ -140,6 +159,7 @@ export class AdminPanelComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.toastr.warning('Offre d\'emploi modifiée avec succès');
     });
   }
 
@@ -152,9 +172,11 @@ export class AdminPanelComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
       if (result) {
+        joboffer.state = 'deleted';
         this.jobofferService
           .deleteJobOffer(joboffer)
           .subscribe((joboffers: JobOffer[]) => this.joboffers = joboffers);
+        this.toastr.error('Offre d\'emploi supprimée avec succès');
       }
     });
   }
@@ -170,7 +192,7 @@ export class AdminPanelComponent implements OnInit {
         this.searchService
           .createSearch(result)
           .subscribe((search: Search[]) => this.search = search);
-        console.log(this.search, "search")
+        this.toastr.success('Recherche ajoutée avec succès');
       }
     });
   }
@@ -182,7 +204,7 @@ export class AdminPanelComponent implements OnInit {
       data: search
     });
     dialogRef.afterClosed().subscribe(result => {
-      window.location.reload();
+      this.toastr.warning('Recherche modifiée avec succès');
     });
   }
 
@@ -193,9 +215,11 @@ export class AdminPanelComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        search.state = 'deleted';
         this.searchService
           .deleteSearch(search)
           .subscribe((search: Search[]) => this.search = search);
+        this.toastr.error('Recherche supprimée avec succès');
       }
     });
   }
@@ -210,6 +234,7 @@ export class AdminPanelComponent implements OnInit {
         this.jobtypeService
           .createJobType(result)
           .subscribe((jobType: JobType[]) => this.jobType = jobType);
+        this.toastr.success('Type d\'emploi ajouté avec succès');
       }
     });
   }
@@ -221,7 +246,7 @@ export class AdminPanelComponent implements OnInit {
       data: jobType
     });
     dialogRef.afterClosed().subscribe(result => {
-      window.location.reload();
+      this.toastr.warning('Type d\'emploi modifié avec succès');
     });
   }
 
@@ -232,9 +257,11 @@ export class AdminPanelComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        jobType.state = 'deleted';
         this.jobtypeService
           .deleteJobType(jobType)
           .subscribe((jobType: JobType[]) => this.jobType = jobType);
+        this.toastr.error('Type d\'emploi supprimé avec succès');
       }
     });
   }

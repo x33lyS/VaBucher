@@ -23,7 +23,7 @@
         <th></th>
       </thead>
       <tbody>
-        <tr *ngFor="let joboffer of filteredJobOffers.slice().reverse()" class="tr mat-elevation-z3">
+        <tr *ngFor="let joboffer of filteredJobOffers.slice().reverse()" class="tr mat-elevation-z3" [@deleteAnimation]="joboffer.state">
           <td>{{ joboffer.title }}</td>
           <td>{{ joboffer.description.slice(0, joboffer.description.slice(0, 500).lastIndexOf(' ')) + ' ...' }}</td>
           <td>{{ joboffer.salaire }}</td>
@@ -56,7 +56,7 @@
           <th>CV</th>
           <th>Phone</th>
         </thead>
-        <tr *ngFor="let user of filteredUser" class="tr mat-elevation-z3">
+        <tr *ngFor="let user of filteredUser" class="tr mat-elevation-z3" [@deleteAnimation]="user.state">
           <td>{{user.firstname}}</td>
           <td>{{user.lastname}}</td>
           <td>{{user.email}}</td>
@@ -80,7 +80,7 @@
           <thead>
           <th>Filter</th>
           </thead>
-          <tr *ngFor="let search of filteredSearches" class="mat-elevation-z3">
+          <tr *ngFor="let search of filteredSearches" class="mat-elevation-z3" [@deleteAnimation]="search.state">
             <td>
               {{search.filter}}
             </td>
@@ -98,7 +98,7 @@
           <thead>
           <th>Jobs</th>
           </thead>
-          <tr *ngFor="let jobtype of filteredJobType" class="mat-elevation-z3" >
+          <tr *ngFor="let jobtype of filteredJobType" class="mat-elevation-z3" [@deleteAnimation]="jobtype.state">
             <td>
               {{jobtype.jobs}}
             </td>

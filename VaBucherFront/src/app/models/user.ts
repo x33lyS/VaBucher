@@ -10,4 +10,5 @@ export class User {
     cv: string | null | undefined;
     email!: string;
     phone: string | null | undefined;
+    state = "";
 }

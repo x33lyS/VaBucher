@@ -22,7 +22,8 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
     trigger('deleteAnimation', [
       state('deleted', style({
         opacity: 0,
-        transform: 'scale(0.8)'
+        transform: 'scale(0.8)',
+        display: 'none'
       })),
       transition('* => deleted', [
         animate('300ms ease-out')
