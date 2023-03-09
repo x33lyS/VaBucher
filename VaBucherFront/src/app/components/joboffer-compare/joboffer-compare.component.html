@@ -1,5 +1,5 @@
 <div  class="container">
-  <div class="offers mat-elevation-z5" *ngFor="let jobOffer of savedJobOffers; let i = index" >
+  <div class="offers mat-elevation-z5" *ngFor="let jobOffer of savedJobOffers; let i = index" [@deleteAnimation]="jobOffer.state">
     <div class="header">
       <h2>{{ jobOffer.title }}</h2>
       <button (click)="deleteCompare(jobOffer)"><mat-icon>delete_outline</mat-icon></button>

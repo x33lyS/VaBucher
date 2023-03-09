@@ -10,15 +10,18 @@
   <div class="offers" *ngIf="joboffersToDisplay.length > 0">
     <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
       <ng-container *ngIf="joboffer && joboffersToDisplay.indexOf(joboffer) % 2 !== 0">
-        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 3 === 0 ? 1 : 2}}" (click)="showDetails(joboffer)">
+        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 3 === 0 ? 1 : 2}}" >
           <ng-container *ngIf="currentUser">
-            <button (click)="saveHistory(joboffer)"><mat-icon>star_border</mat-icon></button>
+            <button matTooltip="Favoris" class="favoris" (click)="saveHistory(joboffer)"><mat-icon>{{ joboffer.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
           </ng-container>
-          <h6>{{ joboffer.title | firstUppercase}}</h6>
-          <button *ngIf="joboffer.salaire">Rémunération: {{ joboffer.salaire }}</button>
-          <button *ngIf="joboffer.types">Type de poste: {{ joboffer.types }}</button>
-          <button *ngIf="joboffer.domain">Domaine: {{ joboffer.domain }}</button>
-          <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 200).lastIndexOf(' ')) + ' ...' }}</p>
+          <div (click)="showDetails(joboffer)">
+            <h6>{{ joboffer.title | firstUppercase}}</h6>
+            <button *ngIf="joboffer.salaire">Rémunération: {{ joboffer.salaire }}</button>
+            <button *ngIf="joboffer.types">Type de poste: {{ joboffer.types }}</button>
+            <button *ngIf="joboffer.domain">Domaine: {{ joboffer.domain }}</button>
+            <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 200).lastIndexOf(' ')) + ' ...' }}</p>
+            <button class="voir-plus">Voir plus</button>
+          </div>
         </div>
       </ng-container>
     </ng-container>
@@ -26,15 +29,18 @@
     <div class="offers" *ngIf="joboffersToDisplay.length > 0">
     <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
       <ng-container *ngIf="joboffersToDisplay.indexOf(joboffer) % 2 === 0">
-        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 4 === 0 ? 4 : 3}}" (click)="showDetails(joboffer)">
+        <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 4 === 0 ? 4 : 3}}">
           <ng-container *ngIf="currentUser">
-            <button (click)="saveHistory(joboffer)"><mat-icon>star_border</mat-icon></button>
+            <button matTooltip="Favoris" class="favoris" (click)="saveHistory(joboffer)"><mat-icon>{{ joboffer.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
           </ng-container>
-          <h6>{{ joboffer.title | firstUppercase}}</h6>
-          <button *ngIf="joboffer.salaire">Rémunération: {{ joboffer.salaire }}</button>
-          <button *ngIf="joboffer.types">Type de poste: {{ joboffer.types }}</button>
-          <button *ngIf="joboffer.domain">Domaine: {{ joboffer.domain }}</button>
-          <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 200).lastIndexOf(' ')) + ' ...' }}</p>
+          <div (click)="showDetails(joboffer)">
+            <h6>{{ joboffer.title | firstUppercase}}</h6>
+            <button *ngIf="joboffer.salaire">Rémunération: {{ joboffer.salaire }}</button>
+            <button *ngIf="joboffer.types">Type de poste: {{ joboffer.types }}</button>
+            <button *ngIf="joboffer.domain">Domaine: {{ joboffer.domain }}</button>
+            <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 200).lastIndexOf(' ')) + ' ...' }}</p>
+            <button class="voir-plus">Voir plus</button>
+          </div>
         </div>
       </ng-container>
     </ng-container>

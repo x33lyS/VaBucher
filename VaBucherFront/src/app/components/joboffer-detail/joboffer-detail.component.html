@@ -1,14 +1,22 @@
 <div class="dialog-background">
   <div class="selected-job-offer active">
-    <span class="close-button" (click)="onClose()">X</span>
-    <h2>{{ selectedJoboffer.title }}</h2>
-    <p>{{ selectedJoboffer.description }} </p>
-    <p>Salaire: {{ selectedJoboffer.salaire }}</p>
-    <p>Localisation: {{ selectedJoboffer.localisation }}</p>
-    <p>Types: {{ selectedJoboffer.types }}</p>
-    <p>CompanyInfo: {{ selectedJoboffer.companyInfo }}</p>
-    <p>Domain: {{ selectedJoboffer.domain }}</p>
-    <p>Date: {{ selectedJoboffer.isNew }}</p>
-    <button *ngIf="access" (click)="saveJobOffer(); saved.emit()">Comparer</button>
+    <div class="header">
+      <span class="close-button" (click)="onClose()">X</span>
+      <h2>{{ selectedJoboffer.title }}</h2>
+    </div>
+    <div class="description">
+      <p>{{ selectedJoboffer.description }} </p>
+    </div>
+    <div class="content">
+      <p class="mat-elevation-z2">Salaire: <span>{{ selectedJoboffer.salaire }}</span> </p>
+      <p class="mat-elevation-z2">Localisation:<span>{{ selectedJoboffer.localisation }}</span> </p>
+      <p class="mat-elevation-z2">Types:<span>{{ selectedJoboffer.types }}</span> </p>
+      <p class="mat-elevation-z2">Entreprise:<span>{{ selectedJoboffer.companyInfo }}</span> </p>
+      <p class="mat-elevation-z2">Domaine:<span>{{ selectedJoboffer.domain }}</span> </p>
+      <p class="mat-elevation-z2">Date: <span>{{ selectedJoboffer.isNew }}</span></p>
+    </div>
+    <div class="compare-button">
+      <button *ngIf="access" (click)="saveJobOffer(); saved.emit()">Comparer</button>
+    </div>
   </div>
 </div>

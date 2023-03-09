@@ -23,7 +23,7 @@
     "@material/snackbar": "^15.0.0-canary.7971d6ad5.0",
     "angular-material-icons": "^0.7.1",
     "material-design-icons-iconfont": "^6.7.0",
-    "ngx-toastr": "^16.0.2",
+    "ngx-toastr": "^16.1.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

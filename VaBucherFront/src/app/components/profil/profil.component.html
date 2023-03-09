@@ -46,7 +46,7 @@
   </form>
 </div>
 
-<div class="history_container" *ngFor="let favoris of jobofferhistory">
+<div class="history_container" *ngFor="let favoris of jobofferhistory" [@deleteAnimation]="favoris.state">
   <div class="offers">
         <div class="box">
           <div class="header">

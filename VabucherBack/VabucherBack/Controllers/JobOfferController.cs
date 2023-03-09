@@ -40,6 +40,19 @@ namespace VabucherBack.Controllers
         {
             return Ok(await _context.JobOffers.ToListAsync());
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<JobOffer>> GetJobOfferById(int id)
+        {
+            var jobOffer = await _context.JobOffers.FindAsync(id);
+
+            if (jobOffer == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(jobOffer);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<List<JobOffer>>> CreateJobOffer(JobOffer jobOffer)

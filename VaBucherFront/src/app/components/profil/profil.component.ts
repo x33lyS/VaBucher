@@ -9,13 +9,26 @@ import {Jobhistory} from "../../models/jobhistory";
 import {JobofferService} from "../../services/joboffer.service";
 import {map} from "rxjs";
 import {JobOffer} from "../../models/joboffer";
+import {ToastrService} from "ngx-toastr";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 
 
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.component.html',
-  styleUrls: ['./profil.component.scss']
+  styleUrls: ['./profil.component.scss'],
+  animations: [
+    trigger('deleteAnimation', [
+      state('deleted', style({
+        opacity: 0,
+        transform: 'scale(0.8)'
+      })),
+      transition('* => deleted', [
+        animate('300ms ease-out')
+      ])
+    ])
+  ]
 })
 export class ProfilComponent implements OnInit {
   currentUser!: CurrentUser;
@@ -32,7 +45,8 @@ export class ProfilComponent implements OnInit {
     private authentificationService: AuthenticationService,
     private router: Router,
     private jobhistoryService: JobhistoryService,
-    private jobofferService: JobofferService
+    private jobofferService: JobofferService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -82,20 +96,37 @@ export class ProfilComponent implements OnInit {
     });
   }
 
-  deleteHistory(joboffer: JobOffer) {
+  deleteHistory(joboffer: JobOffer | any) {
+    joboffer.state = 'deleted';
     // @ts-ignore
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     const currentUserId = currentUser.id;
     const currentJobOfferId = joboffer.id;
     this.jobhistoryService.deleteJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
       jobHistoryList => {
-        console.log('Job history created successfully:', jobHistoryList);
+        console.log('Job history deleted successfully:', jobHistoryList);
+        this.updateJobOfferAndSetIsSavedFalse(joboffer);
+        this.toastr.success('Offre d\'emploi supprimée de vos favoris');
       },
       error => {
-        console.error('Error creating job history:', error);
+        console.error('Error deleting job history:', error);
       }
     );
   }
+
+  updateJobOfferAndSetIsSavedFalse(joboffer: JobOffer) {
+    joboffer.isSaved = false;
+    this.jobofferService.updateJobOffer(joboffer).subscribe(
+      updatedJobOfferList => {
+        console.log('Job offer updated successfully:', updatedJobOfferList);
+
+      },
+      error => {
+        console.error('Error updating job offer:', error);
+      }
+    );
+  }
+
 
 }
 

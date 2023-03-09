@@ -30,11 +30,12 @@ namespace VabucherBack.Controllers
                 return Ok(await _context.JobHistories.ToListAsync());
         }
 
+
         [HttpDelete("{userId}/{jobOfferId}")]
         public async Task<IActionResult> DeleteJobHistory(int userId, int jobOfferId)
         {
             var jobHistory = await _context.JobHistories
-                .SingleOrDefaultAsync(jh => jh.IdUser == userId && jh.IdOffer == jobOfferId);
+                .FirstOrDefaultAsync(jh => jh.IdUser == userId && jh.IdOffer == jobOfferId);
 
             if (jobHistory == null)
             {
@@ -46,6 +47,7 @@ namespace VabucherBack.Controllers
 
             return Ok();
         }
+
 
     }
 }
