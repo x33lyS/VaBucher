@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import {JobhistoryService} from "../../services/jobhistory.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {ToastrService} from "ngx-toastr";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 
 
@@ -24,7 +25,6 @@ import {ToastrService} from "ngx-toastr";
   providers: [FilterPipe]
 })
 export class JobofferComponent implements OnInit {
-
   joboffers: JobOffer[] = [];
   domainFilter!: string;
   locationFilter!: string;
