@@ -1,0 +1,26 @@
+<div class="box">
+  <div class="container" *ngFor="let api of apiData">
+    <div class="content">
+      <div class="header">
+        <h1>{{api.intitule}}</h1>
+        <div class="api-item__logo" *ngIf="api.entreprise?.logo">
+          <img src="{{api.entreprise.logo}}" alt="">
+        </div>
+      </div>
+      <div class="domain">
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let domain of api.formations">
+            Domaine: {{domain.domaineLibelle | uppercase}}
+          </mat-chip>
+        </mat-chip-listbox>
+      </div>
+      <div class="description">
+        {{api.description}}
+      </div>
+      <div class="postuler">
+        <!--  <a href="{{api.contact.urlPostulation}}">Postuler</a>-->
+      </div>
+    </div>
+  </div>
+</div>
+

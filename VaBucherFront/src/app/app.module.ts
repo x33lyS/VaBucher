@@ -37,7 +37,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FirstUppercasePipe } from './first-uppercase.pipe';
 import { JobofferCompareComponent } from './components/joboffer-compare/joboffer-compare.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
-import { MatSnackBarModule } from '@angular/material/snack-bar'; // <--- Ajout de MatSnackBarModule
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatTabsModule} from "@angular/material/tabs";
+import { ApiComponent } from './components/api/api.component';
+import {MatChipsModule} from "@angular/material/chips"; // <--- Ajout de MatSnackBarModule
 
 
 @NgModule({
@@ -64,6 +67,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'; // <--- Ajout d
     DialogUpdateJobType,
     FirstUppercasePipe,
     JobofferCompareComponent,
+    ApiComponent,
   ],
     imports: [
         BrowserModule,
@@ -83,7 +87,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'; // <--- Ajout d
         ToastrModule.forRoot(),
         MatDialogModule,
         MatTooltipModule,
-       MatSnackBarModule
+        MatSnackBarModule,
+        MatTabsModule,
+        MatChipsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

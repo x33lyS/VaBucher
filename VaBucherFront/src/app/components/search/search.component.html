@@ -7,8 +7,9 @@
              (input)="filterOptions()"
              (click)="filterOptions()"
              [(ngModel)]="domainFilter"
-             [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
+             [matAutocomplete]="auto"
+             (keyup)="updatePoleEmploiDomain()">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected()">
       <mat-option *ngFor="let search of filteredSearches" [value]="search.filter" (click)="filterOptions()">{{ search.filter }}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
@@ -24,10 +25,6 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-
-
   <button mat-raised-button (click)="onSubmit()">Valider</button>
-
-
 </div>
 

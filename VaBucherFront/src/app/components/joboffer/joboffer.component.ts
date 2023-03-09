@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
 import {JobhistoryService} from "../../services/jobhistory.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {ToastrService} from "ngx-toastr";
-import {animate, state, style, transition, trigger} from "@angular/animations";
 
 
 
@@ -143,7 +142,6 @@ export class JobofferComponent implements OnInit {
     this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
       this.joboffers = result
     });
-
   }
 
   get joboffersToDisplay(): JobOffer[] {
@@ -171,16 +169,12 @@ export class JobofferComponent implements OnInit {
 
   searchNewOffer() {
     const randomDomain = this.searches[Math.floor(Math.random() * this.searches.length)];
-
     this.searchService.setCreatednewrandom({ domain: randomDomain });
-
     this.updateFilters({
       domain: randomDomain.filter,
       location: "",
       jobtype: ""
     });
   }
-
-
 }
 
