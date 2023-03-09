@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { JobOffer } from '../models/joboffer';
+import {ToastrService} from "ngx-toastr";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,7 @@ export class JobofferService {
   savedJobOffers: any[] = [];
 
 
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private toastr: ToastrService) { }
 
 
   saveJobOffer(jobOffer: JobOffer) {
@@ -22,6 +22,9 @@ export class JobofferService {
     if (jobOfferIndex === -1) {
       savedJobOffers.push(jobOffer);
       localStorage.setItem('savedForCompareJobOffers', JSON.stringify(savedJobOffers));
+      this.toastr.success('Offre prête à être comparée');
+    }else{
+      this.toastr.error('Offre déjà enregistrée');
     }
   }
 
@@ -34,6 +37,9 @@ export class JobofferService {
 
   public getJobOffer() : Observable<JobOffer[]> {
     return this.http.get<JobOffer[]>(`${this.apiUrl}/${this.url}`);
+  }
+  public getJobOfferById(jobOfferId: number | undefined): Observable<JobOffer> {
+    return this.http.get<JobOffer>(`${this.apiUrl}/${this.url}/${jobOfferId}`);
   }
 
 

@@ -37,9 +37,63 @@ $background-color: rgba(0, 0, 0, 0.5);
 // Masquage de la boîte de dialogue par défaut
 .selected-job-offer {
   display: none;
+  .header{
+    h2{
+      text-decoration: underline;
+    }
+    span{
+      font-size: 1.5em;
+      font-weight: bolder;
+      color: #c01f27;
+      transition: all 0.3s ease;
+      &:hover{
+        transform: rotate(180deg);
+        color: #E94A35;
+      }
+    }
+  }
+  .description{
+    line-height: 2em;
+  }
+  .content{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    p{
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      span{
+        color: #4E4D66;
+        font-weight: bolder;
+      }
+    }
+  }
+  .compare-button{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    button{
+      border: 1px solid #E94A35;
+      background: transparent;
+      border-radius: 8px;
+      padding: 10px 40px;
+      transition: all 0.3s ease;
+      &:hover{
+        background: #E94A35;
+        color: #fff;
+      }
+    }
+  }
 }
 
 // Affichage de la boîte de dialogue lorsque la classe .active est ajoutée
 .selected-job-offer.active {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
+
+

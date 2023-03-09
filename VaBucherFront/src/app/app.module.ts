@@ -37,6 +37,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FirstUppercasePipe } from './first-uppercase.pipe';
 import { JobofferCompareComponent } from './components/joboffer-compare/joboffer-compare.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { MatSnackBarModule } from '@angular/material/snack-bar'; // <--- Ajout de MatSnackBarModule
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         BrowserAnimationsModule,
         ToastrModule.forRoot(),
         MatDialogModule,
-        MatTooltipModule
+        MatTooltipModule,
+       MatSnackBarModule
     ],
   providers: [],
   bootstrap: [AppComponent]

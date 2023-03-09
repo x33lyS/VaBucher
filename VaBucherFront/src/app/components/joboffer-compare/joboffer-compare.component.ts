@@ -1,10 +1,23 @@
 import { Component } from '@angular/core';
 import { JobofferService } from 'src/app/services/joboffer.service';
+import {ToastrService} from "ngx-toastr";
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-joboffer-compare',
   templateUrl: './joboffer-compare.component.html',
-  styleUrls: ['./joboffer-compare.component.scss']
+  styleUrls: ['./joboffer-compare.component.scss'],
+  animations: [
+    trigger('deleteAnimation', [
+      state('deleted', style({
+        opacity: 0,
+        transform: 'scale(0.8)'
+      })),
+      transition('* => deleted', [
+        animate('300ms ease-out')
+      ])
+    ])
+  ]
 })
 export class JobofferCompareComponent {
   jobofferService: JobofferService;
@@ -16,23 +29,24 @@ export class JobofferCompareComponent {
   hoveredIndexesDomain: number[] = [];
   hoveredIndexesDate: number[] = [];
 
-  constructor(jobofferService: JobofferService) {
+  constructor(jobofferService: JobofferService, private toastr: ToastrService) {
     this.jobofferService = jobofferService;
   }
 
   ngOnInit(): void {
     this.savedJobOffers = this.jobofferService.getSavedJobOffers()
     console.log(this.savedJobOffers);
-
   }
+
   deleteCompare(jobOffer: any) {
+    jobOffer.state = 'deleted';
     const savedJobOffers = JSON.parse(localStorage.getItem('savedForCompareJobOffers') || '[]');
-    const index = savedJobOffers.findIndex((savedJobOffer: any) => savedJobOffer.id === jobOffer.id);
-    if (index > -1) {
-      savedJobOffers.splice(index, 1);
-      localStorage.setItem('savedForCompareJobOffers', JSON.stringify(savedJobOffers));
+    setTimeout(() => {
+      const index = this.savedJobOffers.indexOf(jobOffer);
       this.savedJobOffers.splice(index, 1);
-    }
+      localStorage.setItem('savedForCompareJobOffers', JSON.stringify(this.savedJobOffers));
+      this.toastr.error('Offre supprimé')
+    }, 300);
   }
 
   takeIndexSalary() {

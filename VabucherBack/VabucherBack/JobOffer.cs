@@ -14,5 +14,6 @@ namespace VabucherBack
         public string Domain { get; set; } = string.Empty;
         public string IsNew { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
+        public bool isSaved { get; set; } = false;
     }
 }
