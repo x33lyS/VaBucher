@@ -104,6 +104,7 @@ table {
       border-radius: 12px;
       h6,
       p {
+        text-align: left;
         color: #fff;
         padding: 25px 15px 10px 20px;
       }
@@ -247,7 +248,13 @@ table {
 }
 
 .voir-plus{
+  a{
+    color: white;
+  }
   &:hover{
+    a{
+      color: #ED6A5A;
+    }
     background: white !important;
     color: #E94A35 !important;
   }

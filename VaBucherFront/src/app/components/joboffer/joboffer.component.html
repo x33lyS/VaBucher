@@ -21,6 +21,7 @@
                   <button *ngIf="joboffer.domain">Domaine: {{ joboffer.domain }}</button>
                   <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 200).lastIndexOf(' ')) + ' ...' }}</p>
                   <button class="voir-plus">Voir plus</button>
+                  <button *ngIf="joboffer.url" class="voir-plus"><a href="{{joboffer.url}}" target="_blank">Postuler</a></button>
                 </div>
               </div>
             </ng-container>
@@ -40,6 +41,7 @@
                   <button *ngIf="joboffer.domain">Domaine: {{ joboffer.domain }}</button>
                   <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 200).lastIndexOf(' ')) + ' ...' }}</p>
                   <button class="voir-plus">Voir plus</button>
+                  <button *ngIf="joboffer.url" class="voir-plus"><a href="{{joboffer.url}}" target="_blank">Postuler</a></button>
                 </div>
               </div>
             </ng-container>
