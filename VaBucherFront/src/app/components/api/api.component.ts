@@ -13,19 +13,17 @@ import {ToastrService} from "ngx-toastr";
   providers: [FilterPipe]
 })
 export class ApiComponent implements OnInit {
-  private token = 'ehGBQZad8YWjGMjn6yrzWx0QKQg';
+  private token = 'GkA3Rh6uZnyG86hUnejVIV5Ty4w';
   apiData: any[] = [];
   locationFilter?: string;
   jobtypefilter?: string;
   poleEmploiDomainFilter?: string;
   poleEmploiLocationFilter?: string;
-  // apiToken?: string;
-  noApiResult: boolean = false;
+  ApiResult: boolean = true;
 
   constructor(private http: HttpClient,
               private dataService: ApiDataService,
               private toastr: ToastrService,
-              private joboffercmp: JobofferComponent
               ) { }
 
   ngOnInit(): void {
@@ -39,18 +37,17 @@ export class ApiComponent implements OnInit {
       debounceTime(1500),
     ).subscribe(poleEmploiDomain => {
       this.poleEmploiDomainFilter = poleEmploiDomain;
-      this.fetchApiData(); // Refaire l'appel à l'API avec la nouvelle donnée
+      this.fetchApiData();
     });
     this.dataService.filterPoleEmploiLocation$.pipe(
       debounceTime(1500),
     ).subscribe(poleEmploiLocation => {
       this.locationFilter = poleEmploiLocation;
-      this.fetchApiData(); // Refaire l'appel à l'API avec la nouvelle donnée
+      this.fetchApiData();
     });
   }
 
   fetchApiData() {
-    this.apiData = [];
     const apiUrl = `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=${this.poleEmploiDomainFilter}&origineOffre=0`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token,
@@ -63,12 +60,13 @@ export class ApiComponent implements OnInit {
               this.apiData.push(item);
             }
           });
-          this.apiData = this.apiData.filter((item: any) => item.lieuTravail.libelle.toLowerCase().includes(this.locationFilter));
-          this.noApiResult = this.apiData.length === 0;
+          this.apiData = this.apiData.filter((item: any) => item.lieuTravail.libelle.toLowerCase().includes(this.locationFilter?.toLowerCase()));
+          this.ApiResult = this.apiData.length === 0;
           this.dataService.updateData(this.apiData);
+          this.ApiResult = true;
         } else {
           console.log("No resultats found in API response");
-          this.noApiResult = true;
+          this.ApiResult = false;
         }
       },
       (error) => {
