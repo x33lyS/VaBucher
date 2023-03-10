@@ -29,8 +29,7 @@ export class RegistrationComponent implements OnInit {
   jobtypes: JobType[] = [];
   selectedSearches:any[] = [];
   searches: Search[] = [];
-
-
+  registrationUserStatus = false;
 
   // @Input() user?: User;
   @Output() usersUpdated = new EventEmitter<User[]>();
@@ -39,22 +38,21 @@ export class RegistrationComponent implements OnInit {
     private searchService: SearchService,
     private jobtypeService: JobtypeService) {
 
-  this.registrationform = this._formBuilder.group({
-      firstname:['', Validators.required],
-      lastname: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      location: '',
-      domain: '',
-      jobtype: '',
-      role: 1,
-      cv: '',
-      phone: '',
-      staySignedIn: false
-  })
-}
-
+    this.registrationform = this._formBuilder.group({
+        firstname:['', Validators.required],
+        lastname: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', Validators.required],
+        confirmPassword: ['', Validators.required],
+        location: '',
+        domain: '',
+        jobtype: '',
+        role: 1,
+        cv: '',
+        phone: '',
+        staySignedIn: false
+    })
+  }
 
   ngOnInit(): void {
     this.jobtypeService
@@ -63,10 +61,8 @@ export class RegistrationComponent implements OnInit {
     this.searchService
     .getSearch()
     .subscribe((result: Search[]) => (this.searches = result));
-
   }
-
-
+ 
   onSubmit() {
     if (this.registrationform.valid) {
     const user = new User();
@@ -134,4 +130,7 @@ checkPassword() {
   submit() {
     return this.registrationform.valid && this.validatePasswords()
   }
+
+  switchRegistrationUserStatus = () => this.registrationUserStatus = !this.registrationUserStatus;
+
 }
