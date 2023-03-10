@@ -13,10 +13,10 @@ import {ToastrService} from "ngx-toastr";
   providers: [FilterPipe]
 })
 export class ApiComponent implements OnInit {
-  private token = 'b7zVAZWjF_FZvlCDD8ddCL4Srmk';
+  private token = 'OToD5ak1qtzbRmWVw36Wst_yEEI';
   apiData: any[] = [];
   locationFilter?: string;
-  jobtypefilter?: string;
+  jobtypefilter?: any | [];
   poleEmploiDomainFilter?: string;
   poleEmploiLocationFilter?: string;
   ApiResult: boolean = true;
@@ -66,8 +66,12 @@ export class ApiComponent implements OnInit {
             }
           });
           this.apiData = this.apiData.filter((item: any) => item.lieuTravail.libelle.toLowerCase().includes(this.locationFilter?.toLowerCase()));
-          this.apiData = this.apiData.filter((item: any) => item.typeContrat.toLowerCase().includes(this.jobtypefilter?.toLowerCase()));
-          this.ApiResult = this.apiData.length === 0;
+          const jobtypeFilterArray = this.jobtypefilter?.map((type: string) => type.toLowerCase());
+          if (jobtypeFilterArray.length > 0) {
+            this.apiData = this.apiData.filter((item: any) => {
+              return jobtypeFilterArray.some((type: any) => item.typeContrat.toLowerCase().includes(type));
+            });
+          }
           this.dataService.updateData(this.apiData);
           this.ApiResult = false;
         } else {
@@ -80,5 +84,6 @@ export class ApiComponent implements OnInit {
         this.toastr.error("Une erreur est survenue lors de la récupération des données");
       }
     );
+    console.log(this.apiData)
   }
 }
