@@ -13,10 +13,10 @@ import {ToastrService} from "ngx-toastr";
   providers: [FilterPipe]
 })
 export class ApiComponent implements OnInit {
-  private token = 'GkA3Rh6uZnyG86hUnejVIV5Ty4w';
+  private token = 'OToD5ak1qtzbRmWVw36Wst_yEEI';
   apiData: any[] = [];
   locationFilter?: string;
-  jobtypefilter?: string;
+  jobtypefilter?: any | [];
   poleEmploiDomainFilter?: string;
   poleEmploiLocationFilter?: string;
   ApiResult: boolean = true;
@@ -27,6 +27,10 @@ export class ApiComponent implements OnInit {
               ) { }
 
   ngOnInit(): void {
+    this.dataService.filterPoleEmploiJobType$.subscribe(poleEmploiJobType => {
+      this.jobtypefilter = poleEmploiJobType;
+      console.log(poleEmploiJobType)
+    });
     this.dataService.filterPoleEmploiLocation$.subscribe(poleEmploiLocation => {
       this.locationFilter = poleEmploiLocation;
     });
@@ -48,6 +52,7 @@ export class ApiComponent implements OnInit {
   }
 
   fetchApiData() {
+    this.apiData = [];
     const apiUrl = `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=${this.poleEmploiDomainFilter}&origineOffre=0`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token,
@@ -61,12 +66,17 @@ export class ApiComponent implements OnInit {
             }
           });
           this.apiData = this.apiData.filter((item: any) => item.lieuTravail.libelle.toLowerCase().includes(this.locationFilter?.toLowerCase()));
-          this.ApiResult = this.apiData.length === 0;
+          const jobtypeFilterArray = this.jobtypefilter?.map((type: string) => type.toLowerCase());
+          if (jobtypeFilterArray.length > 0) {
+            this.apiData = this.apiData.filter((item: any) => {
+              return jobtypeFilterArray.some((type: any) => item.typeContrat.toLowerCase().includes(type));
+            });
+          }
           this.dataService.updateData(this.apiData);
-          this.ApiResult = true;
+          this.ApiResult = false;
         } else {
           console.log("No resultats found in API response");
-          this.ApiResult = false;
+          this.ApiResult = true;
         }
       },
       (error) => {
@@ -74,5 +84,6 @@ export class ApiComponent implements OnInit {
         this.toastr.error("Une erreur est survenue lors de la récupération des données");
       }
     );
+    console.log(this.apiData)
   }
 }

@@ -23,7 +23,7 @@ export class SearchComponent {
   locationFilter!: string;
   jobtypefilter!: string;
   searches: Search[] = [];
-  selectedJobTypes: any[] = [];
+  selectedJobTypes: [] = [];
   filteredSearches: any[] = [];
   currentUser!: CurrentUser;
   currentUserData: string | null | undefined
@@ -86,6 +86,9 @@ export class SearchComponent {
   updatePoleEmploiLocation() {
     this.dataService.setFilterPoleEmploiLocation(this.locationFilter);
   }
+  updatePoleEmploiJobType() {
+    this.dataService.setFilterPoleEmploiJobType(this.selectedJobTypes);
+  }
   onOptionSelected() {
     this.updatePoleEmploiDomain();
   }
@@ -109,6 +112,7 @@ export class SearchComponent {
     this.selectedJobTypes = jobType
     this.jobtypefilter = this.selectedJobTypes.join(',');
     this.filterJobOffers();
+    this.updatePoleEmploiJobType();
   }
 
   filterOptions() {
