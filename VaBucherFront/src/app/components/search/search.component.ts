@@ -86,6 +86,9 @@ export class SearchComponent {
   updatePoleEmploiLocation() {
     this.dataService.setFilterPoleEmploiLocation(this.locationFilter);
   }
+  updatePoleEmploiJobType() {
+    this.dataService.setFilterPoleEmploiJobType(this.selectedJobTypes.join(',') || '');
+  }
   onOptionSelected() {
     this.updatePoleEmploiDomain();
   }
@@ -109,6 +112,7 @@ export class SearchComponent {
     this.selectedJobTypes = jobType
     this.jobtypefilter = this.selectedJobTypes.join(',');
     this.filterJobOffers();
+    this.updatePoleEmploiJobType();
   }
 
   filterOptions() {

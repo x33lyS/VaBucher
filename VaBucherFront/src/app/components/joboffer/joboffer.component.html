@@ -45,6 +45,15 @@
                 </div>
               </div>
             </ng-container>
+            <div *ngIf="!showLoader" class="job-offers">
+              <div *ngIf="joboffersToDisplay.length === 0" class="offer-title no-offers">
+                <h5>Aucune offre à afficher</h5>
+                <div class="button-start">
+                  <span class="mas">Rechercher d'autres offres</span>
+                  <button type="button" name="Hover" (click)="searchNewOffer()">Rechercher d'autres offres</button>
+                </div>
+              </div>
+            </div>
           </ng-container>
         </div>
         <button *ngIf="currentPage < pages.length" (click)="setPage(currentPage + 1)" class="pagination-button-right" >&gt;</button>
@@ -56,15 +65,6 @@
         <app-api></app-api>
       </mat-tab>
     </mat-tab-group>
-  </div>
- <div *ngIf="!showLoader" class="job-offers">
-    <div *ngIf="joboffersToDisplay.length === 0" class="offer-title no-offers">
-      <h5>Aucune offre à afficher</h5>
-      <div class="button-start">
-        <span class="mas">Rechercher d'autres offres</span>
-        <button type="button" name="Hover" (click)="searchNewOffer()">Rechercher d'autres offres</button>
-      </div>
-    </div>
   </div>
   <ng-container *ngIf="currentUser" >
     <button class="compare-button" mat-fab extended   *ngIf="jobofferService.getSavedJobOffers().length > 0 " (click)="openSavedJobOffers()">{{jobofferService.getSavedJobOffers().length}} offres à comparer </button>
