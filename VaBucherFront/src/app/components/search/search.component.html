@@ -15,7 +15,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Filter by location</mat-label>
-    <input matInput [(ngModel)]="locationFilter" (input)="filterJobOffers()">
+    <input matInput [(ngModel)]="locationFilter" (input)="filterJobOffers()" (keyup)="updatePoleEmploiLocation()">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Filter by Job Types</mat-label>

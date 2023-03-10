@@ -83,6 +83,9 @@ export class SearchComponent {
   updatePoleEmploiDomain() {
     this.dataService.setFilterPoleEmploiDomain(this.domainFilter);
   }
+  updatePoleEmploiLocation() {
+    this.dataService.setFilterPoleEmploiLocation(this.locationFilter);
+  }
   onOptionSelected() {
     this.updatePoleEmploiDomain();
   }
@@ -118,8 +121,10 @@ export class SearchComponent {
       search.filter.toLowerCase().includes(lowerCaseFilter)
     );
     this.filterJobOffers()
+    this.updatePoleEmploiDomain()
   }
   filterJobOffers() {
     this.filtersChanged.emit({ domain: this.domainFilter, location: this.locationFilter, jobtype: this.jobtypefilter });
+    this.updatePoleEmploiLocation()
   }
 }
