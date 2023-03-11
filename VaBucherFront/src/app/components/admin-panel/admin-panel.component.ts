@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { interval } from 'rxjs';
+import {delay, interval, of} from 'rxjs';
 import { JobOffer } from 'src/app/models/joboffer';
 import { User } from 'src/app/models/user';
 import { ApiDataService } from 'src/app/services/api-data.service';
@@ -27,7 +27,16 @@ import {ToastrService} from "ngx-toastr";
       transition('* => deleted', [
         animate('300ms ease-out')
       ])
-    ])
+    ]),
+    trigger('addAnimation', [
+      state('added', style({
+        opacity: 1,
+        transform: 'translateX(100%)'
+      })),
+      transition('* => added', [
+        animate('300ms ease-out')
+      ])
+    ]),
   ]
 })
 export class AdminPanelComponent implements OnInit {
@@ -43,7 +52,8 @@ export class AdminPanelComponent implements OnInit {
   search: Search[] = [];
   jobType: JobType[] = [];
   data: any[] = [];
-
+  added: string = '';
+  newJobType: JobType | undefined;
   @Input() user?: User;
   @Output() usersUpdated = new EventEmitter<User[]>();
 
@@ -110,8 +120,6 @@ export class AdminPanelComponent implements OnInit {
     );
     this.filteredJobType = this.jobType.filter((jobtype) =>
       jobtype.jobs.toLowerCase().includes(this.filter));
-
-
   }
 
 
@@ -191,7 +199,10 @@ export class AdminPanelComponent implements OnInit {
       if (result) {
         this.searchService
           .createSearch(result)
-          .subscribe((search: Search[]) => this.search = search);
+          .subscribe((search: Search[]) => {
+            this.search = search;
+            this.refreshData();
+          });
         this.toastr.success('Recherche ajoutée avec succès');
       }
     });
@@ -233,11 +244,26 @@ export class AdminPanelComponent implements OnInit {
       if (result) {
         this.jobtypeService
           .createJobType(result)
-          .subscribe((jobType: JobType[]) => this.jobType = jobType);
+          .subscribe((jobType: JobType[]) => {
+            this.jobType = jobType;
+            this.refreshData()
+          });
         this.toastr.success('Type d\'emploi ajouté avec succès');
       }
     });
   }
+
+  refreshData() {
+    this.jobtypeService.getJobType().subscribe((jobTypes: JobType[]) => {
+      this.filteredJobType = jobTypes;
+    });
+    this.searchService.getSearch().subscribe((searches: Search[]) => {
+      this.filteredSearches = searches;
+    });
+  }
+
+
+
 
   updateJobType(jobType: JobType) {
     const dialogRef = this.dialog.open(DialogUpdateJobType, {

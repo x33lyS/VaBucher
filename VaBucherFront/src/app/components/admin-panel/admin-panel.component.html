@@ -98,7 +98,7 @@
           <thead>
           <th>Jobs</th>
           </thead>
-          <tr *ngFor="let jobtype of filteredJobType" class="mat-elevation-z3" [@deleteAnimation]="jobtype.state">
+          <tr *ngFor="let jobtype of filteredJobType" class="mat-elevation-z3" [@deleteAnimation]="jobtype.state" [@addAnimation]="jobtype === newJobType ? 'added' : ''">
             <td>
               {{jobtype.jobs}}
             </td>
