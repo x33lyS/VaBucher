@@ -27,7 +27,16 @@ import {ToastrService} from "ngx-toastr";
       transition('* => deleted', [
         animate('300ms ease-out')
       ])
-    ])
+    ]),
+    trigger('addAnimation', [
+      state('added', style({
+        opacity: 1,
+        transform: 'translateX(100%)'
+      })),
+      transition('* => added', [
+        animate('300ms ease-out')
+      ])
+    ]),
   ]
 })
 export class AdminPanelComponent implements OnInit {
@@ -43,7 +52,8 @@ export class AdminPanelComponent implements OnInit {
   search: Search[] = [];
   jobType: JobType[] = [];
   data: any[] = [];
-
+  added: string = '';
+  newJobType: JobType | undefined;
   @Input() user?: User;
   @Output() usersUpdated = new EventEmitter<User[]>();
 
@@ -231,9 +241,12 @@ export class AdminPanelComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.newJobType = result;
         this.jobtypeService
           .createJobType(result)
-          .subscribe((jobType: JobType[]) => this.jobType = jobType);
+          .subscribe((jobType: JobType[]) => {
+            this.jobType = jobType;
+          });
         this.toastr.success('Type d\'emploi ajouté avec succès');
       }
     });
