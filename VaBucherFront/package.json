@@ -25,6 +25,7 @@
     "material-design-icons-iconfont": "^6.7.0",
     "ngx-toastr": "^16.1.0",
     "rxjs": "~7.5.0",
+    "swup": "^3.0.5",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
@@ -32,6 +33,7 @@
     "@angular-devkit/build-angular": "^15.0.4",
     "@angular/cli": "~15.0.4",
     "@angular/compiler-cli": "^15.0.4",
+    "@swup/slide-theme": "^1.0.5",
     "@types/jasmine": "~4.0.0",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",

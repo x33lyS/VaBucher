@@ -7,7 +7,7 @@ import {
   AdminPanelComponent,
   DialogAddSearch,
   DialogAddJobType,
-  DialogContentExampleDialog, DialogUpdateJobOffer, DialogUpdateSearch, DialogUpdateJobType
+  DialogContentExampleDialog, DialogUpdateJobOffer, DialogUpdateSearch, DialogUpdateJobType, DialogUpdateUser
 } from './components/admin-panel/admin-panel.component';
 import { FormsModule } from '@angular/forms';
 import { JobofferComponent } from './components/joboffer/joboffer.component';
@@ -68,6 +68,7 @@ import {MatChipsModule} from "@angular/material/chips"; // <--- Ajout de MatSnac
     FirstUppercasePipe,
     JobofferCompareComponent,
     ApiComponent,
+    DialogUpdateUser
   ],
     imports: [
         BrowserModule,

@@ -17,10 +17,10 @@
           Types: <span>{{ jobOffer.types }}</span>
         </p>
         <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexCompanyInfo()" [ngClass]="{'hovered': hoveredIndexesCompanyInfo.includes(i)}" (mouseleave)="leaveIndex()">
-          CompanyInfo: <span>{{ jobOffer.companyInfo }}</span>
+          Entreprise: <span>{{ jobOffer.companyInfo }}</span>
         </p>
         <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexDomain()" [ngClass]="{'hovered': hoveredIndexesDomain.includes(i)}" (mouseleave)="leaveIndex()">
-          Domain: <span>{{ jobOffer.domain }}</span>
+          Domaine: <span>{{ jobOffer.domain }}</span>
         </p>
         <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexDate()" [ngClass]="{'hovered': hoveredIndexesDate.includes(i)}" (mouseleave)="leaveIndex()">
           Date: <span>{{ jobOffer.isNew }}</span>

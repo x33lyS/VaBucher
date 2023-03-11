@@ -13,7 +13,7 @@ import {ToastrService} from "ngx-toastr";
   providers: [FilterPipe]
 })
 export class ApiComponent implements OnInit {
-  private token = 'OToD5ak1qtzbRmWVw36Wst_yEEI';
+  private token = 'S3kXbNWYezhxVqLpgrpx3DWP9Dg';
   apiData: any[] = [];
   locationFilter?: string;
   jobtypefilter?: any | [];
@@ -29,7 +29,6 @@ export class ApiComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.filterPoleEmploiJobType$.subscribe(poleEmploiJobType => {
       this.jobtypefilter = poleEmploiJobType;
-      console.log(poleEmploiJobType)
     });
     this.dataService.filterPoleEmploiLocation$.subscribe(poleEmploiLocation => {
       this.locationFilter = poleEmploiLocation;
@@ -84,6 +83,5 @@ export class ApiComponent implements OnInit {
         this.toastr.error("Une erreur est survenue lors de la récupération des données");
       }
     );
-    console.log(this.apiData)
   }
 }

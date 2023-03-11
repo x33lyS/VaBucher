@@ -34,9 +34,7 @@ export class JobofferCompareComponent {
   }
 
   ngOnInit(): void {
-    this.savedJobOffers = this.jobofferService.getSavedJobOffers()
-    console.log(this.savedJobOffers);
-  }
+    this.savedJobOffers = this.jobofferService.getSavedJobOffers()}
 
   deleteCompare(jobOffer: any) {
     jobOffer.state = 'deleted';
@@ -55,7 +53,6 @@ export class JobofferCompareComponent {
       if (!this.hoveredIndexesSalary.includes(i)) {
         this.hoveredIndexesSalary.push(i);
       }
-      console.log(this.hoveredIndexesSalary);
     }
   }
   leaveIndex() {
@@ -73,7 +70,6 @@ export class JobofferCompareComponent {
       if (!this.hoveredIndexesLocation.includes(i)) {
         this.hoveredIndexesLocation.push(i);
       }
-      console.log(this.hoveredIndexesLocation);
     }
   }
 
@@ -83,7 +79,6 @@ export class JobofferCompareComponent {
       if (!this.hoveredIndexesType.includes(i)) {
         this.hoveredIndexesType.push(i);
       }
-      console.log(this.hoveredIndexesType);
     }
   }
 
@@ -93,7 +88,6 @@ export class JobofferCompareComponent {
       if (!this.hoveredIndexesCompanyInfo.includes(i)) {
         this.hoveredIndexesCompanyInfo.push(i);
       }
-      console.log(this.hoveredIndexesCompanyInfo);
     }
   }
 
@@ -103,7 +97,6 @@ export class JobofferCompareComponent {
       if (!this.hoveredIndexesDomain.includes(i)) {
         this.hoveredIndexesDomain.push(i);
       }
-      console.log(this.hoveredIndexesDomain);
     }
   }
   takeIndexDate() {
@@ -112,7 +105,6 @@ export class JobofferCompareComponent {
       if (!this.hoveredIndexesDate.includes(i)) {
         this.hoveredIndexesDate.push(i);
       }
-      console.log(this.hoveredIndexesDate);
     }
   }
 }
