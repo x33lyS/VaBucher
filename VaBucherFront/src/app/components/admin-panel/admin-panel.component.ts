@@ -12,6 +12,8 @@ import { JobtypeService } from "../../services/jobtype.service";
 import { JobType } from "../../models/jobtype";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ToastrService} from "ngx-toastr";
+import {CurrentUser} from "../../models/currentuser";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-admin-panel',
@@ -46,7 +48,7 @@ export class AdminPanelComponent implements OnInit {
   filteredUser: User[] = [];
   filteredSearches: Search[] = [];
   filteredJobType: JobType[] = [];
-
+  currentUser?: CurrentUser | null;
   filter: string = '';
   users: User[] = [];
   search: Search[] = [];
@@ -62,7 +64,8 @@ export class AdminPanelComponent implements OnInit {
     public dialog: MatDialog,
     private searchService: SearchService,
     private jobtypeService: JobtypeService,
-              public toastr: ToastrService
+              public toastr: ToastrService,
+              private authService: AuthenticationService
   ) { }
 
 
@@ -95,6 +98,22 @@ export class AdminPanelComponent implements OnInit {
         this.filteredJobType = result;
       });
   }
+
+  canDeleteUser(user: User): boolean {
+    this.currentUser = this.authService.getCurrentUser();
+    if (this.currentUser?.role === 4){
+      return true;
+    }
+    if (this.currentUser?.role === 3){
+      if (user.role === 3 || user.role === 4){
+        return false;
+      } else {
+        return true;
+      }
+    }
+    return false;
+  }
+
   applyFilter(event: Event | KeyboardEvent) {
     const filterValue = (event.target as HTMLInputElement)?.value;
     this.filter = filterValue.toLowerCase();
@@ -138,7 +157,6 @@ export class AdminPanelComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if (result) {
         user.state = 'deleted';
         this.userService
@@ -178,7 +196,6 @@ export class AdminPanelComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if (result) {
         joboffer.state = 'deleted';
         this.jobofferService
@@ -195,7 +212,6 @@ export class AdminPanelComponent implements OnInit {
       height: '400px',
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, 'result')
       if (result) {
         this.searchService
           .createSearch(result)
@@ -416,7 +432,6 @@ export class DialogUpdateJobType {
     public dialog: MatDialog,
   ) {
     this.jobtype = data.jobs;
-    console.log(this.jobtype)
   }
 
   ngOnInit(): void {
@@ -425,7 +440,6 @@ export class DialogUpdateJobType {
     const newJobType = new JobType();
     newJobType.id = this.data.id;
     newJobType.jobs = this.jobtype;
-    console.log(newJobType)
     this.jobtypeService
       .updateJobType(newJobType)
       .subscribe(() => console.log('Job Type updated successfully.'));
@@ -540,7 +554,6 @@ export class DialogUpdateJobOffer {
     newJobOffer.companyInfo = this.joboffers.companyInfo;
     newJobOffer.domain = this.joboffers.domain;
     newJobOffer.isNew = this.joboffers.isNew;
-    console.log(newJobOffer, "newJobOffer")
     this.jobofferService
       .updateJobOffer(newJobOffer)
       .subscribe(() => console.log('Job offer updated successfully.'));
