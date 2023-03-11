@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { interval } from 'rxjs';
+import {delay, interval, of} from 'rxjs';
 import { JobOffer } from 'src/app/models/joboffer';
 import { User } from 'src/app/models/user';
 import { ApiDataService } from 'src/app/services/api-data.service';
@@ -120,8 +120,6 @@ export class AdminPanelComponent implements OnInit {
     );
     this.filteredJobType = this.jobType.filter((jobtype) =>
       jobtype.jobs.toLowerCase().includes(this.filter));
-
-
   }
 
 
@@ -201,7 +199,10 @@ export class AdminPanelComponent implements OnInit {
       if (result) {
         this.searchService
           .createSearch(result)
-          .subscribe((search: Search[]) => this.search = search);
+          .subscribe((search: Search[]) => {
+            this.search = search;
+            this.refreshData();
+          });
         this.toastr.success('Recherche ajoutée avec succès');
       }
     });
@@ -241,16 +242,28 @@ export class AdminPanelComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.newJobType = result;
         this.jobtypeService
           .createJobType(result)
           .subscribe((jobType: JobType[]) => {
             this.jobType = jobType;
+            this.refreshData()
           });
         this.toastr.success('Type d\'emploi ajouté avec succès');
       }
     });
   }
+
+  refreshData() {
+    this.jobtypeService.getJobType().subscribe((jobTypes: JobType[]) => {
+      this.filteredJobType = jobTypes;
+    });
+    this.searchService.getSearch().subscribe((searches: Search[]) => {
+      this.filteredSearches = searches;
+    });
+  }
+
+
+
 
   updateJobType(jobType: JobType) {
     const dialogRef = this.dialog.open(DialogUpdateJobType, {
