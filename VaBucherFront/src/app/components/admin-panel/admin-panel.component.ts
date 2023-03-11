@@ -144,11 +144,24 @@ export class AdminPanelComponent implements OnInit {
 
 
   updateUser(user: User) {
-    this.toastr.warning('Utilisateur modifié avec succès');
-    this.userService
-      .updateUser(user)
-      .subscribe((users: User[]) => this.usersUpdated.emit(users));
+    const dialogRef = this.dialog.open(DialogUpdateUser, {
+      width: '250px',
+      data: user
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.userService
+              .updateUser(user)
+              .subscribe((users: User[]) => this.usersUpdated.emit(users));
+            this.toastr.warning('Utilisateur modifié avec succès');
+          } else {
+            user = result;
+          }
+        });
   }
+
+
 
   deleteUser(user: User) {
     const dialogRef = this.dialog.open(DialogContentExampleDialog, {
@@ -557,5 +570,73 @@ export class DialogUpdateJobOffer {
     this.jobofferService
       .updateJobOffer(newJobOffer)
       .subscribe(() => console.log('Job offer updated successfully.'));
+  }
+}
+@Component({
+  selector: 'dialog-update',
+  template:
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Prénom</mat-label>' +
+    '<input matInput [(ngModel)]="users.firstname">' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Nom</mat-label>' +
+    '<textarea matInput [(ngModel)]="users.lastname"></textarea>' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Localisation</mat-label>' +
+    '<input matInput [(ngModel)]="users.location">' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Domaine</mat-label>' +
+    '<input matInput  [(ngModel)]="users.domaine">' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Job Type</mat-label>' +
+    '<input matInput  [(ngModel)]="users.jobtype">' +
+    '</mat-form-field>' +
+    '<mat-form-field appearance="outline">' +
+    '<mat-label>Role</mat-label>' +
+    '<input type="number" matInput [(ngModel)]="users.role">' +
+    '</mat-form-field>' +
+    '<mat-dialog-actions align="center">' +
+    '<button mat-button mat-dialog-close (click)="onCancel()">Annuler</button>' +
+    '<button mat-button (click)="updateUser()" [mat-dialog-close]="users" cdkFocusInitial>Modifier</button>' +
+    '</mat-dialog-actions>',
+  styles: ['mat-form-field { width: 100%; padding: 30px; }' +
+  'mat-dialog-content { display: flex; flex-direction: column; }' +
+  'button { margin: 10px; width: 50%; }' +
+  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
+})
+export class DialogUpdateUser {
+  users: User | any = [];
+  user: any[] = [];
+  constructor(
+    public dialogRef: MatDialogRef<DialogUpdateUser>,
+    @Inject(MAT_DIALOG_DATA) public data: User,
+    private userService: UserService,
+    public dialog: MatDialog,
+  ) {
+    this.users = data;
+  }
+
+  ngOnInit(): void {
+  }
+  updateUser() {
+    const newUser = new User();
+    newUser.id = this.users.id;
+    newUser.firstname = this.users.firstname;
+    newUser.lastname = this.users.lastname;
+    newUser.location = this.users.location;
+    newUser.domain = this.users.domain;
+    newUser.jobtype = this.users.jobtype;
+    newUser.role = this.users.role;
+    this.userService
+      .updateUser(newUser)
+      .subscribe(() => console.log('User update successfully.'));
+  }
+
+  onCancel() {
+    this.dialogRef.close();
   }
 }
