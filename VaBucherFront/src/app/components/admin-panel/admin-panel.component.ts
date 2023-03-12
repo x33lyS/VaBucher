@@ -597,7 +597,7 @@ export class DialogUpdateJobOffer {
     '</mat-form-field>' +
     '<mat-form-field appearance="outline">' +
     '<mat-label>Role</mat-label>' +
-    '<input type="number" matInput [(ngModel)]="users.role">' +
+    '<input type="number" pattern="^[0-9]$" matInput [(ngModel)]="users.role">' +
     '</mat-form-field>' +
     '<mat-dialog-actions align="center">' +
     '<button mat-button mat-dialog-close (click)="onCancel()">Annuler</button>' +

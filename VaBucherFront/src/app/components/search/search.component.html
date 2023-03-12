@@ -1,6 +1,7 @@
-<div style="padding-top: 5%;">
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Filter by domain</mat-label>
+<div class="container mat-elevation-z4">
+  <div class="inputs">
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Filter by domain</mat-label>
       <input type="text"
              aria-label="Domain"
              matInput
@@ -9,22 +10,28 @@
              [(ngModel)]="domainFilter"
              [matAutocomplete]="auto"
              (keyup)="updatePoleEmploiDomain()">
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected()">
-      <mat-option *ngFor="let search of filteredSearches" [value]="search.filter" (click)="filterOptions()">{{ search.filter }}</mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Filter by location</mat-label>
-    <input matInput [(ngModel)]="locationFilter" (input)="filterJobOffers()" (keyup)="updatePoleEmploiLocation()">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Filter by Job Types</mat-label>
-    <mat-select [value]="selectedJobTypes" multiple (selectionChange)="updateSelectedJobTypes($event.value)">
-      <mat-option *ngFor="let jobType of jobtypes" [value]="jobType.jobs">
-       {{jobType.jobs}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button mat-raised-button (click)="onSubmit()">Valider</button>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected()">
+        <mat-option *ngFor="let search of filteredSearches" [value]="search.filter" (click)="filterOptions()">{{ search.filter }}</mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Filter by location</mat-label>
+      <input matInput [(ngModel)]="locationFilter" (input)="filterJobOffers()" (keyup)="updatePoleEmploiLocation()">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Filter by Job Types</mat-label>
+      <mat-select [value]="selectedJobTypes" multiple (selectionChange)="updateSelectedJobTypes($event.value)">
+        <mat-option *ngFor="let jobType of jobtypes" [value]="jobType.jobs">
+          {{jobType.jobs}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="scraper-button">
+    <ng-container *ngIf="enableScrapButton">
+      <button mat-raised-button (click)="onSubmit()">Valider</button>
+      <p>Nous n'avons pas ou peu d'offres correspondant à votre recherche, mais nous pouvons aller en chercher pour vous en appuyant sur "Valider"</p>
+    </ng-container>
+  </div>
 </div>
 

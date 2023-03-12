@@ -10,6 +10,7 @@ import { SearchService } from 'src/app/services/search.service';
 import { JobtypeService } from 'src/app/services/jobtype.service';
 import { CurrentUser } from 'src/app/models/currentuser';
 import { JobofferComponent } from '../joboffer/joboffer.component';
+import {ToastrService} from "ngx-toastr";
 
 
 
@@ -29,7 +30,9 @@ export class SearchComponent {
   currentUserData: string | null | undefined
   jobtypes: JobType[] = [];
   joboffers: JobOffer[] = [];
-
+  enableScrapButton: boolean = false;
+  searchResult: any[] = [];
+  pages: any;
 
   @Output() jobOffersUpdated = new EventEmitter<JobOffer[]>();
   @Output() filtersChanged = new EventEmitter<{ domain: string, location: string, jobtype: string }>();
@@ -39,10 +42,15 @@ export class SearchComponent {
     private http: HttpClient,
     private dataService: ApiDataService,
     private searchService: SearchService,
-    private jobtypeService: JobtypeService) { }
-
+    private jobtypeService: JobtypeService,
+              private jobOffer: JobofferComponent,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.jobofferService.pages$.subscribe((pages) => {
+      this.enableScrapButton = pages.length <= 2;
+    });
+
     this.currentUserData = localStorage.getItem('currentUser');
     if (this.currentUserData) {
       this.currentUser = JSON.parse(this.currentUserData);

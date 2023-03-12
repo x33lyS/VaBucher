@@ -13,7 +13,7 @@ import {ToastrService} from "ngx-toastr";
   providers: [FilterPipe]
 })
 export class ApiComponent implements OnInit {
-  private token = 'S3kXbNWYezhxVqLpgrpx3DWP9Dg';
+  private token = 'OvdNAs43eEVkzrKSUCaTbw6ZG8A';
   apiData: any[] = [];
   locationFilter?: string;
   jobtypefilter?: any | [];
