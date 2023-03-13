@@ -171,6 +171,7 @@ export class JobofferComponent implements OnInit {
     this.jobtypefilter = filters.jobtype;
     this.page = 1;
     this.currentPage = 1
+    this.jobofferService.setCurrentPage(this.currentPage)
   }
 
   searchNewOffer() {

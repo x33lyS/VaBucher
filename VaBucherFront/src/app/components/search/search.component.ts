@@ -67,7 +67,8 @@ export class SearchComponent {
     ]).subscribe(([pages, currentPage]) => {
       this.pages = pages;
       this.cPage = currentPage;
-      this.enableScrapButton = this.pages.length <= 1 && this.pages[this.pages.length - 1] === this.cPage;
+      this.enableScrapButton = this.pages.length === this.cPage;
+      
     });
 
     // this.enableScrapButton = !(this.pages && this.pages.length > 0 && this.pages[this.pages.length - 1] === this.cPage) || (this.pages && this.pages.length <= 1);
