@@ -47,6 +47,7 @@ export class JobofferComponent implements OnInit {
               private jobhistoryService: JobhistoryService,  private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.jobofferService.setPages(this.pages);
     this.authentificationService.currentUser$.subscribe((currentUser) => {
       this.currentUser = currentUser || this.authentificationService.getCurrentUser();
     });
@@ -130,7 +131,6 @@ export class JobofferComponent implements OnInit {
     this.pages = [];
     for (let i = 1; i <= filteredJoboffers.length / 6; i++) {
       this.pages.push(i);
-      this.jobofferService.setPages(this.pages);
     }
   }
 
@@ -150,7 +150,9 @@ export class JobofferComponent implements OnInit {
     filteredJoboffers = this.filter.transform(filteredJoboffers, this.domainFilter, this.locationFilter, this.jobtypefilter);
     this.setNumberPage(filteredJoboffers);
     this.jobofferService.getOffersAfterSearch(filteredJoboffers)
-    return filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+    const newPages = filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+    this.jobofferService.setPages(this.pages)
+    return newPages
   }
 
   setPage(page: number) {
@@ -158,6 +160,7 @@ export class JobofferComponent implements OnInit {
     this.page = page;
     this.jobofferService.setCurrentPage(this.currentPage)
   }
+
   showDetails(joboffer: JobOffer) {
     this.selectedJobOffer = joboffer;
   }
