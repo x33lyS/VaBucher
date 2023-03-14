@@ -14,7 +14,7 @@ import {JobofferService} from "../../services/joboffer.service";
   providers: [FilterPipe]
 })
 export class ApiComponent implements OnInit {
-  private token = 'YEfnI01OFRTT7J4ArYYgmzVk864';
+  private token = 'ypXpSPoMIM8g2f0Igl3ZOuM1mbA';
   apiData: any[] = [];
   locationFilter?: string;
   jobtypefilter?: any | [];
