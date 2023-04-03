@@ -84,7 +84,10 @@ export class ApiComponent implements OnInit {
       },
       (error) => {
         console.log("API call failed:", error);
-        this.toastr.error("Une erreur est survenue lors de la récupération des données");
+        this.toastr.error("Une erreur est survenue lors de la récupération des données", 'Error', {
+          positionClass: 'toast-top-left',
+        });
+        
       }
     );
   }

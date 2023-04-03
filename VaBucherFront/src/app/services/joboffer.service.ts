@@ -28,9 +28,13 @@ export class JobofferService {
     if (jobOfferIndex === -1) {
       savedJobOffers.push(jobOffer);
       localStorage.setItem('savedForCompareJobOffers', JSON.stringify(savedJobOffers));
-      this.toastr.success('Offre prête à être comparée');
-    }else{
-      this.toastr.error('Offre déjà enregistrée');
+      this.toastr.success('Offre prête à être comparée', 'Success', {
+        positionClass: 'toast-top-left',
+      });
+    } else {
+      this.toastr.error('Offre déjà enregistrée', 'Error', {
+        positionClass: 'toast-top-left',
+      });
     }
   }
 
