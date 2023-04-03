@@ -84,7 +84,9 @@ export class JobofferComponent implements OnInit {
             jobHistoryList => {
               console.log('Job history deleted successfully:', jobHistoryList);
               this.updateJobOfferAndSetIsSavedFalse(joboffer);
-              this.toastr.error('Offre d\'emploi supprimée de vos favoris');
+              this.toastr.error('Offre d\'emploi supprimée de vos favoris', 'Error', {
+                positionClass: 'toast-top-left',
+              });
             },
             error => {
               console.error('Error deleting job history:', error);
@@ -93,7 +95,9 @@ export class JobofferComponent implements OnInit {
         } else {
           this.jobhistory.createJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
             jobHistoryList => {
-              this.toastr.success('Offre ajoutée à vos favoris');
+              this.toastr.success('Offre ajoutée à vos favoris', 'Success', {
+                positionClass: 'toast-top-left',
+              });
               this.jobofferService.updateJobOffer(updatedJobOffer).subscribe(
                 updatedJobOfferList => {
                   console.log('Job offer updated successfully:', updatedJobOfferList);
