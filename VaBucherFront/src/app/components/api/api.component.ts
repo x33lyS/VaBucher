@@ -5,6 +5,7 @@ import {FilterPipe} from "../../filter.pipe";
 import {JobofferComponent} from "../joboffer/joboffer.component";
 import {debounceTime, distinctUntilChanged} from "rxjs";
 import {ToastrService} from "ngx-toastr";
+import {JobofferService} from "../../services/joboffer.service";
 
 @Component({
   selector: 'app-api',
@@ -13,7 +14,7 @@ import {ToastrService} from "ngx-toastr";
   providers: [FilterPipe]
 })
 export class ApiComponent implements OnInit {
-  private token = 'OvdNAs43eEVkzrKSUCaTbw6ZG8A';
+  private token = 'ypXpSPoMIM8g2f0Igl3ZOuM1mbA';
   apiData: any[] = [];
   locationFilter?: string;
   jobtypefilter?: any | [];
@@ -24,9 +25,12 @@ export class ApiComponent implements OnInit {
   constructor(private http: HttpClient,
               private dataService: ApiDataService,
               private toastr: ToastrService,
+              private jobofferService: JobofferService
               ) { }
 
   ngOnInit(): void {
+
+
     this.dataService.filterPoleEmploiJobType$.subscribe(poleEmploiJobType => {
       this.jobtypefilter = poleEmploiJobType;
     });

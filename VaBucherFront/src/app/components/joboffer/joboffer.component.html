@@ -3,7 +3,6 @@
 <div class="recent-offers" id="section_3">
   <img class="image" src="../assets/blobGauche.png">
   <div class="offer-title">
-<!--    <h5 *ngIf="joboffersToDisplay.length > 0" [ngClass]="{'padding-bottom': currentUser}">Nos offres d'emploi</h5>-->
     <mat-tab-group mat-stretch-tabs="true" mat-align-tabs="start">
       <mat-tab *ngIf="joboffersToDisplay.length > 0" [ngClass]="{'padding-bottom': currentUser}" label="Nos offres d'emploi">
         <button *ngIf="currentPage > 1" (click)="setPage(currentPage -1)" class="pagination-button-left">&lt;</button>
@@ -26,8 +25,6 @@
               </div>
             </ng-container>
           </ng-container>
-        </div>
-        <div class="offers" *ngIf="joboffersToDisplay.length > 0">
           <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
             <ng-container *ngIf="joboffersToDisplay.indexOf(joboffer) % 2 === 0">
               <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 4 === 0 ? 4 : 3}}">

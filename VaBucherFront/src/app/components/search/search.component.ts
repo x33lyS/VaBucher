@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { interval, take } from 'rxjs';
+import {combineLatest, interval, take} from 'rxjs';
 import { JobOffer } from 'src/app/models/joboffer';
 import { Search } from 'src/app/models/search';
 import { JobType } from 'src/app/models/jobtype';
@@ -33,6 +33,7 @@ export class SearchComponent {
   enableScrapButton: boolean = false;
   searchResult: any[] = [];
   pages: any;
+  cPage: any;
 
   @Output() jobOffersUpdated = new EventEmitter<JobOffer[]>();
   @Output() filtersChanged = new EventEmitter<{ domain: string, location: string, jobtype: string }>();
@@ -48,8 +49,29 @@ export class SearchComponent {
 
   ngOnInit(): void {
     this.jobofferService.pages$.subscribe((pages) => {
-      this.enableScrapButton = pages.length <= 2;
+      this.pages = pages;
+      // console.log(pages)
+      // this.enableScrapButton = this.pages.length <= 1;
+      });
+
+    this.jobofferService.currentPage$.subscribe((currentPage) => {
+      this.cPage = currentPage
+      // this.enableScrapButton = (this.pages.length - 1) === this.cPage;
+      // console.log(this.cPage)
+      // console.log(this.pages.length)
+    })
+
+    combineLatest([
+      this.jobofferService.pages$,
+      this.jobofferService.currentPage$
+    ]).subscribe(([pages, currentPage]) => {
+      this.pages = pages;
+      this.cPage = currentPage;
+      this.enableScrapButton = this.pages.length === this.cPage;
+      
     });
+
+    // this.enableScrapButton = !(this.pages && this.pages.length > 0 && this.pages[this.pages.length - 1] === this.cPage) || (this.pages && this.pages.length <= 1);
 
     this.currentUserData = localStorage.getItem('currentUser');
     if (this.currentUserData) {
@@ -90,12 +112,15 @@ export class SearchComponent {
 
   updatePoleEmploiDomain() {
     this.dataService.setFilterPoleEmploiDomain(this.domainFilter);
+    this.jobofferService.setPages(this.pages)
   }
   updatePoleEmploiLocation() {
     this.dataService.setFilterPoleEmploiLocation(this.locationFilter);
+    this.jobofferService.setPages(this.pages)
   }
   updatePoleEmploiJobType() {
     this.dataService.setFilterPoleEmploiJobType(this.selectedJobTypes);
+    this.jobofferService.setPages(this.pages)
   }
   onOptionSelected() {
     this.updatePoleEmploiDomain();
