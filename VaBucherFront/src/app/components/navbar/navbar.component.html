@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg" (scroll)="onWindowScroll();">
+<nav class="navbar navbar-expand-lg" [ngClass]="{'dark-navbar': checkCurrentPage()}" (scroll)="onWindowScroll();">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">
+    <a class="navbar-brand" routerLink="/" routerLinkActive="activeLink" [routerLinkActiveOptions]="{exact: true}">
       Va Bucher
     </a>
 
