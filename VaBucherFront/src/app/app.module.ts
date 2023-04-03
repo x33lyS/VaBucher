@@ -40,7 +40,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatTabsModule} from "@angular/material/tabs";
 import { ApiComponent } from './components/api/api.component';
-import {MatChipsModule} from "@angular/material/chips"; // <--- Ajout de MatSnackBarModule
+import {MatChipsModule} from "@angular/material/chips";
+import {MatMenuModule} from "@angular/material/menu"; // <--- Ajout de MatSnackBarModule
 
 
 @NgModule({
@@ -90,7 +91,8 @@ import {MatChipsModule} from "@angular/material/chips"; // <--- Ajout de MatSnac
         MatTooltipModule,
         MatSnackBarModule,
         MatTabsModule,
-        MatChipsModule
+        MatChipsModule,
+        MatMenuModule
     ],
   providers: [],
   bootstrap: [AppComponent]
