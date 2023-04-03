@@ -14,11 +14,18 @@
     .activeForm {
       background-color: #fff!important;
     }
+    .inactiveForm {
+      background-image: url("../../../assets/home.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
     .compagny-form {
       border-top-right-radius: 15px;
       border-bottom-right-radius: 15px;
     }
     .switch-compagny-form {
+     
       width: 70%;
       margin: 50% auto;
       h3 {
@@ -74,9 +81,20 @@
       .input-container {
         width: 80%;
         margin: 0 auto;
+        display: flex;
+        flex-direction: column;
         .form-name {
           display: flex;
           gap: 13px;
+        }                
+        .form-input {
+          flex-grow: 1;
+        }
+        
+        .form-error {
+          color: red;
+          display: block; /* Make the error message a block element */
+          margin-top: 2px; /* Add some margin to separate it from the input */
         }
       }
     }
