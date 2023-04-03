@@ -11,7 +11,7 @@ export class AdminGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
     const currentUser = this.authService.getCurrentUser();
-      if (currentUser && currentUser.role === 3) {
+      if (currentUser && (currentUser.role === 3|| currentUser.role === 4)  ) {
         return true;
       } else {
         this.router.navigate(['/login']);

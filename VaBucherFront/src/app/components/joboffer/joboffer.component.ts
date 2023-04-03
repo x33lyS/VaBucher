@@ -42,15 +42,14 @@ export class JobofferComponent implements OnInit {
   selectedJobOffer: JobOffer | null = null;
   showLoader: boolean = true;
 
-
   constructor(private router: Router,public jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService,
               private dataService: ApiDataService, private filter: FilterPipe, private jobhistory: JobhistoryService, private authentificationService: AuthenticationService,
               private jobhistoryService: JobhistoryService,  private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.jobofferService.setPages(this.pages);
     this.authentificationService.currentUser$.subscribe((currentUser) => {
       this.currentUser = currentUser || this.authentificationService.getCurrentUser();
-      // Si currentUser est null, on appelle getCurrentUser() pour chercher l'utilisateur dans le sessionStorage
     });
     this.getOffers();
     timer(1000).subscribe(() => {
@@ -67,6 +66,8 @@ export class JobofferComponent implements OnInit {
       .subscribe((result: JobType[]) => (this.jobtypes = result));
     this.searchService.getSearch().subscribe((result: Search[]) => (this.searches = result));
   }
+
+
 
   saveHistory(joboffer: JobOffer) {
     // @ts-ignore
@@ -148,13 +149,18 @@ export class JobofferComponent implements OnInit {
     let filteredJoboffers = this.joboffers;
     filteredJoboffers = this.filter.transform(filteredJoboffers, this.domainFilter, this.locationFilter, this.jobtypefilter);
     this.setNumberPage(filteredJoboffers);
-    return filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+    this.jobofferService.getOffersAfterSearch(filteredJoboffers)
+    const newPages = filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+    this.jobofferService.setPages(this.pages)
+    return newPages
   }
 
   setPage(page: number) {
     this.currentPage = page;
     this.page = page;
+    this.jobofferService.setCurrentPage(this.currentPage)
   }
+
   showDetails(joboffer: JobOffer) {
     this.selectedJobOffer = joboffer;
   }
@@ -165,6 +171,7 @@ export class JobofferComponent implements OnInit {
     this.jobtypefilter = filters.jobtype;
     this.page = 1;
     this.currentPage = 1
+    this.jobofferService.setCurrentPage(this.currentPage)
   }
 
   searchNewOffer() {

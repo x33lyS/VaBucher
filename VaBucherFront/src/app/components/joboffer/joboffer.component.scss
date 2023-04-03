@@ -90,20 +90,27 @@ table {
   }
   .pagination-button-left {
     left: 1%;
+    height: 100%;
   }
   .pagination-button-right {
     right: 2%;
+    height: 100%;
   }
   .offers {
     margin: 0 auto;
     width: 90vw;
     display: flex;
-    height: 37vh;
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: space-between;
     .box {
       margin: 10px;
       border-radius: 12px;
+      width: calc((90vw - 40px) / 3);
+
       h6,
       p {
+        text-align: left;
         color: #fff;
         padding: 25px 15px 10px 20px;
       }
@@ -126,6 +133,14 @@ table {
   #box-2,
   #box-3 {
     flex: 0 0 30%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .offers {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -247,7 +262,13 @@ table {
 }
 
 .voir-plus{
+  a{
+    color: white;
+  }
   &:hover{
+    a{
+      color: #ED6A5A;
+    }
     background: white !important;
     color: #E94A35 !important;
   }

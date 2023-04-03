@@ -30,7 +30,7 @@
 
         <ng-container *ngIf="currentUser">
 
-          <li *ngIf="currentUser.role == 3" class="nav-item">
+          <li *ngIf="currentUser.role == 3 || currentUser.role === 4" class="nav-item">
             <a routerLink="/admin" class="custom-btn">Admin</a>
           </li>
 

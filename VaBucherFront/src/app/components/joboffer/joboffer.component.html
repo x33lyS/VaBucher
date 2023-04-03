@@ -3,7 +3,6 @@
 <div class="recent-offers" id="section_3">
   <img class="image" src="../assets/blobGauche.png">
   <div class="offer-title">
-<!--    <h5 *ngIf="joboffersToDisplay.length > 0" [ngClass]="{'padding-bottom': currentUser}">Nos offres d'emploi</h5>-->
     <mat-tab-group mat-stretch-tabs="true" mat-align-tabs="start">
       <mat-tab *ngIf="joboffersToDisplay.length > 0" [ngClass]="{'padding-bottom': currentUser}" label="Nos offres d'emploi">
         <button *ngIf="currentPage > 1" (click)="setPage(currentPage -1)" class="pagination-button-left">&lt;</button>
@@ -21,12 +20,11 @@
                   <button *ngIf="joboffer.domain">Domaine: {{ joboffer.domain }}</button>
                   <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 200).lastIndexOf(' ')) + ' ...' }}</p>
                   <button class="voir-plus">Voir plus</button>
+                  <button *ngIf="joboffer.url" class="voir-plus"><a href="{{joboffer.url}}" target="_blank">Postuler</a></button>
                 </div>
               </div>
             </ng-container>
           </ng-container>
-        </div>
-        <div class="offers" *ngIf="joboffersToDisplay.length > 0">
           <ng-container *ngFor="let joboffer of joboffersToDisplay | filter:domainFilter:locationFilter:jobtypefilter">
             <ng-container *ngIf="joboffersToDisplay.indexOf(joboffer) % 2 === 0">
               <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 4 === 0 ? 4 : 3}}">
@@ -40,9 +38,19 @@
                   <button *ngIf="joboffer.domain">Domaine: {{ joboffer.domain }}</button>
                   <p>{{ joboffer.description.slice(0, joboffer.description.slice(0, 200).lastIndexOf(' ')) + ' ...' }}</p>
                   <button class="voir-plus">Voir plus</button>
+                  <button *ngIf="joboffer.url" class="voir-plus"><a href="{{joboffer.url}}" target="_blank">Postuler</a></button>
                 </div>
               </div>
             </ng-container>
+            <div *ngIf="!showLoader" class="job-offers">
+              <div *ngIf="joboffersToDisplay.length === 0" class="offer-title no-offers">
+                <h5>Aucune offre à afficher</h5>
+                <div class="button-start">
+                  <span class="mas">Rechercher d'autres offres</span>
+                  <button type="button" name="Hover" (click)="searchNewOffer()">Rechercher d'autres offres</button>
+                </div>
+              </div>
+            </div>
           </ng-container>
         </div>
         <button *ngIf="currentPage < pages.length" (click)="setPage(currentPage + 1)" class="pagination-button-right" >&gt;</button>
@@ -54,15 +62,6 @@
         <app-api></app-api>
       </mat-tab>
     </mat-tab-group>
-  </div>
- <div *ngIf="!showLoader" class="job-offers">
-    <div *ngIf="joboffersToDisplay.length === 0" class="offer-title no-offers">
-      <h5>Aucune offre à afficher</h5>
-      <div class="button-start">
-        <span class="mas">Rechercher d'autres offres</span>
-        <button type="button" name="Hover" (click)="searchNewOffer()">Rechercher d'autres offres</button>
-      </div>
-    </div>
   </div>
   <ng-container *ngIf="currentUser" >
     <button class="compare-button" mat-fab extended   *ngIf="jobofferService.getSavedJobOffers().length > 0 " (click)="openSavedJobOffers()">{{jobofferService.getSavedJobOffers().length}} offres à comparer </button>
