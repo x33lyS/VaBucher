@@ -34,7 +34,9 @@ export class JobofferCompareComponent {
   }
 
   ngOnInit(): void {
-    this.savedJobOffers = this.jobofferService.getSavedJobOffers()}
+    this.savedJobOffers = this.jobofferService.getSavedJobOffers()
+    window.scrollTo(0, 0);
+  }
 
   deleteCompare(jobOffer: any) {
     jobOffer.state = 'deleted';

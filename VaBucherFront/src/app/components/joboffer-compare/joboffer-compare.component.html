@@ -1,31 +1,35 @@
 <div  class="container">
-  <div class="offers mat-elevation-z5" *ngFor="let jobOffer of savedJobOffers; let i = index" [@deleteAnimation]="jobOffer.state">
+  <div class="offers" *ngFor="let jobOffer of savedJobOffers; let i = index" [@deleteAnimation]="jobOffer.state">
     <div class="header">
       <h2>{{ jobOffer.title }}</h2>
       <button (click)="deleteCompare(jobOffer)"><mat-icon>delete_outline</mat-icon></button>
     </div>
+    <span class="companyInfo">{{ jobOffer.companyInfo }}</span>
     <div class="content">
 <!--      <p class="description">{{ jobOffer.description.slice(0, jobOffer.description.slice(0, 350).lastIndexOf(' ')) + ' ...' }} </p>-->
       <div class="content-type">
-        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexSalary()" [ngClass]="{'hovered': hoveredIndexesSalary.includes(i)}" (mouseleave)="leaveIndex()">
+        <p class="vue-compare " (mouseenter)="takeIndexSalary()" [ngClass]="{'hovered': hoveredIndexesSalary.includes(i)}" (mouseleave)="leaveIndex()">
           Salaire: <span>{{ jobOffer.salaire }}</span>
         </p>
-        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexLocation()" [ngClass]="{'hovered': hoveredIndexesLocation.includes(i)}" (mouseleave)="leaveIndex()">
+        <p class="vue-compare " (mouseenter)="takeIndexLocation()" [ngClass]="{'hovered': hoveredIndexesLocation.includes(i)}" (mouseleave)="leaveIndex()">
           Localisation:  <span>{{ jobOffer.localisation }}</span>
         </p>
-        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexType()" [ngClass]="{'hovered': hoveredIndexesType.includes(i)}" (mouseleave)="leaveIndex()">
+        <p class="vue-compare " (mouseenter)="takeIndexType()" [ngClass]="{'hovered': hoveredIndexesType.includes(i)}" (mouseleave)="leaveIndex()">
           Types: <span>{{ jobOffer.types }}</span>
         </p>
-        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexCompanyInfo()" [ngClass]="{'hovered': hoveredIndexesCompanyInfo.includes(i)}" (mouseleave)="leaveIndex()">
+        <!-- <p class="vue-compare " (mouseenter)="takeIndexCompanyInfo()" [ngClass]="{'hovered': hoveredIndexesCompanyInfo.includes(i)}" (mouseleave)="leaveIndex()">
           Entreprise: <span>{{ jobOffer.companyInfo }}</span>
-        </p>
-        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexDomain()" [ngClass]="{'hovered': hoveredIndexesDomain.includes(i)}" (mouseleave)="leaveIndex()">
+        </p> -->
+        <p class="vue-compare " (mouseenter)="takeIndexDomain()" [ngClass]="{'hovered': hoveredIndexesDomain.includes(i)}" (mouseleave)="leaveIndex()">
           Domaine: <span>{{ jobOffer.domain }}</span>
         </p>
-        <p class="vue-compare mat-elevation-z2" (mouseenter)="takeIndexDate()" [ngClass]="{'hovered': hoveredIndexesDate.includes(i)}" (mouseleave)="leaveIndex()">
+        <p class="vue-compare " (mouseenter)="takeIndexDate()" [ngClass]="{'hovered': hoveredIndexesDate.includes(i)}" (mouseleave)="leaveIndex()">
           Date: <span>{{ jobOffer.isNew }}</span>
         </p>
       </div>
     </div>
+  </div>
+  <div class="add-offer">
+    <button routerLink="/dashboard">Add an offer</button>
   </div>
 </div>
