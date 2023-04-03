@@ -74,7 +74,9 @@ a:hover {
   font-weight: var(--font-weight-bold)
 }
 
-
+.mat-mdc-icon-button.mat-mdc-button-base{
+  color: var(--primary-color);
+}
 .navbar-expand-lg .navbar-nav .nav-item {
   border-radius: var(--border-radius-large);
   margin: 5px;
