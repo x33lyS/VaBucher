@@ -16,16 +16,11 @@ ul li {
 }
 
 a {
-  touch-action: manipulation;
-  transition: all .3s;
-
-}
-
-a {
   display: inline-block;
   color: var(--primary-color);
   text-decoration: none;
-
+  touch-action: manipulation;
+  transition: all .3s;
 }
 
 a:hover {
@@ -63,33 +58,32 @@ a:hover {
   width: 100%;
   background: 0 0;
   background: transparent;
-
   z-index: 9;
 }
 
 .navbar-inverse {
-  background: #2E2E2E;
-}
-
-.dark-navbar{
-  background: #2E2E2E;
+  //background: #000;
+  backdrop-filter: blur(20px);
 }
 
 .navbar-brand,
 .navbar-brand:hover {
-  color: var(--white-color);
-  font-size: var(--h5-font-size);
+  color: var(--primary-color);
+  font-size: clamp(1rem, 5vw, 1rem);
   background: transparent;
   font-weight: var(--font-weight-bold)
 }
 
-
+.mat-mdc-icon-button.mat-mdc-button-base{
+  color: var(--primary-color);
+}
 .navbar-expand-lg .navbar-nav .nav-item {
   border-radius: var(--border-radius-large);
-  margin: 10px;
+  margin: 5px;
   background: transparent;
-
-  padding: 5px 20px
+  padding: 5px 20px;
+  color: var(--primary-color);
+  font-size: clamp(1rem, 5vw, 1rem);
 }
 
 .navbar-nav .nav-item {
@@ -100,26 +94,25 @@ a:hover {
   position: relative;
   padding-top: 15px;
   background: transparent;
-
   padding-bottom: 15px
+}
+
+.navbar-nav{
+  display: flex;
+  align-items: center;
 }
 
 .navbar-nav .nav-item:hover {
   background: transparent;
-
   color: var(--secondary-color)
 }
 
 @media screen and (max-width:991px) {
   .navbar {
-    background-color: var(--primary-color);
+    //background-color: var(--primary-color);
+    backdrop-filter: blur(20px);
 
   }
-
-  .navbar-expand-lg .navbar-nav {
-    padding-bottom: 30px
-  }
-
   .navbar-expand-lg .navbar-nav .nav-item {
     padding: 0
   }

@@ -107,7 +107,6 @@ table {
       margin: 10px;
       border-radius: 12px;
       width: calc((90vw - 40px) / 3);
-
       h6,
       p {
         text-align: left;
@@ -133,6 +132,23 @@ table {
   #box-2,
   #box-3 {
     flex: 0 0 30%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .offers {
+    width: auto !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .box {
+    width: auto !important;
+  }
+  .recent-offers{
+    img{
+      display: none;
+    }
   }
 }
 
