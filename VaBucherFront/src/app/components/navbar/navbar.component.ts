@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, Host } from '@angular/core';
+import { Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { CurrentUser } from 'src/app/models/currentuser';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -13,7 +14,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class NavbarComponent implements OnInit {
   currentUser!: CurrentUser;
 
-  constructor(private authentificationService: AuthenticationService) { }
+  constructor(private authentificationService: AuthenticationService, private router: Router) { }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
@@ -25,6 +26,10 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  checkCurrentPage(): boolean {
+    return this.router.url !== '/';
+  }
+
   ngOnInit(): void {
     // Subscribe to the currentUser$ BehaviorSubject
     this.authentificationService.currentUser$.subscribe((currentUser) => {
@@ -32,7 +37,6 @@ export class NavbarComponent implements OnInit {
       // Si currentUser est null, on appelle getCurrentUser() pour chercher l'utilisateur dans le sessionStorage
     });
   }
-
 
   disconnect() {
     this.authentificationService.logout();

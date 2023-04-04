@@ -4,6 +4,8 @@ import { JobOffer } from 'src/app/models/joboffer';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { JobofferService } from 'src/app/services/joboffer.service';
 import {Router} from "@angular/router";
+import { JobhistoryService } from 'src/app/services/jobhistory.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +24,7 @@ export class HomeComponent implements OnInit {
   currentUser: CurrentUser | null = null;
 
 
-  constructor(public jobofferService: JobofferService, private authentificationService: AuthenticationService, private router: Router) { }
+  constructor(public jobofferService: JobofferService, private authentificationService: AuthenticationService, private router: Router,private jobhistoryService: JobhistoryService,private toastr: ToastrService) { }
 
   ngOnInit(): void {
     // this.getOffers();
@@ -125,6 +127,70 @@ export class HomeComponent implements OnInit {
       });
     }
     return this.joboffers
+  }
+
+
+  saveHistory(joboffer: JobOffer) {
+    // @ts-ignore
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    const currentUserId = currentUser.id;
+    const currentJobOfferId = joboffer.id;
+    const updatedJobOffer = {...joboffer, isSaved: true};
+    console.log('Creating job history for user', currentUserId, 'and job offer', currentJobOfferId);
+
+    this.jobofferService.getJobOfferById(currentJobOfferId).subscribe(
+      jobOffer => {
+        if (jobOffer.isSaved) {
+          this.jobhistoryService.deleteJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
+            jobHistoryList => {
+              console.log('Job history deleted successfully:', jobHistoryList);
+              this.updateJobOfferAndSetIsSavedFalse(joboffer);
+              this.toastr.success('Offre d\'emploi supprimée de vos favoris', 'Success', {
+                positionClass: 'toast-top-left',
+              });
+              joboffer.isSaved = false;
+
+            },
+            error => {
+              console.error('Error deleting job history:', error);
+            }
+          );
+        } else {
+          this.jobhistoryService.createJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
+            jobHistoryList => {
+              this.toastr.success('Offre ajoutée à vos favoris', 'Success', {
+                positionClass: 'toast-top-left',
+              });
+              joboffer.isSaved = true;
+              this.jobofferService.updateJobOffer(updatedJobOffer).subscribe(
+                updatedJobOfferList => {
+                  console.log('Job offer updated successfully:', updatedJobOfferList);
+                },
+                error => {
+                  console.error('Error updating job offer:', error);
+                }
+              );
+              console.log('Job history created successfully:', jobHistoryList);
+            },
+            error => {
+              console.error('Error creating job history:', error);
+            }
+          );
+        }
+      }
+    );
+  }
+
+  updateJobOfferAndSetIsSavedFalse(joboffer: JobOffer) {
+    joboffer.isSaved = false;
+    this.jobofferService.updateJobOffer(joboffer).subscribe(
+      updatedJobOfferList => {
+        console.log('Job offer updated successfully:', updatedJobOfferList);
+      },
+      error => {
+        console.error('Error updating job offer:', error);
+      }
+    );
   }
 }
 
