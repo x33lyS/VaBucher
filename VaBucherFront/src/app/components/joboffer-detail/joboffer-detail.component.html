@@ -4,7 +4,7 @@
       <span class="close-button" (click)="onClose()">X</span>
       <h2>{{ selectedJoboffer.title }}</h2>
       <ng-container *ngIf="currentUser">
-        <button style="border: none;" matTooltip="Favoris" class="favoris" (click)="saveHistory(selectedJoboffer)"><mat-icon>{{ selectedJoboffer.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
+        <button style="border: none;" matTooltip="Favoris" class="favoris" (click)="jobofferService.saveHistory(selectedJoboffer)"><mat-icon>{{ selectedJoboffer.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
       </ng-container>
     </div>
     <div class="description">

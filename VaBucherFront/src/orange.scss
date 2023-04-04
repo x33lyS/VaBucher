@@ -1,0 +1,31 @@
+@import '~@angular/material/theming';
+
+
+
+// Define your custom color palette
+$my-orange-palette: (
+  50: #ffe8e4,
+  100: #ffc9c4,
+  200: #ffa9a4,
+  300: #ff8984,
+  400: #ff6e6d,
+  500: #E94A35,
+  600: #e0311f,
+  700: #c9261a,
+  800: #ae1c15,
+  900: #93120f,
+  A100: #ffd1cf,
+  A200: #ffa09d,
+  A400: #ff6e6d,
+  A700: #c9261a,
+);
+
+// Create a new theme using your custom color palette
+$my-orange-theme: mat-light-theme((
+  color: (
+    primary: $my-orange-palette,
+    accent: $my-orange-palette,
+  )
+));
+
+@include angular-material-theme($my-orange-theme);

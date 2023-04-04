@@ -54,7 +54,7 @@ export class ApiComponent implements OnInit {
     });
   }
 
-  fetchApiData() {
+  fetchApiData() {    
     this.apiData = [];
     const apiUrl = `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=${this.poleEmploiDomainFilter}&origineOffre=0`;
     const headers = new HttpHeaders({

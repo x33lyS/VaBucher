@@ -21,8 +21,8 @@ export class JobofferDetailComponent {
   access: boolean = false
 
 
-  constructor(private jobOfferService: JobofferService, private authService: AuthenticationService,
-              private _snackBar: MatSnackBar, private toastr: ToastrService,private jobhistoryService: JobhistoryService) { }
+  constructor(public jobofferService: JobofferService, private authService: AuthenticationService,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
@@ -32,71 +32,8 @@ export class JobofferDetailComponent {
     console.log(this.selectedJoboffer);
 
   }
-  saveHistory(joboffer: JobOffer) {
-    // @ts-ignore
-    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    const currentUserId = currentUser.id;
-    const currentJobOfferId = joboffer.id;
-    const updatedJobOffer = {...joboffer, isSaved: true};
-    console.log('Creating job history for user', currentUserId, 'and job offer', currentJobOfferId);
-
-    this.jobOfferService.getJobOfferById(currentJobOfferId).subscribe(
-      jobOffer => {
-        if (jobOffer.isSaved) {
-          this.jobhistoryService.deleteJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
-            jobHistoryList => {
-              console.log('Job history deleted successfully:', jobHistoryList);
-              this.updateJobOfferAndSetIsSavedFalse(joboffer);
-              this.toastr.success('Offre d\'emploi supprimée de vos favoris', 'Success', {
-                positionClass: 'toast-top-left',
-              });
-              this.selectedJoboffer.isSaved = false;
-
-            },
-            error => {
-              console.error('Error deleting job history:', error);
-            }
-          );
-        } else {
-          this.jobhistoryService.createJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
-            jobHistoryList => {
-              this.toastr.success('Offre ajoutée à vos favoris', 'Success', {
-                positionClass: 'toast-top-left',
-              });
-              this.selectedJoboffer.isSaved = true;
-
-              this.jobOfferService.updateJobOffer(updatedJobOffer).subscribe(
-                updatedJobOfferList => {
-                  console.log('Job offer updated successfully:', updatedJobOfferList);
-                },
-                error => {
-                  console.error('Error updating job offer:', error);
-                }
-              );
-              console.log('Job history created successfully:', jobHistoryList);
-            },
-            error => {
-              console.error('Error creating job history:', error);
-            }
-          );
-        }
-      }
-    );
-  }
-
-  updateJobOfferAndSetIsSavedFalse(joboffer: JobOffer) {
-    joboffer.isSaved = false;
-    this.jobOfferService.updateJobOffer(joboffer).subscribe(
-      updatedJobOfferList => {
-        console.log('Job offer updated successfully:', updatedJobOfferList);
-      },
-      error => {
-        console.error('Error updating job offer:', error);
-      }
-    );
-  }
   saveJobOffer() {
-    this.jobOfferService.saveJobOffer(this.selectedJoboffer);
+    this.jobofferService.saveJobOffer(this.selectedJoboffer);
   }
 
   onClose() {

@@ -273,7 +273,7 @@ export class AdminPanelComponent implements OnInit {
         this.searchService
           .deleteSearch(search)
           .subscribe((search: Search[]) => this.search = search);
-        this.toastr.error('Recherche supprimée avec succès', 'Success', {
+        this.toastr.warning('Recherche supprimée avec succès', 'Warning', {
           positionClass: 'toast-top-left',
         });
       }
@@ -336,7 +336,7 @@ export class AdminPanelComponent implements OnInit {
         this.jobtypeService
           .deleteJobType(jobType)
           .subscribe((jobType: JobType[]) => this.jobType = jobType);
-        this.toastr.success('Type d\'emploi supprimé avec succès', 'Success', {
+        this.toastr.warning('Type d\'emploi supprimé avec succès', 'Warning', {
           positionClass: 'toast-top-left',
         });
       }
