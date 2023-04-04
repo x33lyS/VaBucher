@@ -52,3 +52,35 @@
       }
     }
 }
+
+.redirect{
+    margin-top: 20px;
+    text-align: center;
+    span {
+      font-weight: bolder;
+      color: #4E4D66;
+      text-decoration: underline;
+    }
+}
+
+//small device
+@media screen and (max-width: 850px) {
+    .signin {
+        .form {
+            width: 90vw;
+            .image {
+                display: none;
+            }
+        }
+        ._form {
+            width: 100%;
+            margin: 20px;
+            input {
+                width: 80%;
+            }
+            button {
+                width: 80%;
+            }
+        }
+    }
+}

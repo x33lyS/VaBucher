@@ -18,40 +18,51 @@
           <a class="nav-item" routerLink="/dashboard">Start</a>
         </li>
 
-        <ng-container *ngIf="!currentUser">
-          <li class="nav-item">
-            <a routerLink="/registration" class="custom-btn">Sign Up</a>
-          </li>
 
-          <li class="nav-item">
-            <a routerLink="/login" class="custom-btn">Sign In</a>
-          </li>
-        </ng-container>
-
-        <button mat-icon-button *ngIf="currentUser" [matMenuTriggerFor]="menu"
+        <button mat-icon-button [matMenuTriggerFor]="menuConnected"
                 aria-label="Example icon-button with a menu">
           <mat-icon>menu</mat-icon>
         </button>
 
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <mat-icon>dashboard</mat-icon>
-            <li *ngIf="currentUser.role == 3 || currentUser.role === 4" class="nav-item">
-              <a routerLink="/admin" class="custom-btn">Admin</a>
-            </li>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>account_circle</mat-icon>
-            <li class="nav-item">
-              <a routerLink="/profil" class="custom-btn">Profile</a>
-            </li>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>exit_to_app</mat-icon>
-            <li class="nav-item">
-              <a (click)="disconnect()" routerLink="/dashboard" class="custom-btn">Disconnect</a>
-            </li>
-          </button>
+        <mat-menu #menuConnected="matMenu">
+
+          <ng-container *ngIf="currentUser">
+            <button mat-menu-item>
+              <mat-icon>dashboard</mat-icon>
+              <li *ngIf="currentUser.role == 3 || currentUser.role === 4" class="nav-item">
+                <a routerLink="/admin" class="custom-btn">Admin</a>
+              </li>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>account_circle</mat-icon>
+              <li class="nav-item">
+                <a routerLink="/profil" class="custom-btn">Profile</a>
+              </li>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>exit_to_app</mat-icon>
+              <li class="nav-item">
+                <a (click)="disconnect()" routerLink="/dashboard" class="custom-btn">Disconnect</a>
+              </li>
+            </button>
+          </ng-container>
+
+          <ng-container *ngIf="!currentUser">
+            <button mat-menu-item>
+              <mat-icon>assignment</mat-icon>
+              <li class="nav-item">
+                <a routerLink="/registration" class="custom-btn">Sign Up</a>
+              </li>
+            </button>
+
+            <button mat-menu-item>
+              <mat-icon>face</mat-icon>
+              <li class="nav-item">
+                <a routerLink="/login" class="custom-btn">Sign In</a>
+              </li>
+            </button>
+          </ng-container>
+
         </mat-menu>
       </ul>
     </div>
