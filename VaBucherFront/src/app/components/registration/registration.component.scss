@@ -1,8 +1,8 @@
 .signup {
-  height: 100vh;
+  height: 120vh;
   background-color: #f6f6f6;
   .container {
-    padding-top: 200px;
+    padding-top: 70px;
   }
   .form {
     margin: 0 auto;
@@ -14,6 +14,21 @@
     .activeForm {
       background-color: #fff!important;
     }
+    //.compagny-form {
+    //  border-top-right-radius: 15px;
+    //  border-bottom-right-radius: 15px;
+    //}
+    //.switch-compagny-form {
+    //  width: 70%;
+    //  margin: 50% auto;
+    //  h3 {
+    //    color: #fff;
+    //  }
+    //  .switch-button {
+    //    background: #fff;
+    //    color: #4E4D66;
+    //  }
+    //}
     .inactiveForm {
       background-image: url("../../../assets/home.png");
       background-size: contain;
@@ -25,7 +40,7 @@
       border-bottom-right-radius: 15px;
     }
     .switch-compagny-form {
-     
+
       width: 70%;
       margin: 50% auto;
       h3 {
@@ -37,7 +52,7 @@
       }
     }
     .user-form {
-      width: 50%;
+      width: 100%;
       border-top-left-radius: 15px;
       border-bottom-left-radius: 15px;
       img {
@@ -48,7 +63,7 @@
     }
     .compagny-form, .user-form {
       background-color: #4E4D66;
-      width: 50%;
+      width: 100%;
       padding-bottom: 30px;
       h3 {
         margin-top: 50px;
@@ -86,15 +101,19 @@
         .form-name {
           display: flex;
           gap: 13px;
-        }                
-        .form-input {
-          flex-grow: 1;
-        }
-        
-        .form-error {
-          color: red;
-          display: block; /* Make the error message a block element */
-          margin-top: 2px; /* Add some margin to separate it from the input */
+          .form-container{
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+           .form-input {
+              width: 100%;
+            }
+            .form-error {
+              color: red;
+              display: block; /* Make the error message a block element */
+              margin-top: 2px; /* Add some margin to separate it from the input */
+            }
+          }
         }
       }
     }
@@ -107,5 +126,54 @@
       background-color: #f1f1f1;
       font-size: 13px;
     }
-  }  
+  }
+}
+.redirect{
+  margin-top: 20px;
+  text-align: center;
+  span {
+    font-weight: bolder;
+    color: #4E4D66;
+    text-decoration: underline;
+  }
+}
+
+//small device
+@media screen and (max-width: 850px) {
+
+  .signup {
+    .form {
+      width: 90%;
+      .user-form {
+        width: 100%;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        img {
+          padding: 30px 0;
+          width: 90%;
+          left: 0;
+        }
+      }
+      .compagny-form {
+        width: 100%;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
+      .switch-compagny-form {
+        width: 100%;
+        margin: 50% auto;
+        h3 {
+          color: #fff;
+        }
+        .switch-button {
+          background: #fff;
+          color: #4E4D66;
+        }
+      }
+    }
+  }
 }
