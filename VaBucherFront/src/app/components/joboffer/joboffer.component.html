@@ -58,7 +58,7 @@
           <span *ngFor="let page of pages" [ngClass]="{'active': page === currentPage}"  (click)="setPage(page)">&#9679;</span>
         </div>
       </mat-tab>
-      <mat-tab label="Les offres du gouvernement">
+      <mat-tab *ngIf="joboffersToDisplay.length > 0" label="Les offres du gouvernement">
         <app-api></app-api>
       </mat-tab>
     </mat-tab-group>
