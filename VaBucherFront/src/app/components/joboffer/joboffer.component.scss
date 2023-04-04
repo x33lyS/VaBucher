@@ -265,8 +265,9 @@ table {
   }
 }
 
-.compare-button{
-  background: #ED6A5A;
+.compare-button {
+  z-index: 1;
+  background: #767599;
   position: fixed;
   bottom: 45px;
   left: 50%;
