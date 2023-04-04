@@ -1,65 +1,87 @@
 <div class="signup">
   <div class="container">
     <div class="form">
-      <div class="user-form" [ngClass]="{'activeForm': !registrationUserStatus}">
-        <form *ngIf="!registrationUserStatus">
+      <div class="user-form"
+        [ngClass]="{'activeForm': !registrationUserStatus, 'inactiveForm': registrationUserStatus}">
+        <form *ngIf="!registrationUserStatus" [formGroup]="registrationform" (ngSubmit)="onSubmit()">
           <h3>Sign Up</h3>
           <p>as a student</p>
 
           <div class="input-container">
             <div class="form-name">
-              <input type="text" formControlName="firstname" name="firstname" placeholder="Firstname" required>
-              <small *ngIf="registrationform.value.firstname.length === 0 && registrationform.get('firstname')?.touched">Firstname required</small>
-
-              <input type="text" formControlName="lastname" name="lastname" placeholder="Lastname" required>
-              <small *ngIf="registrationform.value.lastname.length === 0 && registrationform.get('lastname')?.touched">Lastname required</small>
+              <div>
+              <input class="form-input" type="text" formControlName="firstname" name="firstname" placeholder="Firstname"
+                required>
+              <small class="form-error"
+                *ngIf="registrationform.value.firstname.length === 0 && registrationform.get('firstname')?.touched">Firstname
+                required</small>
+              </div>
+              <div>
+                <input class="form-input" type="text" formControlName="lastname" name="lastname" placeholder="Lastname"
+                  required>
+                <small class="form-error"
+                  *ngIf="registrationform.value.lastname.length === 0 && registrationform.get('lastname')?.touched">Lastname
+                  required</small>
+              </div>
             </div>
 
             <input type="email" formControlName="email" name="email" placeholder="Email" required>
-            <small *ngIf="registrationform.value.email.length === 0 && registrationform.get('email')?.touched">Email required</small>
-            <mat-error *ngIf="registrationform.get('email')?.hasError('email') && !registrationform.get('email')?.hasError('required')">
+            <small class="form-error"
+              *ngIf="registrationform.value.email.length === 0 && registrationform.get('email')?.touched">Email
+              required</small>
+            <mat-error
+              *ngIf="registrationform.get('email')?.hasError('email') && !registrationform.get('email')?.hasError('required')">
               Please enter a valid email address
             </mat-error>
 
             <input type="password" formControlName="password" name="password" placeholder="Password" required>
-            <small *ngIf="registrationform.value.password.length === 0 && registrationform.get('password')?.touched">Password required</small>
+            <small
+              *ngIf="registrationform.value.password.length === 0 && registrationform.get('password')?.touched" style="color: red;">Password
+              required</small>
 
             <!-- Affichez un message d'erreur si le mot de passe a moins de 8 caractères -->
-            <div class="validate-password">
+            <div *ngIf=" registrationform.controls['password'].touched" class="validate-password">
               <div *ngIf="registrationform.value.password.length < 8; else passwordErrorlength">
                 <mat-icon>close</mat-icon>
-                <span>Le mot de passe doit avoir au moins 8 caractères.</span >
+                <small>Le mot de passe doit avoir au moins 8 caractères.</small>
               </div>
               <ng-template #passwordErrorlength>
                 <mat-icon>done</mat-icon>
-                <span>Le mot de passe doit avoir au moins 8 caractères.</span>
+                <small>Le mot de passe doit avoir au moins 8 caractères.</small>
               </ng-template>
 
-             <!-- Affichez un message d'erreur si le mot de passe ne respecte pas les critères -->
-             <div *ngIf="!checkPassword() else passwordValidMessage">
+              <!-- Affichez un message d'erreur si le mot de passe ne respecte pas les critères -->
+              <div *ngIf="!checkPassword() else passwordValidMessage">
                 <mat-icon>close</mat-icon>
-                <span>The password must contain at least one uppercase letter, one lowercase letter, and one special character.</span>
-             </div>
-             <ng-template #passwordValidMessage>
+                <small>The password must contain at least one uppercase letter, one lowercase letter, and one special
+                  character.</small>
+              </div>
+              <ng-template #passwordValidMessage>
                 <mat-icon>done</mat-icon>
                 <span>The password meets the criteria.</span>
               </ng-template>
             </div>
 
-            <input type="password" formControlName="confirmPassword" name="confirmPassword" placeholder="Password confirmation" required>
-            <small *ngIf="registrationform.value.confirmPassword.length === 0 && registrationform.get('confirmPassword')?.touched">Confirm Password required</small>
-            <div *ngIf="registrationform.value.confirmPassword.length > 0 && registrationform.get('confirmPassword')?.touched && !validatePasswords()">
-            <span>
-              <mat-icon>close</mat-icon>
-              <p>Passwords do not match.</p>
-            </span>
+            <input type="password" formControlName="confirmPassword" name="confirmPassword"
+              placeholder="Password confirmation" required>
+            <small
+              *ngIf="registrationform.value.confirmPassword.length === 0 && registrationform.get('confirmPassword')?.touched" style="color: red;">Confirm
+              Password required</small>
+            <div
+              *ngIf="registrationform.value.confirmPassword.length > 0 && registrationform.get('confirmPassword')?.touched && !validatePasswords()">
+              <span>
+                <mat-icon>close</mat-icon>
+                <p>Passwords do not match.</p>
+              </span>
             </div>
 
-            <mat-select placeholder="Domaine" [value]="selectedJobTypes" multiple formControlName="domain" name="domain">
+            <mat-select placeholder="Domaine" [value]="selectedJobTypes" multiple formControlName="domain"
+              name="domain">
               <mat-option *ngFor="let search of searches" [value]="search.filter">{{ search.filter }}</mat-option>
             </mat-select>
 
-            <mat-select placeholder="Job type" [value]="selectedJobTypes" multiple formControlName="jobtype" name="jobtype">
+            <mat-select placeholder="Job type" [value]="selectedJobTypes" multiple formControlName="jobtype"
+              name="jobtype">
               <mat-option *ngFor="let jobType of jobtypes" [value]="jobType.jobs">{{jobType.jobs}}</mat-option>
             </mat-select>
 
@@ -83,6 +105,105 @@
 <!--          <h3>Are you a student ?</h3>-->
 <!--          <button class="switch-button" (click)="switchRegistrationUserStatus()">Sign Up as a compagny</button>-->
 <!--        </div>-->
+        <div *ngIf="registrationUserStatus" class="switch-compagny-form ">
+          <h3>Are you a student ?</h3>
+          <button class="switch-button" (click)="switchRegistrationUserStatus()">Sign Up as a student</button>
+        </div>
+      </div>
+      <div class="compagny-form"
+        [ngClass]="{'activeForm': registrationUserStatus , 'inactiveForm': !registrationUserStatus}">
+        <form *ngIf="registrationUserStatus">
+          <h3>Sign Up</h3>
+          <p>as a recruiter</p>
+
+          <div class="input-container">
+            <div class="form-name">
+              <input type="text" formControlName="firstname" name="firstname" placeholder="Firstname" required>
+              <small
+                *ngIf="registrationform.value.firstname.length === 0 && registrationform.get('firstname')?.touched">Firstname
+                required</small>
+
+              <input type="text" formControlName="lastname" name="lastname" placeholder="Lastname" required>
+              <small
+                *ngIf="registrationform.value.lastname.length === 0 && registrationform.get('lastname')?.touched">Lastname
+                required</small>
+            </div>
+
+            <input type="email" formControlName="email" name="email" placeholder="Email" required>
+            <small *ngIf="registrationform.value.email.length === 0 && registrationform.get('email')?.touched">Email
+              required</small>
+            <mat-error
+              *ngIf="registrationform.get('email')?.hasError('email') && !registrationform.get('email')?.hasError('required')">
+              Please enter a valid email address
+            </mat-error>
+
+            <input type="password" formControlName="password" name="password" placeholder="Password" required>
+            <small
+              *ngIf="registrationform.value.password.length === 0 && registrationform.get('password')?.touched">Password
+              required</small>
+
+            <div *ngIf=" registrationform.controls['password'].touched" class="validate-password">
+              <div *ngIf="registrationform.value.password.length < 8; else passwordErrorlength">
+                <mat-icon>close</mat-icon>
+                <small>Le mot de passe doit avoir au moins 8 caractères.</small>
+              </div>
+              <ng-template #passwordErrorlength>
+                <mat-icon>done</mat-icon>
+                <small>Le mot de passe doit avoir au moins 8 caractères.</small>
+              </ng-template>
+
+              <div *ngIf="!checkPassword() else passwordValidMessage">
+                <mat-icon>close</mat-icon>
+                <small>The password must contain at least one uppercase letter, one lowercase letter, and one special
+                  character.</small>
+              </div>
+              <ng-template #passwordValidMessage>
+                <mat-icon>done</mat-icon>
+                <span>The password meets the criteria.</span>
+              </ng-template>
+            </div>
+
+            <input type="password" formControlName="confirmPassword" name="confirmPassword"
+              placeholder="Password confirmation" required>
+            <small
+              *ngIf="registrationform.value.confirmPassword.length === 0 && registrationform.get('confirmPassword')?.touched" style="color: red;">Confirm
+              Password required</small>
+            <div
+              *ngIf="registrationform.value.confirmPassword.length > 0 && registrationform.get('confirmPassword')?.touched && !validatePasswords()">
+              <span>
+                <mat-icon>close</mat-icon>
+                <p>Passwords do not match.</p>
+              </span>
+            </div>
+
+            <mat-select placeholder="Domaine" [value]="selectedJobTypes" multiple formControlName="domain"
+              name="domain">
+              <mat-option *ngFor="let search of searches" [value]="search.filter">{{ search.filter }}</mat-option>
+            </mat-select>
+
+            <mat-select placeholder="Job type" [value]="selectedJobTypes" multiple formControlName="jobtype"
+              name="jobtype">
+              <mat-option *ngFor="let jobType of jobtypes" [value]="jobType.jobs">{{jobType.jobs}}</mat-option>
+            </mat-select>
+
+            <div class="form-name">
+              <input placeholder="Phone" type="tel" formControlName="phone" name="phone">
+
+              <input placeholder="Location" type="text" formControlName="location" name="location">
+            </div>
+
+            <mat-checkbox formControlName="staySignedIn">Stay signed in</mat-checkbox><br />
+
+            <button type="submit" [disabled]="!submit()">Sign up</button>
+            <div class="error-message">
+              {{message}}
+            </div>
+          </div>
+        </form>
+        <div *ngIf="!registrationUserStatus" class="switch-compagny-form">
+          <h3>Are you a compagny ?</h3>
+          <button class="switch-button" (click)="switchRegistrationUserStatus()">Sign Up as a compagny</button>
+        </div>
       </div>
 <!--      <div class="compagny-form" [ngClass]="{'activeForm': registrationUserStatus}">-->
 <!--        <form *ngIf="registrationUserStatus" [formGroup]="registrationform" (ngSubmit)="onSubmit()" >-->

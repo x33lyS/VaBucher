@@ -43,7 +43,9 @@ export class JobofferCompareComponent {
       const index = this.savedJobOffers.indexOf(jobOffer);
       this.savedJobOffers.splice(index, 1);
       localStorage.setItem('savedForCompareJobOffers', JSON.stringify(this.savedJobOffers));
-      this.toastr.error('Offre supprimé')
+      this.toastr.error('Offre supprimé', 'Error', {
+        positionClass: 'toast-top-left',
+      });
     }, 300);
   }
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import {delay, interval, of} from 'rxjs';
+import { delay, interval, of } from 'rxjs';
 import { JobOffer } from 'src/app/models/joboffer';
 import { User } from 'src/app/models/user';
 import { ApiDataService } from 'src/app/services/api-data.service';
@@ -10,10 +10,10 @@ import { SearchService } from "../../services/search.service";
 import { Search } from "../../models/search";
 import { JobtypeService } from "../../services/jobtype.service";
 import { JobType } from "../../models/jobtype";
-import {animate, state, style, transition, trigger} from "@angular/animations";
-import {ToastrService} from "ngx-toastr";
-import {CurrentUser} from "../../models/currentuser";
-import {AuthenticationService} from "../../services/authentication.service";
+import { animate, state, style, transition, trigger } from "@angular/animations";
+import { ToastrService } from "ngx-toastr";
+import { CurrentUser } from "../../models/currentuser";
+import { AuthenticationService } from "../../services/authentication.service";
 
 @Component({
   selector: 'app-admin-panel',
@@ -64,8 +64,8 @@ export class AdminPanelComponent implements OnInit {
     public dialog: MatDialog,
     private searchService: SearchService,
     private jobtypeService: JobtypeService,
-              public toastr: ToastrService,
-              private authService: AuthenticationService
+    public toastr: ToastrService,
+    private authService: AuthenticationService
   ) { }
 
 
@@ -101,11 +101,11 @@ export class AdminPanelComponent implements OnInit {
 
   canDeleteUser(user: User): boolean {
     this.currentUser = this.authService.getCurrentUser();
-    if (this.currentUser?.role === 4){
+    if (this.currentUser?.role === 4) {
       return true;
     }
-    if (this.currentUser?.role === 3){
-      if (user.role === 3 || user.role === 4){
+    if (this.currentUser?.role === 3) {
+      if (user.role === 3 || user.role === 4) {
         return false;
       } else {
         return true;
@@ -150,15 +150,17 @@ export class AdminPanelComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            this.userService
-              .updateUser(user)
-              .subscribe((users: User[]) => this.usersUpdated.emit(users));
-            this.toastr.warning('Utilisateur modifié avec succès');
-          } else {
-            user = result;
-          }
+      if (result) {
+        this.userService
+          .updateUser(user)
+          .subscribe((users: User[]) => this.usersUpdated.emit(users));
+        this.toastr.warning('Utilisateur modifié avec succès', 'Warning', {
+          positionClass: 'toast-top-left',
         });
+      } else {
+        user = result;
+      }
+    });
   }
 
 
@@ -175,7 +177,9 @@ export class AdminPanelComponent implements OnInit {
         this.userService
           .deleteUser(user)
           .subscribe((users: User[]) => this.usersUpdated.emit(users));
-        this.toastr.error('Utilisateur supprimé avec succès');
+        this.toastr.error('Utilisateur supprimé avec succès', 'Error', {
+          positionClass: 'toast-top-left',
+        });
       }
     });
   }
@@ -187,7 +191,9 @@ export class AdminPanelComponent implements OnInit {
         // @ts-ignore
         (users: User[]) => this.usersUpdated.emit(users),
       );
-    this.toastr.success('Utilisateur ajouté avec succès');
+    this.toastr.success('Utilisateur ajouté avec succès', 'Success', {
+      positionClass: 'toast-top-left',
+    });
   }
 
   updateOffer(joboffer: JobOffer) {
@@ -198,7 +204,9 @@ export class AdminPanelComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.toastr.warning('Offre d\'emploi modifiée avec succès');
+      this.toastr.warning('Offre d\'emploi modifiée avec succès', 'Warning', {
+        positionClass: 'toast-top-left',
+      });
     });
   }
 
@@ -214,7 +222,9 @@ export class AdminPanelComponent implements OnInit {
         this.jobofferService
           .deleteJobOffer(joboffer)
           .subscribe((joboffers: JobOffer[]) => this.joboffers = joboffers);
-        this.toastr.error('Offre d\'emploi supprimée avec succès');
+        this.toastr.error('Offre d\'emploi supprimée avec succès', 'Error', {
+          positionClass: 'toast-top-left',
+        });
       }
     });
   }
@@ -232,7 +242,9 @@ export class AdminPanelComponent implements OnInit {
             this.search = search;
             this.refreshData();
           });
-        this.toastr.success('Recherche ajoutée avec succès');
+        this.toastr.success('Recherche ajoutée avec succès', 'Success', {
+          positionClass: 'toast-top-left',
+        });
       }
     });
   }
@@ -244,7 +256,9 @@ export class AdminPanelComponent implements OnInit {
       data: search
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.toastr.warning('Recherche modifiée avec succès');
+      this.toastr.warning('Recherche modifiée avec succès', 'Warning', {
+        positionClass: 'toast-top-left',
+      });
     });
   }
 
@@ -259,7 +273,9 @@ export class AdminPanelComponent implements OnInit {
         this.searchService
           .deleteSearch(search)
           .subscribe((search: Search[]) => this.search = search);
-        this.toastr.error('Recherche supprimée avec succès');
+        this.toastr.error('Recherche supprimée avec succès', 'Success', {
+          positionClass: 'toast-top-left',
+        });
       }
     });
   }
@@ -277,7 +293,9 @@ export class AdminPanelComponent implements OnInit {
             this.jobType = jobType;
             this.refreshData()
           });
-        this.toastr.success('Type d\'emploi ajouté avec succès');
+        this.toastr.success('Type d\'emploi ajouté avec succès', 'Success', {
+          positionClass: 'toast-top-left',
+        });
       }
     });
   }
@@ -301,7 +319,9 @@ export class AdminPanelComponent implements OnInit {
       data: jobType
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.toastr.warning('Type d\'emploi modifié avec succès');
+      this.toastr.warning('Type d\'emploi modifié avec succès', 'Warning', {
+        positionClass: 'toast-top-left',
+      });
     });
   }
 
@@ -316,7 +336,9 @@ export class AdminPanelComponent implements OnInit {
         this.jobtypeService
           .deleteJobType(jobType)
           .subscribe((jobType: JobType[]) => this.jobType = jobType);
-        this.toastr.error('Type d\'emploi supprimé avec succès');
+        this.toastr.success('Type d\'emploi supprimé avec succès', 'Success', {
+          positionClass: 'toast-top-left',
+        });
       }
     });
   }
@@ -604,9 +626,9 @@ export class DialogUpdateJobOffer {
     '<button mat-button (click)="updateUser()" [mat-dialog-close]="users" cdkFocusInitial>Modifier</button>' +
     '</mat-dialog-actions>',
   styles: ['mat-form-field { width: 100%; padding: 30px; }' +
-  'mat-dialog-content { display: flex; flex-direction: column; }' +
-  'button { margin: 10px; width: 50%; }' +
-  'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
+    'mat-dialog-content { display: flex; flex-direction: column; }' +
+    'button { margin: 10px; width: 50%; }' +
+    'mat-dialog-actions { display: flex; flex-direction: row; justify-content: space-between; color: red; }']
 })
 export class DialogUpdateUser {
   users: User | any = [];

@@ -107,7 +107,9 @@ export class ProfilComponent implements OnInit {
       jobHistoryList => {
         console.log('Job history deleted successfully:', jobHistoryList);
         this.updateJobOfferAndSetIsSavedFalse(joboffer);
-        this.toastr.success('Offre d\'emploi supprimée de vos favoris');
+        this.toastr.success('Offre d\'emploi supprimée de vos favoris', 'Success', {
+          positionClass: 'toast-top-left',
+        });
       },
       error => {
         console.error('Error deleting job history:', error);

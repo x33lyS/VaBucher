@@ -43,7 +43,7 @@ export class JobofferComponent implements OnInit {
   showLoader: boolean = true;
 
   constructor(private router: Router,public jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService,
-              private dataService: ApiDataService, private filter: FilterPipe, private jobhistory: JobhistoryService, private authentificationService: AuthenticationService,
+              private dataService: ApiDataService, private filter: FilterPipe, private authentificationService: AuthenticationService,
               private jobhistoryService: JobhistoryService,  private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -84,16 +84,22 @@ export class JobofferComponent implements OnInit {
             jobHistoryList => {
               console.log('Job history deleted successfully:', jobHistoryList);
               this.updateJobOfferAndSetIsSavedFalse(joboffer);
-              this.toastr.error('Offre d\'emploi supprimée de vos favoris');
+              this.toastr.success('Offre d\'emploi supprimée de vos favoris', 'Success', {
+                positionClass: 'toast-top-left',
+              });
+              joboffer.isSaved = false;
             },
             error => {
               console.error('Error deleting job history:', error);
             }
           );
         } else {
-          this.jobhistory.createJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
+          this.jobhistoryService.createJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
             jobHistoryList => {
-              this.toastr.success('Offre ajoutée à vos favoris');
+              this.toastr.success('Offre ajoutée à vos favoris', 'Success', {
+                positionClass: 'toast-top-left',
+              });
+              joboffer.isSaved = true;
               this.jobofferService.updateJobOffer(updatedJobOffer).subscribe(
                 updatedJobOfferList => {
                   console.log('Job offer updated successfully:', updatedJobOfferList);
