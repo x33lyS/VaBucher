@@ -101,15 +101,19 @@
         .form-name {
           display: flex;
           gap: 13px;
-        }
-        .form-input {
-          flex-grow: 1;
-        }
-
-        .form-error {
-          color: red;
-          display: block; /* Make the error message a block element */
-          margin-top: 2px; /* Add some margin to separate it from the input */
+          .form-container{
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+           .form-input {
+              width: 100%;
+            }
+            .form-error {
+              color: red;
+              display: block; /* Make the error message a block element */
+              margin-top: 2px; /* Add some margin to separate it from the input */
+            }
+          }
         }
       }
     }

@@ -27,9 +27,9 @@
         <mat-menu #menuConnected="matMenu">
 
           <ng-container *ngIf="currentUser">
-            <button mat-menu-item>
+            <button mat-menu-item *ngIf="currentUser.role == 3 || currentUser.role === 4">
               <mat-icon>dashboard</mat-icon>
-              <li *ngIf="currentUser.role == 3 || currentUser.role === 4" class="nav-item">
+              <li class="nav-item">
                 <a routerLink="/admin" class="custom-btn">Admin</a>
               </li>
             </button>
