@@ -38,7 +38,6 @@
         <ng-container *ngIf="currentUser">
           <button style="border: none;" matTooltip="Favoris" class="favoris" (click)="jobofferService.saveHistory(joboffers[i])"><mat-icon>{{ joboffers[i]?.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
         </ng-container>
-        {{joboffers.slice(i, i+1)[0]?.id}}
         <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.title as title">
           <h6>{{ title | firstUppercase }}</h6>
         </ng-container>
@@ -62,7 +61,6 @@
         <ng-container *ngIf="currentUser">
           <button style="border: none;" matTooltip="Favoris" class="favoris" (click)="jobofferService.saveHistory(joboffers[i])"><mat-icon>{{ joboffers[i]?.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
         </ng-container>
-        {{joboffers.slice(i, i+1)[0]?.id}}
         <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.title as title">
           <h6>{{ title | firstUppercase }}</h6>
         </ng-container>

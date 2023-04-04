@@ -36,7 +36,7 @@
         <mat-menu #menu="matMenu">
           <button mat-menu-item>
             <mat-icon>dashboard</mat-icon>
-            <li *ngIf="currentUser.role == 3 || currentUser.role === 4" class="nav-item">
+            <li *ngIf="currentUser?.role == 3 || currentUser?.role === 4" class="nav-item">
               <a routerLink="/admin" class="custom-btn">Admin</a>
             </li>
           </button>
