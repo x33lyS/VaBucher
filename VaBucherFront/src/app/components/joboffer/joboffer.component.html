@@ -11,7 +11,7 @@
             <ng-container *ngIf="joboffer && joboffersToDisplay.indexOf(joboffer) % 2 !== 0">
               <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 3 === 0 ? 1 : 2}}" >
                 <ng-container *ngIf="currentUser">
-                  <button matTooltip="Favoris" class="favoris" (click)="saveHistory(joboffer)"><mat-icon>{{ joboffer.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
+                  <button matTooltip="Favoris" class="favoris" (click)="jobofferService.saveHistory(joboffer)"><mat-icon>{{ joboffer.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
                 </ng-container>
                 <div (click)="showDetails(joboffer)">
                   <h6>{{ joboffer.title | firstUppercase}}</h6>
@@ -29,7 +29,7 @@
             <ng-container *ngIf="joboffersToDisplay.indexOf(joboffer) % 2 === 0">
               <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 4 === 0 ? 4 : 3}}">
                 <ng-container *ngIf="currentUser">
-                  <button matTooltip="Favoris" class="favoris" (click)="saveHistory(joboffer)"><mat-icon>{{ joboffer.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
+                  <button matTooltip="Favoris" class="favoris" (click)="jobofferService.saveHistory(joboffer)"><mat-icon>{{ joboffer.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
                 </ng-container>
                 <div (click)="showDetails(joboffer)">
                   <h6>{{ joboffer.title | firstUppercase}}</h6>
@@ -58,7 +58,7 @@
           <span *ngFor="let page of pages" [ngClass]="{'active': page === currentPage}"  (click)="setPage(page)">&#9679;</span>
         </div>
       </mat-tab>
-      <mat-tab label="Les offres du gouvernement">
+      <mat-tab *ngIf="joboffersToDisplay.length > 0" label="Les offres du gouvernement">
         <app-api></app-api>
       </mat-tab>
     </mat-tab-group>

@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;400;700&display=swap');
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import 'ngx-toastr/toastr';
 
 *{
@@ -17,6 +16,7 @@
 
 a, button{
   cursor: pointer;
+  
 }
 /*---------------------------------------
   CUSTOM PROPERTIES ( VARIABLES )
@@ -132,3 +132,6 @@ b,
 strong {
   font-weight: var(--font-weight-bold);
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
