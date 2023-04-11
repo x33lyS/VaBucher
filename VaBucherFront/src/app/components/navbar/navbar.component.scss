@@ -12,7 +12,6 @@ ul li {
   font-size: var(--p-font-size);
   font-weight: var(--font-weight-light);
   background: transparent;
-
 }
 
 a {
@@ -43,7 +42,6 @@ a:hover {
 
 .custom-btn:hover {
   background: var(--custom-btn-bg-hover-color);
-
   color: var(--white-color)
 }
 
@@ -81,7 +79,7 @@ a:hover {
   border-radius: var(--border-radius-large);
   margin: 5px;
   background: transparent;
-  padding: 5px 20px;
+  padding: 5px 20px 5px 2px;
   color: var(--primary-color);
   font-size: clamp(1rem, 5vw, 1rem);
 }
@@ -102,9 +100,12 @@ a:hover {
   align-items: center;
 }
 
-.navbar-nav .nav-item:hover {
-  background: transparent;
-  color: var(--secondary-color)
+.item{
+  display: flex !important;
+  align-items: center !important;
+  &:hover{
+    text-decoration: underline !important;
+  }
 }
 
 @media screen and (max-width:991px) {
