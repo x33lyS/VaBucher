@@ -77,7 +77,6 @@ export class SearchComponent {
     });
 
     this.searchService.offersToDisplay$.subscribe((offers) => {
-      console.log(offers, 'offers')
       if (offers.length === 0) {
         this.enableScrapButton = true;
       }

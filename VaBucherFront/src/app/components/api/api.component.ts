@@ -14,7 +14,7 @@ import {JobofferService} from "../../services/joboffer.service";
   providers: [FilterPipe]
 })
 export class ApiComponent implements OnInit {
-  private token = 'dlEKf_m2DlKjcKt0yHzgqtd7d8k';
+  private token = 'PgwJwZDJHrAFfjHIszmjiZMKPNk';
   apiData: any[] = [];
   locationFilter?: string;
   jobtypefilter?: any | [];
@@ -29,8 +29,6 @@ export class ApiComponent implements OnInit {
               ) { }
 
   ngOnInit(): void {
-
-
     this.dataService.filterPoleEmploiJobType$.subscribe(poleEmploiJobType => {
       this.jobtypefilter = poleEmploiJobType;
     });
