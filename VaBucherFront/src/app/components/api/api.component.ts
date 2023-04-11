@@ -14,7 +14,7 @@ import {JobofferService} from "../../services/joboffer.service";
   providers: [FilterPipe]
 })
 export class ApiComponent implements OnInit {
-  private token = 'ypXpSPoMIM8g2f0Igl3ZOuM1mbA';
+  private token = 'PgwJwZDJHrAFfjHIszmjiZMKPNk';
   apiData: any[] = [];
   locationFilter?: string;
   jobtypefilter?: any | [];
@@ -29,8 +29,6 @@ export class ApiComponent implements OnInit {
               ) { }
 
   ngOnInit(): void {
-
-
     this.dataService.filterPoleEmploiJobType$.subscribe(poleEmploiJobType => {
       this.jobtypefilter = poleEmploiJobType;
     });
@@ -54,7 +52,7 @@ export class ApiComponent implements OnInit {
     });
   }
 
-  fetchApiData() {    
+  fetchApiData() {
     this.apiData = [];
     const apiUrl = `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=${this.poleEmploiDomainFilter}&origineOffre=0`;
     const headers = new HttpHeaders({
@@ -84,10 +82,10 @@ export class ApiComponent implements OnInit {
       },
       (error) => {
         console.log("API call failed:", error);
-        this.toastr.error("Une erreur est survenue lors de la récupération des données", 'Error', {
-          positionClass: 'toast-top-left',
-        });
-        
+        // this.toastr.error("Une erreur est survenue lors de la récupération des données", 'Error', {
+        //   positionClass: 'toast-top-left',
+        // });
+
       }
     );
   }

@@ -1,6 +1,6 @@
 <app-search (filtersChanged)="updateFilters($event)"></app-search>
 <app-loader *ngIf="showLoader"></app-loader>
-<div class="recent-offers" id="section_3">
+<div class="recent-offers" id="section_3" *ngIf="joboffersToDisplay.length > 0 || this.apiOffers.length > 0">
   <img class="image" src="../assets/blobGauche.png">
   <div class="offer-title">
     <mat-tab-group mat-stretch-tabs="true" mat-align-tabs="start">
@@ -42,15 +42,6 @@
                 </div>
               </div>
             </ng-container>
-            <div *ngIf="!showLoader" class="job-offers">
-              <div *ngIf="joboffersToDisplay.length === 0" class="offer-title no-offers">
-                <h5>Aucune offre à afficher</h5>
-                <div class="button-start">
-                  <span class="mas">Rechercher d'autres offres</span>
-                  <button type="button" name="Hover" (click)="searchNewOffer()">Rechercher d'autres offres</button>
-                </div>
-              </div>
-            </div>
           </ng-container>
         </div>
         <button *ngIf="currentPage < pages.length" (click)="setPage(currentPage + 1)" class="pagination-button-right" >&gt;</button>
@@ -58,7 +49,7 @@
           <span *ngFor="let page of pages" [ngClass]="{'active': page === currentPage}"  (click)="setPage(page)">&#9679;</span>
         </div>
       </mat-tab>
-      <mat-tab *ngIf="joboffersToDisplay.length > 0" label="Les offres du gouvernement">
+      <mat-tab label="Les offres du gouvernement">
         <app-api></app-api>
       </mat-tab>
     </mat-tab-group>
@@ -72,3 +63,12 @@
 <!--<div *ngFor="let data of data">-->
 <!--  {{ data.intitule }}-->
 <!--</div>-->
+<div class="job-offers" *ngIf="joboffersToDisplay.length === 0 && this.apiOffers.length === 0">
+  <div class="offer-title no-offers">
+    <h5>Aucune offre à afficher</h5>
+    <div class="button-start">
+      <span class="mas">Rechercher d'autres offres</span>
+      <button type="button" name="Hover" (click)="searchNewOffer()">Rechercher d'autres offres</button>
+    </div>
+  </div>
+</div>

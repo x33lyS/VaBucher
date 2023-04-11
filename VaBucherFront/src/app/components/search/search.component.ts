@@ -11,6 +11,7 @@ import { JobtypeService } from 'src/app/services/jobtype.service';
 import { CurrentUser } from 'src/app/models/currentuser';
 import { JobofferComponent } from '../joboffer/joboffer.component';
 import {ToastrService} from "ngx-toastr";
+import {FormBuilder} from "@angular/forms";
 
 
 
@@ -45,7 +46,12 @@ export class SearchComponent {
     private searchService: SearchService,
     private jobtypeService: JobtypeService,
               private jobOffer: JobofferComponent,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private _formBuilder: FormBuilder) { }
+
+  userParameter = this._formBuilder.group({
+    userpreference: false,
+  })
 
   ngOnInit(): void {
     this.jobofferService.pages$.subscribe((pages) => {
@@ -68,7 +74,12 @@ export class SearchComponent {
       this.pages = pages;
       this.cPage = currentPage;
       this.enableScrapButton = this.pages.length === this.cPage;
-      
+    });
+
+    this.searchService.offersToDisplay$.subscribe((offers) => {
+      if (offers.length === 0) {
+        this.enableScrapButton = true;
+      }
     });
 
     // this.enableScrapButton = !(this.pages && this.pages.length > 0 && this.pages[this.pages.length - 1] === this.cPage) || (this.pages && this.pages.length <= 1);
@@ -99,15 +110,27 @@ export class SearchComponent {
   }
 
   ngAfterInitUserProfil() {
-    if (this.currentUser) {
-      if (this.currentUser.domain) {
-        this.domainFilter = this.currentUser.domain.split(',')[0];
+    this.userParameter.valueChanges.subscribe(value => {
+      if (value.userpreference === false ) {
+        this.domainFilter = '';
+        this.locationFilter = '';
+        this.jobtypefilter = '';
+        this.filterOptions();
+      } else {
+        if (this.currentUser) {
+          if (this.currentUser.domain) {
+            this.domainFilter = this.currentUser.domain.split(',')[0];
+          }
+          if (this.currentUser.location) {
+            this.locationFilter = this.currentUser.location;
+          }
+          if (this.currentUser.jobtype) {
+            this.jobtypefilter = this.currentUser.jobtype;
+          }
+        }
+        this.filterOptions();
       }
-      if (this.currentUser.location) {
-        this.locationFilter = this.currentUser.location;
-      }
-    }
-    this.filterOptions();
+    })
   }
 
   updatePoleEmploiDomain() {

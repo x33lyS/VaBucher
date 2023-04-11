@@ -41,6 +41,7 @@ export class JobofferComponent implements OnInit {
   searches!: Search[];
   selectedJobOffer: JobOffer | null = null;
   showLoader: boolean = true;
+  apiOffers: any[] = [];
 
   constructor(private router: Router,public jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService,
               private dataService: ApiDataService, private filter: FilterPipe, private authentificationService: AuthenticationService,
@@ -60,6 +61,8 @@ export class JobofferComponent implements OnInit {
       .subscribe((result: JobOffer[]) => (this.joboffers = result)));
     this.dataService.currentData.subscribe(data => {
       this.data = data;
+      this.apiOffers = this.data;
+      console.log(this.apiOffers)
     });
     this.jobtypeService
       .getJobType()
@@ -95,6 +98,7 @@ export class JobofferComponent implements OnInit {
     this.jobofferService.getOffersAfterSearch(filteredJoboffers)
     const newPages = filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
     this.jobofferService.setPages(this.pages)
+    this.searchService.updateOfferToDisplay(newPages)
     return newPages
   }
 
