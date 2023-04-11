@@ -95,6 +95,7 @@ export class JobofferComponent implements OnInit {
     this.jobofferService.getOffersAfterSearch(filteredJoboffers)
     const newPages = filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
     this.jobofferService.setPages(this.pages)
+    this.searchService.updateOfferToDisplay(newPages)
     return newPages
   }
 

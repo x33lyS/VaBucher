@@ -14,6 +14,8 @@ export class SearchService {
   private newrandom = new BehaviorSubject<any>(null);
   createnewrandom = this.newrandom.asObservable();
   createNewRandom = new EventEmitter();
+  private offerToDisplay = new BehaviorSubject<any>(null);
+  offersToDisplay$ = this.offerToDisplay.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -21,7 +23,10 @@ export class SearchService {
     return this.http.get<Search[]>(`${this.apiUrl}/${this.url}`);
   }
 
-  
+  updateOfferToDisplay(offer: any) {
+    this.offerToDisplay.next(offer);
+  }
+
   setCreatednewrandom(newrandom: { domain: any }) {
     this.newrandom.next(newrandom);
     this.createNewRandom.emit(newrandom);
