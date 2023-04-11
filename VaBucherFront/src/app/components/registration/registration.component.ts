@@ -37,7 +37,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private authentService: AuthenticationService, private userService: UserService, private _formBuilder: FormBuilder, private router: Router,
     private searchService: SearchService,
-    private jobtypeService: JobtypeService) {
+    private jobtypeService: JobtypeService,
+              private toastr: ToastrService) {
 
     this.registrationform = this._formBuilder.group({
       firstname: ['', Validators.required],
@@ -102,7 +103,7 @@ export class RegistrationComponent implements OnInit {
                 sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
               }
               this.router.navigate(['/dashboard']);
-
+              this.toastr.success('Bienvenue !');
               // il faut protéger la route home aves un guard dans le futur pour ne pas pouvoir y accéder sans être connecté
             },
             error: (error) => {
@@ -111,8 +112,7 @@ export class RegistrationComponent implements OnInit {
           });
         },
         (error: string) => {
-          // Traitement en cas d'erreur, par exemple en affichant un message d'erreur
-          this.message = 'Un compte existe déjà avec cette adresse email';
+          this.toastr.error( "Une erreur est survenue veuillez vérifier que vous avez entré le bon mail et mot de passe.");
         }
       );
     }
@@ -132,8 +132,8 @@ export class RegistrationComponent implements OnInit {
     return this.registrationform.valid && this.validatePasswords()
   }
 
-  switchRegistrationUserStatus = () => { 
-    this.registrationUserStatus = !this.registrationUserStatus 
+  switchRegistrationUserStatus = () => {
+    this.registrationUserStatus = !this.registrationUserStatus
   };
 
 }
