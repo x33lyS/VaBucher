@@ -29,7 +29,7 @@
       </mat-form-field>
 
     </div>
-    <div class="user-parameter" [formGroup]="userParameter">
+    <div class="user-parameter" [formGroup]="userParameter" *ngIf="currentUser">
       <mat-checkbox formControlName="userpreference">Utiliser mes filtres</mat-checkbox>
     </div>
   </div>
