@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CurrentUser } from 'src/app/models/currentuser';
-import { UserService } from 'src/app/services/user.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import {Component,OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {CurrentUser} from 'src/app/models/currentuser';
+import {UserService} from 'src/app/services/user.service';
+import {AuthenticationService} from 'src/app/services/authentication.service';
 import {FormControl,Validators} from "@angular/forms";
 import {JobhistoryService} from "../../services/jobhistory.service";
 import {Jobhistory} from "../../models/jobhistory";
@@ -10,8 +10,7 @@ import {JobofferService} from "../../services/joboffer.service";
 import {map} from "rxjs";
 import {JobOffer} from "../../models/joboffer";
 import {ToastrService} from "ngx-toastr";
-import {animate, state, style, transition, trigger} from "@angular/animations";
-
+import {animate,state,style,transition,trigger} from "@angular/animations";
 
 
 @Component({
@@ -19,13 +18,13 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss'],
   animations: [
-    trigger('deleteAnimation', [
-      state('deleted', style({
+    trigger('deleteAnimation',[
+      state('deleted',style({
         opacity: 0,
         transform: 'scale(0.8)',
         display: 'none'
       })),
-      transition('* => deleted', [
+      transition('* => deleted',[
         animate('300ms ease-out')
       ])
     ])
@@ -48,7 +47,8 @@ export class ProfilComponent implements OnInit {
     private jobhistoryService: JobhistoryService,
     private jobofferService: JobofferService,
     private toastr: ToastrService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
 
@@ -64,13 +64,14 @@ export class ProfilComponent implements OnInit {
           .forEach((jobOffer: JobOffer) => {
             // @ts-ignore
             this.jobofferhistory.push(jobOffer);
-            console.log(jobOffer, 'job'); // Affiche l'offre d'emploi correspondante dans la console
+            console.log(jobOffer,'job'); // Affiche l'offre d'emploi correspondante dans la console
           });
       });
     });
 
     this.authentificationService.currentUser$.subscribe((currentUser) => {
       this.currentUser = currentUser;
+      console.log(this.currentUser,'currentUser');
     });
     this.currentUserData = sessionStorage.getItem('currentUser');
     if (this.currentUserData) {
@@ -80,22 +81,45 @@ export class ProfilComponent implements OnInit {
   }
 
   updateCurrentUser() {
-    let newUser = this.currentUser;
-
-    for (let key in newUser) {
-      // @ts-ignore
-      if (newUser[key] === null || newUser[key] === undefined || newUser[key] === '') {
-        // @ts-ignore
-        delete newUser[key];
-      }
-    }
     this.userService.updateUser(this.currentUser)
-    .subscribe(data => {
-      if (this.currentUserData) {
-      sessionStorage.setItem('currentUser', JSON.stringify(data));
-      }
+      .subscribe(data => {
+    console.log(data,'data');
+        if (this.currentUserData) {
+          sessionStorage.setItem('currentUser',JSON.stringify(data));
+        }
+      });
+  }
+
+  updateCurrentUserPassword() {
+
+    if (this.passwordFormControl.invalid) {
+      this.toastr.error('Mot de passe invalide','Erreur',{
+        positionClass: 'toast-top-left',
+      });
+      return;
+    }
+
+    this.userService.getUser().subscribe((userList: CurrentUser[]) => {
+      // TODO : a changer quand en recevra que l'user actuel
+      userList.forEach((user: CurrentUser) => {
+        if (user.id === this.currentUser.id) {
+          if (user.password === this.currentUser.password) {
+            this.userService.updateUser(this.currentUser)
+              .subscribe(data => {
+                if (this.currentUserData) {
+                  sessionStorage.setItem('currentUser',JSON.stringify(data));
+                }
+              });
+          } else {
+            this.toastr.error('Mot de passe incorrect','Erreur',{
+              positionClass: 'toast-top-left',
+            });
+          }
+        }
+      });
     });
   }
+
 
   deleteHistory(joboffer: JobOffer | any) {
     joboffer.state = 'deleted';
@@ -103,16 +127,16 @@ export class ProfilComponent implements OnInit {
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     const currentUserId = currentUser.id;
     const currentJobOfferId = joboffer.id;
-    this.jobhistoryService.deleteJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
+    this.jobhistoryService.deleteJobOfferHistory(currentJobOfferId,currentUserId).subscribe(
       jobHistoryList => {
-        console.log('Job history deleted successfully:', jobHistoryList);
+        console.log('Job history deleted successfully:',jobHistoryList);
         this.updateJobOfferAndSetIsSavedFalse(joboffer);
-        this.toastr.success('Offre d\'emploi supprimée de vos favoris', 'Success', {
+        this.toastr.success('Offre d\'emploi supprimée de vos favoris','Success',{
           positionClass: 'toast-top-left',
         });
       },
       error => {
-        console.error('Error deleting job history:', error);
+        console.error('Error deleting job history:',error);
       }
     );
   }
@@ -121,11 +145,11 @@ export class ProfilComponent implements OnInit {
     joboffer.isSaved = false;
     this.jobofferService.updateJobOffer(joboffer).subscribe(
       updatedJobOfferList => {
-        console.log('Job offer updated successfully:', updatedJobOfferList);
+        console.log('Job offer updated successfully:',updatedJobOfferList);
 
       },
       error => {
-        console.error('Error updating job offer:', error);
+        console.error('Error updating job offer:',error);
       }
     );
   }

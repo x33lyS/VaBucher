@@ -1,66 +1,51 @@
-<div class="profile" *ngIf="currentUser">
+<div class="profile-wrapper">
   <h1>Profile</h1>
-  <form class="profile-form">
-    <mat-form-field>
-      <mat-label class="label">First Name</mat-label>
-      <input [value]="currentUser.firstname" matInput placeholder="New firstname" value="currentUser.firstname">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label class="label">Last Name</mat-label>
-      <input [value]="currentUser.lastname" matInput placeholder="New lastname">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label class="label">Location</mat-label>
-      <input [value]="currentUser.location" matInput placeholder="New location">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label class="label">Domain</mat-label>
-      <input [value]="currentUser.domain" matInput placeholder="New domain">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label class="label">Job Type</mat-label>
-      <input [value]="currentUser.jobtype" matInput placeholder="New job type">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label class="label">CV</mat-label>
-      <input [value]="currentUser.cv" matInput placeholder="New CV">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label class="label">Email</mat-label>
-      <input [value]="currentUser.email" matInput placeholder="New email">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label class="label">Phone</mat-label>
-      <input [value]="currentUser.phone" matInput placeholder="New phone">
-    </mat-form-field>
+  <div class="profile" *ngIf="currentUser">
+    <form class="profile-form">
+      <h3>Informations</h3>
+      <div class="inputs-wrapper">
+        <input [(ngModel)]="currentUser.firstname" [value]="currentUser.firstname" matInput placeholder="New firstname">
+        <input [(ngModel)]="currentUser.lastname" [value]="currentUser.lastname" matInput placeholder="New lastname">
+        <input [(ngModel)]="currentUser.location" [value]="currentUser.location" matInput placeholder="New location">
+        <input [(ngModel)]="currentUser.domain" [value]="currentUser.domain" matInput placeholder="New domain">
+        <input [(ngModel)]="currentUser.jobtype" [value]="currentUser.jobtype" matInput placeholder="New job type">
+        <input [(ngModel)]="currentUser.cv" [value]="currentUser.cv" matInput placeholder="New CV">
+        <input [(ngModel)]="currentUser.email" [value]="currentUser.email" matInput placeholder="New email">
+        <input [(ngModel)]="currentUser.phone" [value]="currentUser.phone" matInput placeholder="New phone">
+      </div>
+      <button class="submit-btn" mat-raised-button (click)="updateCurrentUser()">Save</button>
+    </form>
 
-<!--  TODO :  il faudra surement faire une partie a part pour le poasswor, plus propre-->
-<!--    <mat-form-field>-->
-<!--      <mat-label class="label">Password</mat-label>-->
-<!--      <input [formControl]="passwordFormControl" [value]="currentUser.password"  matInput placeholder="New password">-->
-<!--      <mat-error *ngIf="passwordFormControl.hasError('minlength')">Password should be at least 8 characters</mat-error>-->
-<!--    </mat-form-field>-->
+    <form class="password-form">
+      <h3>Mot de passe</h3>
+      <input matInput placeholder="Ancien mot de passe">
+      <input [formControl]="passwordFormControl" matInput placeholder="Nouveau mot de passe">
+      <input [formControl]="passwordFormControl" matInput placeholder="Confirmer le nouveau mot de passe">
+      <button class="submit-btn" mat-raised-button (click)="updateCurrentUserPassword()">Save</button>
+    </form>
 
 
-    <button class="submit-btn" mat-raised-button (click)="updateCurrentUser()">Save</button>
-  </form>
+  </div>
+
 </div>
 
 <div class="history_container" *ngFor="let favoris of jobofferhistory" [@deleteAnimation]="favoris.state">
   <div class="offers">
-        <div class="box">
-          <div class="header">
-            <h6>{{ favoris.title | uppercase}}</h6>
-            <button matTooltip="Supprimer" (click)="deleteHistory(favoris)"><mat-icon>delete_outline</mat-icon></button>
-          </div>
-          <div class="chips">
-            <button>Rémunération: {{ favoris.salaire | uppercase }}</button>
-            <button>Type de poste: {{ favoris.types | uppercase}}</button>
-            <button>Domaine: {{ favoris.domain | uppercase}}</button>
-          </div>
-          <div class="description">
-            <p>{{ favoris.description}}</p>
-          </div>
-        </div>
+    <div class="box">
+      <div class="header">
+        <h6>{{ favoris.title | uppercase}}</h6>
+        <button matTooltip="Supprimer" (click)="deleteHistory(favoris)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </div>
+      <div class="chips">
+        <button>Rémunération: {{ favoris.salaire | uppercase }}</button>
+        <button>Type de poste: {{ favoris.types | uppercase}}</button>
+        <button>Domaine: {{ favoris.domain | uppercase}}</button>
+      </div>
+      <div class="description">
+        <p>{{ favoris.description}}</p>
+      </div>
+    </div>
   </div>
 </div>

@@ -26,6 +26,7 @@ export class UserService {
       user
     );
   }
+
   public createUser(user: User): Observable<User[] | HttpErrorResponse> {
     return this.http.post<User[]>(
       `${this.apiUrl}/${this.url}`,
