@@ -18,7 +18,6 @@
 
     <form class="password-form">
       <h3>Mot de passe</h3>
-      <input matInput placeholder="Ancien mot de passe">
       <input [formControl]="passwordFormControl" matInput placeholder="Nouveau mot de passe">
       <input [formControl]="passwordFormControl" matInput placeholder="Confirmer le nouveau mot de passe">
       <button class="submit-btn" mat-raised-button (click)="updateCurrentUserPassword()">Save</button>
