@@ -16,10 +16,10 @@
       <button class="submit-btn" mat-raised-button (click)="updateCurrentUser()">Save</button>
     </form>
 
-    <form class="password-form">
+    <form [formGroup]="passwordForm" class="password-form">
       <h3>Mot de passe</h3>
-      <input [formControl]="passwordFormControl" matInput placeholder="Nouveau mot de passe">
-      <input [formControl]="passwordFormControl" matInput placeholder="Confirmer le nouveau mot de passe">
+      <input matInput formControlName="newPassword" placeholder="Nouveau mot de passe">
+      <input matInput formControlName="confirmPassword" placeholder="Confirmer le nouveau mot de passe">
       <button class="submit-btn" mat-raised-button (click)="updateCurrentUserPassword()">Save</button>
     </form>
 

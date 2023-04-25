@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {CurrentUser} from 'src/app/models/currentuser';
 import {UserService} from 'src/app/services/user.service';
 import {AuthenticationService} from 'src/app/services/authentication.service';
-import {FormControl,Validators} from "@angular/forms";
+import {FormControl,FormGroup,Validators} from "@angular/forms";
 import {JobhistoryService} from "../../services/jobhistory.service";
 import {Jobhistory} from "../../models/jobhistory";
 import {JobofferService} from "../../services/joboffer.service";
@@ -39,6 +39,12 @@ export class ProfilComponent implements OnInit {
     Validators.minLength(6)
   ]);
   currentUserData: string | null = '';
+
+  passwordForm = new FormGroup({
+    newPassword: new FormControl(''),
+    confirmPassword: new FormControl('')
+  });
+  
   @Output() usersUpdated = new EventEmitter<User[]>();
   constructor(
     private userService: UserService,
@@ -88,34 +94,31 @@ export class ProfilComponent implements OnInit {
 }
           
 
-  updateCurrentUserPassword() {
-    if (this.passwordFormControl.invalid) {
-      this.toastr.error('Mot de passe invalide','Erreur',{
-        positionClass: 'toast-top-left',
-      });
-      return;
-    }
-
-    this.userService.getUser().subscribe((userList: CurrentUser[]) => {
-      // TODO : a changer quand en recevra que l'user actuel
-      userList.forEach((user: CurrentUser) => {
-        if (user.id === this.currentUser.id) {
-          if (user.password === this.currentUser.password) {
-            this.userService.updateUser(this.currentUser)
-              .subscribe(data => {
-                if (this.currentUserData) {
-                  sessionStorage.setItem('currentUser',JSON.stringify(data));
-                }
-              });
-          } else {
-            this.toastr.error('Mot de passe incorrect','Erreur',{
-              positionClass: 'toast-top-left',
-            });
-          }
-        }
-      });
+updateCurrentUserPassword() {
+  if (this.passwordForm.invalid) {
+    this.toastr.error('Mot de passe invalide','Erreur',{
+      positionClass: 'toast-top-left',
     });
+    return;
   }
+  if (this.passwordForm.value.newPassword !== this.passwordForm.value.confirmPassword) {
+    this.toastr.error('Les mots de passe ne correspondent pas','Erreur',{
+      positionClass: 'toast-top-left',
+    });
+    return;
+  }
+  if(this.passwordForm.value.newPassword != null) {
+  this.currentUser.password = this.passwordForm.value.newPassword;
+  }
+  this.userService
+      .updateUser(this.currentUser)
+      .subscribe((users: User[]) => this.usersUpdated.emit(users));
+  sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+  this.toastr.success('Mot de passe modifié avec succès', 'Success', {
+    positionClass: 'toast-top-left',
+  });
+  this.passwordForm.reset();
+}
 
 
   deleteHistory(joboffer: JobOffer | any) {
@@ -126,7 +129,6 @@ export class ProfilComponent implements OnInit {
     const currentJobOfferId = joboffer.id;
     this.jobhistoryService.deleteJobOfferHistory(currentJobOfferId,currentUserId).subscribe(
       jobHistoryList => {
-        console.log('Job history deleted successfully:',jobHistoryList);
         this.updateJobOfferAndSetIsSavedFalse(joboffer);
         this.toastr.success('Offre d\'emploi supprimée de vos favoris','Success',{
           positionClass: 'toast-top-left',
