@@ -80,7 +80,7 @@ export class SearchComponent {
 
     this.searchService.offersToDisplay$.subscribe((offers) => {
       if (offers !== null)
-      if (offers.length === 0) {
+      if (offers.length <= 6) {
         this.enableScrapButton = true;
       }
     });
@@ -95,7 +95,7 @@ export class SearchComponent {
     this.userAuthenticate.currentUser$.subscribe((currentUser) => {
       this.currentUser = currentUser || this.userAuthenticate.getCurrentUser();
     });
-      
+
     this.jobtypeService
       .getJobType()
       .subscribe((result: JobType[]) => (this.jobtypes = result));

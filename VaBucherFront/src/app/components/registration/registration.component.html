@@ -77,8 +77,9 @@
               </span>
             </div>
 
-            <mat-select placeholder="Domaine" [value]="selectedJobTypes" multiple formControlName="domain"
+            <mat-select placeholder="Domaine" [value]="selectedJobTypes" formControlName="domain"
               name="domain">
+              <mat-option [value]=""></mat-option>
               <mat-option *ngFor="let search of searches" [value]="search.filter">{{ search.filter }}</mat-option>
             </mat-select>
 

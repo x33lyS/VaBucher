@@ -5,6 +5,8 @@ import { JobOffer } from '../models/joboffer';
 import {ToastrService} from "ngx-toastr";
 import {BehaviorSubject} from "rxjs";
 import { JobhistoryService } from './jobhistory.service';
+import {AuthenticationService} from "./authentication.service";
+import {CurrentUser} from "../models/currentuser";
 @Injectable({
   providedIn: 'root'
 })
@@ -18,9 +20,10 @@ export class JobofferService {
   pages$ = this.pagesObservable.asObservable();
   private currentPageObservable = new BehaviorSubject<any>('');
   currentPage$ = this.currentPageObservable.asObservable();
+  currentUser: CurrentUser | any;
 
   constructor(private http: HttpClient, private toastr: ToastrService,
-    private jobHistoryService: JobhistoryService) { }
+    private jobHistoryService: JobhistoryService, private userAuthenticate: AuthenticationService) { }
 
 
   saveJobOffer(jobOffer: JobOffer) {
@@ -88,8 +91,11 @@ export class JobofferService {
 
   saveHistory(joboffer: JobOffer) {
     // @ts-ignore
-    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    const currentUserId = currentUser.id;
+    this.userAuthenticate.currentUser$.subscribe((currentUser) => {
+      this.currentUser = currentUser || this.userAuthenticate.getCurrentUser();
+      console.log('current user', this.currentUser)
+    });
+    const currentUserId = this.currentUser?.id;
     const currentJobOfferId = joboffer.id;
     const updatedJobOffer = {...joboffer, isSaved: true};
     console.log('Creating job history for user', currentUserId, 'and job offer', currentJobOfferId);
@@ -99,7 +105,7 @@ export class JobofferService {
         if (jobOffer.isSaved) {
           this.jobHistoryService.deleteJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
             jobHistoryList => {
-              console.log('Job history deleted successfully:', jobHistoryList);
+              console.log('Job history deleted successfully:', currentUserId);
               this.updateJobOfferAndSetIsSavedFalse(joboffer);
               this.toastr.success('Offre d\'emploi supprimée de vos favoris', 'Success', {
                 positionClass: 'toast-top-left',

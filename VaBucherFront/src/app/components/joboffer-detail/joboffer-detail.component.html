@@ -11,15 +11,22 @@
       <p>{{ selectedJoboffer.description }} </p>
     </div>
     <div class="content">
-      <p class="mat-elevation-z2">Salaire: <span>{{ selectedJoboffer.salaire }}</span> </p>
-      <p class="mat-elevation-z2">Localisation:<span>{{ selectedJoboffer.localisation }}</span> </p>
-      <p class="mat-elevation-z2">Types:<span>{{ selectedJoboffer.types }}</span> </p>
-      <p class="mat-elevation-z2">Entreprise:<span>{{ selectedJoboffer.companyInfo }}</span> </p>
-      <p class="mat-elevation-z2">Domaine:<span>{{ selectedJoboffer.domain }}</span> </p>
-      <p class="mat-elevation-z2">Date: <span>{{ selectedJoboffer.isNew }}</span></p>
+      <p class="mat-elevation-z2">Salaire:
+        <span>{{ selectedJoboffer.salaire ? selectedJoboffer.salaire : 'Inconnue' }}</span> </p>
+      <p class="mat-elevation-z2">Localisation:<span>{{ selectedJoboffer.localisation ?
+        selectedJoboffer.localisation : 'Inconnue'}}</span> </p>
+      <p class="mat-elevation-z2">Types:<span>{{ selectedJoboffer.types ?
+        selectedJoboffer.types : 'Inconnue' }}</span> </p>
+      <p class="mat-elevation-z2">Entreprise:<span>{{ selectedJoboffer.companyInfo ?
+        selectedJoboffer.companyInfo : 'Inconnue'}}</span> </p>
+      <p class="mat-elevation-z2">Domaine:<span>{{ selectedJoboffer.domain ? selectedJoboffer.domain :
+        'Inconnue'}}</span> </p>
+      <p class="mat-elevation-z2">Date: <span>{{ selectedJoboffer.isNew ? selectedJoboffer.isNew :
+        'Inconnue'}}</span></p>
     </div>
     <div class="compare-button">
       <button *ngIf="access" (click)="saveJobOffer(); saved.emit()">Comparer</button>
+      <button><a href="{{selectedJoboffer.url}}" target="_blank">Postuler</a></button>
     </div>
   </div>
 </div>

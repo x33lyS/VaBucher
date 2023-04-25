@@ -75,9 +75,18 @@ $background-color: rgba(0, 0, 0, 0.5);
   }
   .compare-button{
     display: flex;
+    gap: 20px;
     width: 100%;
     justify-content: center;
     button{
+      a{
+        color: black;
+      }
+      &:hover{
+        a{
+          color: #fff;
+        }
+      }
       border: 1px solid #E94A35;
       background: transparent;
       border-radius: 8px;
