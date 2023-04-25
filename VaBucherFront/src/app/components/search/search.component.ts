@@ -12,6 +12,7 @@ import { CurrentUser } from 'src/app/models/currentuser';
 import { JobofferComponent } from '../joboffer/joboffer.component';
 import {ToastrService} from "ngx-toastr";
 import {FormBuilder} from "@angular/forms";
+import {AuthenticationService} from "../../services/authentication.service";
 
 
 
@@ -47,7 +48,8 @@ export class SearchComponent {
     private jobtypeService: JobtypeService,
               private jobOffer: JobofferComponent,
               private toastr: ToastrService,
-              private _formBuilder: FormBuilder) { }
+              private _formBuilder: FormBuilder,
+              private userAuthenticate: AuthenticationService) { }
 
   userParameter = this._formBuilder.group({
     userpreference: false,
@@ -84,10 +86,13 @@ export class SearchComponent {
 
     // this.enableScrapButton = !(this.pages && this.pages.length > 0 && this.pages[this.pages.length - 1] === this.cPage) || (this.pages && this.pages.length <= 1);
 
-    this.currentUserData = localStorage.getItem('currentUser');
-    if (this.currentUserData) {
-      this.currentUser = JSON.parse(this.currentUserData);
-    }
+    // this.currentUserData = localStorage.getItem('currentUser');
+    // if (this.currentUserData) {
+    //   this.currentUser = JSON.parse(this.currentUserData);
+    // }
+
+    this.userAuthenticate.currentUser$.subscribe(x => this.currentUser = x);
+    console.log(this.currentUser, 'current user')
     this.jobtypeService
       .getJobType()
       .subscribe((result: JobType[]) => (this.jobtypes = result));
