@@ -39,7 +39,6 @@ export class ProfilComponent implements OnInit {
   ]);
   currentUserData: string | null = '';
 
-
   constructor(
     private userService: UserService,
     private authentificationService: AuthenticationService,
@@ -56,7 +55,6 @@ export class ProfilComponent implements OnInit {
       map((jobHistoryList: Jobhistory[]) => jobHistoryList.map((jobHistory: Jobhistory) => jobHistory.idOffer))
       // @ts-ignore
     ).subscribe((jobHistoryIds: number[]) => {
-      console.log(jobHistoryIds); // Affiche les IDs des enregistrements d'historique d'emploi dans la console
 
       this.jobofferService.getJobOffer().subscribe((jobOfferList: JobOffer[]) => {
         // @ts-ignore
@@ -64,34 +62,31 @@ export class ProfilComponent implements OnInit {
           .forEach((jobOffer: JobOffer) => {
             // @ts-ignore
             this.jobofferhistory.push(jobOffer);
-            console.log(jobOffer,'job'); // Affiche l'offre d'emploi correspondante dans la console
           });
       });
     });
 
     this.authentificationService.currentUser$.subscribe((currentUser) => {
       this.currentUser = currentUser;
-      console.log(this.currentUser,'currentUser');
     });
     this.currentUserData = sessionStorage.getItem('currentUser');
     if (this.currentUserData) {
       this.currentUser = JSON.parse(this.currentUserData);
     }
-
   }
 
   updateCurrentUser() {
-    this.userService.updateUser(this.currentUser)
-      .subscribe(data => {
-    console.log(data,'data');
-        if (this.currentUserData) {
-          sessionStorage.setItem('currentUser',JSON.stringify(data));
-        }
-      });
-  }
+   
+  // Call the updateUser() method of your userService to save the changes to the server
+  this.userService.updateUser(this.currentUser)
+        sessionStorage.setItem('currentUser',JSON.stringify(this.currentUser));
+        this.toastr.success('Utilisateur modifié avec succès', 'Success', {
+          positionClass: 'toast-top-left',
+        });
+}
+          
 
   updateCurrentUserPassword() {
-
     if (this.passwordFormControl.invalid) {
       this.toastr.error('Mot de passe invalide','Erreur',{
         positionClass: 'toast-top-left',

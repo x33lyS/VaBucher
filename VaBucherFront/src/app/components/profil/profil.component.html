@@ -4,14 +4,14 @@
     <form class="profile-form">
       <h3>Informations</h3>
       <div class="inputs-wrapper">
-        <input [(ngModel)]="currentUser.firstname" [value]="currentUser.firstname" matInput placeholder="New firstname">
-        <input [(ngModel)]="currentUser.lastname" [value]="currentUser.lastname" matInput placeholder="New lastname">
-        <input [(ngModel)]="currentUser.location" [value]="currentUser.location" matInput placeholder="New location">
-        <input [(ngModel)]="currentUser.domain" [value]="currentUser.domain" matInput placeholder="New domain">
-        <input [(ngModel)]="currentUser.jobtype" [value]="currentUser.jobtype" matInput placeholder="New job type">
-        <input [(ngModel)]="currentUser.cv" [value]="currentUser.cv" matInput placeholder="New CV">
-        <input [(ngModel)]="currentUser.email" [value]="currentUser.email" matInput placeholder="New email">
-        <input [(ngModel)]="currentUser.phone" [value]="currentUser.phone" matInput placeholder="New phone">
+        <input type="text" class="form-control" [(ngModel)]="currentUser.firstname" name="firstname" matInput placeholder="New firstname">
+        <input type="text" class="form-control" [(ngModel)]="currentUser.lastname" name="lastname" matInput placeholder="New lastname">
+        <input type="text" class="form-control" [(ngModel)]="currentUser.location" name="location" matInput placeholder="New location">
+        <input type="text" class="form-control" [(ngModel)]="currentUser.domain" name="domain" matInput placeholder="New domain">
+        <input type="text" class="form-control" [(ngModel)]="currentUser.jobtype" name="jobtype" matInput placeholder="New jobtype">
+        <input type="text" class="form-control" [(ngModel)]="currentUser.cv" name="cv" matInput placeholder="New cv">
+        <input type="text" class="form-control" [(ngModel)]="currentUser.email" name="email" matInput placeholder="New email">
+        <input type="text" class="form-control" [(ngModel)]="currentUser.phone" name="phone" matInput placeholder="New phone number">
       </div>
       <button class="submit-btn" mat-raised-button (click)="updateCurrentUser()">Save</button>
     </form>

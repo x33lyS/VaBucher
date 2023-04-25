@@ -30,6 +30,7 @@ export class AuthenticationService {
     const user = this.currentUserSubject.getValue();
     const storedUser = sessionStorage.getItem('currentUser');
     if (user) {
+      console.log("test");
       return user;
     } else if (storedUser) {
       return JSON.parse(storedUser);

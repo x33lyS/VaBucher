@@ -79,20 +79,45 @@ namespace VaBucherBack.Controllers
         [HttpPut]
         public async Task<ActionResult<List<User>>> UpdateUser(User user)
         {
+            Console.WriteLine("User nUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundot found.");
             var dbUser = await _context.Users.FindAsync(user.Id);
             if (dbUser == null)
                 return BadRequest("User not found.");
-
+            if (user.Firstname != dbUser.Firstname) { 
             dbUser.Firstname = user.Firstname;
-            dbUser.Lastname = user.Lastname;
-            dbUser.Location = user.Location;
-            dbUser.Password = user.Password;
+            }
+            if (user.Lastname != dbUser.Lastname)
+            {
+                dbUser.Lastname = user.Lastname;
+            }
+            if (user.Location != dbUser.Location)
+            {
+                dbUser.Location = user.Location;
+            }
+            if (user.Password != null && user.Password !=  dbUser.Location ) {
+                var salt = BCrypt.Net.BCrypt.GenerateSalt();
+                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
+                dbUser.Password = user.Password;
+            }
+            if (user.Jobtype != dbUser.Jobtype) { 
             dbUser.Jobtype = user.Jobtype;
-            dbUser.Domain = user.Domain;
+            }
+            if (user.Domain != dbUser.Domain)
+            {
+                dbUser.Domain = user.Domain;
+            }
+            if (user.Role != dbUser.Role) { 
             dbUser.Role = user.Role;
-            dbUser.CV = user.CV;
+            }
+            if (user.CV != dbUser.CV) {
+                dbUser.CV = user.CV;
+            }
+            if (user.Email != dbUser.Email) { 
             dbUser.Email = user.Email;
+            }
+            if (user.Phone != dbUser.Phone) { 
             dbUser.Phone = user.Phone;
+            }
 
 
             await _context.SaveChangesAsync();
