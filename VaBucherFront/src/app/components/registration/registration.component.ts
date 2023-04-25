@@ -47,8 +47,8 @@ export class RegistrationComponent implements OnInit {
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
       location: '',
-      domain: '',
-      jobtype: '',
+      domain: [],
+      jobtype: [],
       role: 1,
       cv: '',
       phone: '',
@@ -65,6 +65,9 @@ export class RegistrationComponent implements OnInit {
       .subscribe((result: Search[]) => (this.searches = result));
   }
 
+  test() {
+  }
+
   onSubmit() {
     if (this.registrationform.valid) {
       const user = new User();
@@ -72,25 +75,22 @@ export class RegistrationComponent implements OnInit {
       user.lastname = this.registrationform.value.lastname;
       user.email = this.registrationform.value.email;
       user.password = this.registrationform.value.password;
-      if (user.location) {
+      if (this.registrationform.value.location ||
+         this.registrationform.value.domain
+        || this.registrationform.value.jobtype ||
+        this.registrationform.value.cv ||
+        this.registrationform.value.phone !== null ) {
         user.location = this.registrationform.value.location;
-      }
-      if (user.domain) {
         user.domain = this.registrationform.value.domain.join(',');
-      }
-      if (user.jobtype) {
         user.jobtype = this.registrationform.value.jobtype.join(',');
-      }
-      if (user.cv) {
         user.cv = this.registrationform.value.cv;
-      }
-      if (user.phone) {
         user.phone = this.registrationform.value.phone;
       }
-      console.log(user);
+      console.log(user, 'test');
 
       this.userService.createUser(user).subscribe(
         () => {
+          console.log("Utilisateur créé avec succès !", user);
           // Traitement en cas de réussite, par exemple en redirigeant l'utilisateur vers une autre page
           this.authentService.login(user).subscribe({
             next: (result) => {
@@ -104,7 +104,8 @@ export class RegistrationComponent implements OnInit {
               }
               this.router.navigate(['/dashboard']);
               this.toastr.success('Bienvenue !');
-              // il faut protéger la route home aves un guard dans le futur pour ne pas pouvoir y accéder sans être connecté
+              // il faut protéger la route home avec un guard dans le futur pour ne pas pouvoir
+              // y accéder sans être connecté
             },
             error: (error) => {
               console.log("Erreur lors du login : Status " + error.status + ", " + error.error);

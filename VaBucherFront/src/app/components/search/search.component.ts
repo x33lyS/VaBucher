@@ -22,9 +22,9 @@ import {AuthenticationService} from "../../services/authentication.service";
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent {
-  domainFilter!: string;
+  domainFilter!: any;
   locationFilter!: string;
-  jobtypefilter!: string;
+  jobtypefilter!: any;
   searches: Search[] = [];
   selectedJobTypes: [] = [];
   filteredSearches: any[] = [];
@@ -124,13 +124,13 @@ export class SearchComponent {
       } else {
         if (this.currentUser) {
           if (this.currentUser.domain) {
-            this.domainFilter = this.currentUser.domain.split(',')[0];
+            this.domainFilter = this.currentUser.domain;
           }
           if (this.currentUser.location) {
             this.locationFilter = this.currentUser.location;
           }
           if (this.currentUser.jobtype) {
-            this.jobtypefilter = this.currentUser.jobtype;
+            this.jobtypefilter = this.currentUser.jobtype
           }
         }
         this.filterOptions();

@@ -19,15 +19,16 @@
         <mat-label>Recherche par lieu</mat-label>
         <input matInput [(ngModel)]="locationFilter" (input)="filterJobOffers()" (keyup)="updatePoleEmploiLocation()">
       </mat-form-field>
+
       <mat-form-field appearance="outline">
         <mat-label>Recherche par type d'emploi</mat-label>
-        <mat-select [value]="selectedJobTypes" multiple (selectionChange)="updateSelectedJobTypes($event.value)">
+        <mat-select [value]="selectedJobTypes" multiple
+                    (selectionChange)="updateSelectedJobTypes($event.value)">
           <mat-option *ngFor="let jobType of jobtypes" [value]="jobType.jobs">
             {{jobType.jobs}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-
     </div>
     <div class="user-parameter" [formGroup]="userParameter" *ngIf="currentUser">
       <mat-checkbox formControlName="userpreference">Utiliser mes filtres</mat-checkbox>
