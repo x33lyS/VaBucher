@@ -95,7 +95,7 @@
 
             <mat-checkbox formControlName="staySignedIn">Stay signed in</mat-checkbox><br />
 
-            <button type="submit" [disabled]="!submit()">Sign up</button>
+            <button type="submit" [disabled]="!submit()" (click)="test()">Sign up</button>
             <div class="error-message">
               {{message}}
             </div>
