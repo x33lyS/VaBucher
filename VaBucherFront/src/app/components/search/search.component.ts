@@ -79,6 +79,7 @@ export class SearchComponent {
     });
 
     this.searchService.offersToDisplay$.subscribe((offers) => {
+      if (offers !== null)
       if (offers.length === 0) {
         this.enableScrapButton = true;
       }
@@ -91,8 +92,10 @@ export class SearchComponent {
     //   this.currentUser = JSON.parse(this.currentUserData);
     // }
 
-    this.userAuthenticate.currentUser$.subscribe(x => this.currentUser = x);
-    console.log(this.currentUser, 'current user')
+    this.userAuthenticate.currentUser$.subscribe((currentUser) => {
+      this.currentUser = currentUser || this.userAuthenticate.getCurrentUser();
+    });
+      
     this.jobtypeService
       .getJobType()
       .subscribe((result: JobType[]) => (this.jobtypes = result));

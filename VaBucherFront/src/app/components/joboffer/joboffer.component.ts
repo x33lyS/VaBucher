@@ -62,7 +62,6 @@ export class JobofferComponent implements OnInit {
     this.dataService.currentData.subscribe(data => {
       this.data = data;
       this.apiOffers = this.data;
-      console.log(this.apiOffers)
     });
     this.jobtypeService
       .getJobType()
