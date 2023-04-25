@@ -1,4 +1,4 @@
-import {Component,OnInit} from '@angular/core';
+import {Component,EventEmitter,OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {CurrentUser} from 'src/app/models/currentuser';
 import {UserService} from 'src/app/services/user.service';
@@ -11,6 +11,7 @@ import {map} from "rxjs";
 import {JobOffer} from "../../models/joboffer";
 import {ToastrService} from "ngx-toastr";
 import {animate,state,style,transition,trigger} from "@angular/animations";
+import { User } from 'src/app/models/user';
 
 
 @Component({
@@ -38,7 +39,7 @@ export class ProfilComponent implements OnInit {
     Validators.minLength(6)
   ]);
   currentUserData: string | null = '';
-
+  @Output() usersUpdated = new EventEmitter<User[]>();
   constructor(
     private userService: UserService,
     private authentificationService: AuthenticationService,
@@ -76,11 +77,12 @@ export class ProfilComponent implements OnInit {
   }
 
   updateCurrentUser() {
-   
   // Call the updateUser() method of your userService to save the changes to the server
-  this.userService.updateUser(this.currentUser)
-        sessionStorage.setItem('currentUser',JSON.stringify(this.currentUser));
-        this.toastr.success('Utilisateur modifié avec succès', 'Success', {
+  this.userService
+          .updateUser(this.currentUser)
+          .subscribe((users: User[]) => this.usersUpdated.emit(users));
+          sessionStorage.setItem('currentUser',JSON.stringify(this.currentUser));
+        this.toastr.warning('Utilisateur modifié avec succès', 'Success', {
           positionClass: 'toast-top-left',
         });
 }

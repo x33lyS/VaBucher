@@ -6,6 +6,7 @@ import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/rout
 import {catchError, of, throwError} from "rxjs";
 import { CurrentUser } from '../models/currentuser';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +20,7 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiUrl}/${this.url}`);
   }
 
-  public updateUser(user: CurrentUser): Observable<User[]> {
+  public updateUser(user: User): Observable<User[]> { 
     return this.http.put<User[]>(`${this.apiUrl}/${this.url}`,user);
   }
 

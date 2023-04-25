@@ -79,7 +79,6 @@ namespace VaBucherBack.Controllers
         [HttpPut]
         public async Task<ActionResult<List<User>>> UpdateUser(User user)
         {
-            Console.WriteLine("User nUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundUser not foundot found.");
             var dbUser = await _context.Users.FindAsync(user.Id);
             if (dbUser == null)
                 return BadRequest("User not found.");
