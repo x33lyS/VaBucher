@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { timer } from 'rxjs';
+import { JobofferService } from 'src/app/services/joboffer.service';
 
 @Component({
   selector: 'app-loader',
@@ -10,8 +11,8 @@ export class LoaderComponent implements OnInit {
 
   public isVisible: boolean = true;
 
-  constructor() {
-    timer(1200).subscribe(() => {
+  constructor(public jobofferService: JobofferService) {
+    this.jobofferService.getJobOffer().subscribe(() => {
       this.isVisible = false;
     });
   }

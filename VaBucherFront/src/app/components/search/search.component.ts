@@ -80,7 +80,9 @@ export class SearchComponent {
 
     this.searchService.offersToDisplay$.subscribe((offers) => {
       if (offers !== null)
-      if (offers.length <= 6) {
+      if (offers.length < 6) {
+        console.log(offers.length);
+        
         this.enableScrapButton = true;
       }
     });
