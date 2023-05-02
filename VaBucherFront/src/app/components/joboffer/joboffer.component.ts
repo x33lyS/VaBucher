@@ -42,6 +42,8 @@ export class JobofferComponent implements OnInit {
   selectedJobOffer: JobOffer | null = null;
   showLoader: boolean = true;
   apiOffers: any[] = [];
+  jobOffersWithIcons: boolean = false;
+  ids: any;
 
   constructor(private router: Router,public jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService,
               private dataService: ApiDataService, private filter: FilterPipe, private authentificationService: AuthenticationService,
@@ -67,6 +69,15 @@ export class JobofferComponent implements OnInit {
       .getJobType()
       .subscribe((result: JobType[]) => (this.jobtypes = result));
     this.searchService.getSearch().subscribe((result: Search[]) => (this.searches = result));
+
+    this.jobhistoryService.getJobOfferHistory().subscribe((res) => {
+      res.map((jobOffer: any) => {
+        console.log(jobOffer.idOffer, jobOffer.idUser, this.currentUser.id);
+        console.log(this.ids, 'ids')
+        const isSaved = jobOffer.idUser === this.currentUser.id && jobOffer.idOffer === this.ids;
+        return {...jobOffer, isSaved};
+      });
+    });
   }
 
   public closeJobOfferDetails() {
@@ -87,6 +98,7 @@ export class JobofferComponent implements OnInit {
   getOffers() {
     this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
       this.joboffers = result
+      this.ids = this.joboffers.map((jobOffer) => jobOffer.id);
     });
   }
 

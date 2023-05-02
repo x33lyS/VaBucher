@@ -21,6 +21,8 @@ export class JobofferService {
   private currentPageObservable = new BehaviorSubject<any>('');
   currentPage$ = this.currentPageObservable.asObservable();
   currentUser: CurrentUser | any;
+  favoriteJobOffers: any;
+  userFavoriteJobOffers: any;
 
   constructor(private http: HttpClient, private toastr: ToastrService,
     private jobHistoryService: JobhistoryService, private userAuthenticate: AuthenticationService) { }
@@ -89,6 +91,24 @@ export class JobofferService {
   }
 
 
+  getFavoriteJobOffers() {
+    this.userAuthenticate.currentUser$.subscribe((currentUser) => {
+      this.currentUser = currentUser || this.userAuthenticate.getCurrentUser();
+    });
+    this.jobHistoryService.getJobOfferHistory().subscribe((res) => {
+      this.favoriteJobOffers = res;
+      console.log(res, "res");
+      this.favoriteJobOffers.map((jobOffer: any) => {
+        if (this.currentUser.id == jobOffer.idUser){
+          this.userFavoriteJobOffers = true;
+          console.log(this.userFavoriteJobOffers, "userFavoriteJobOffers");
+        }else{
+          this.userFavoriteJobOffers = false;
+          console.log(this.userFavoriteJobOffers, "userFavoriteJobOffers");
+        }
+      });
+    });
+  }
   saveHistory(joboffer: JobOffer) {
     // @ts-ignore
     this.userAuthenticate.currentUser$.subscribe((currentUser) => {
@@ -97,61 +117,94 @@ export class JobofferService {
     });
     const currentUserId = this.currentUser?.id;
     const currentJobOfferId = joboffer.id;
-    const updatedJobOffer = {...joboffer, isSaved: true};
     console.log('Creating job history for user', currentUserId, 'and job offer', currentJobOfferId);
 
-    this.getJobOfferById(currentJobOfferId).subscribe(
-      jobOffer => {
-        if (jobOffer.isSaved) {
-          this.jobHistoryService.deleteJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
-            jobHistoryList => {
-              console.log('Job history deleted successfully:', currentUserId);
-              this.updateJobOfferAndSetIsSavedFalse(joboffer);
-              this.toastr.success('Offre d\'emploi supprimée de vos favoris', 'Success', {
-                positionClass: 'toast-top-left',
-              });
-              joboffer.isSaved = false;
+    this.jobHistoryService.createJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
+      jobHistoryList => {
+        console.log('Job history created successfully:', currentUserId);
+      });
 
-            },
-            error => {
-              console.error('Error deleting job history:', error);
-            }
-          );
-        } else {
-          this.jobHistoryService.createJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
-            jobHistoryList => {
-              this.toastr.success('Offre ajoutée à vos favoris', 'Success', {
-                positionClass: 'toast-top-left',
-              });
-              joboffer.isSaved = true;
-              this.updateJobOffer(updatedJobOffer).subscribe(
-                updatedJobOfferList => {
-                  console.log('Job offer updated successfully:', updatedJobOfferList);
-                },
-                error => {
-                  console.error('Error updating job offer:', error);
-                }
-              );
-              console.log('Job history created successfully:', jobHistoryList);
-            },
-            error => {
-              console.error('Error creating job history:', error);
-            }
-          );
-        }
+
+    const index = this.userFavoriteJobOffers.findIndex((item: any) => item.idOffer === joboffer.id);
+
+    if (joboffer.isSaved) {
+      // si l'offre est déjà en favoris, la retirer
+      if (index !== -1) {
+        this.userFavoriteJobOffers.splice(index, 1);
       }
-    );
+    } else {
+      // sinon, l'ajouter aux favoris
+      if (index === -1) {
+        this.userFavoriteJobOffers.push(joboffer);
+      }
+    }
+
+    // mettre à jour la propriété isFavorite de l'offre
+    joboffer.isSaved = !joboffer.isSaved;
+
+    // this.jobHistoryService.getJobOfferHistory().subscribe((res) => {
+    //   this.favoriteJobOffers = res;
+    //   console.log(res, "res");
+    //   this.favoriteJobOffers.map((jobOffer: any) => {
+    //     console.log(jobOffer.idOffer, "jobOffer.jobOfferId")
+    //     return jobOffer.idOffer === currentJobOfferId ? this.userFavoriteJobOffers = true : this.userFavoriteJobOffers = false;
+    //   });
+    //
+    // });
+
+
+    // this.getJobOfferById(currentJobOfferId).subscribe(
+    //   jobOffer => {
+    //     if (jobOffer.isSaved) {
+    //       this.jobHistoryService.deleteJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
+    //         jobHistoryList => {
+    //           console.log('Job history deleted successfully:', currentUserId);
+    //           this.updateJobOfferAndSetIsSavedFalse(joboffer);
+    //           this.toastr.success('Offre d\'emploi supprimée de vos favoris', 'Success', {
+    //             positionClass: 'toast-top-left',
+    //           });
+    //           joboffer.isSaved = false;
+    //         },
+    //         error => {
+    //           console.error('Error deleting job history:', error);
+    //         }
+    //       );
+    //     } else {
+    //       this.jobHistoryService.createJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
+    //         jobHistoryList => {
+    //           this.toastr.success('Offre ajoutée à vos favoris', 'Success', {
+    //             positionClass: 'toast-top-left',
+    //           });
+    //           joboffer.isSaved = true;
+    //           this.updateJobOffer(updatedJobOffer).subscribe(
+    //             updatedJobOfferList => {
+    //               console.log('Job offer updated successfully:', updatedJobOfferList);
+    //             },
+    //             error => {
+    //               console.error('Error updating job offer:', error);
+    //             }
+    //           );
+    //           console.log('Job history created successfully:', jobHistoryList);
+    //         },
+    //         error => {
+    //           console.error('Error creating job history:', error);
+    //         }
+    //       );
+    //     }
+    //   }
+    // );
   }
 
-  updateJobOfferAndSetIsSavedFalse(joboffer: JobOffer) {
-    joboffer.isSaved = false;
-    this.updateJobOffer(joboffer).subscribe(
-      updatedJobOfferList => {
-        console.log('Job offer updated successfully:', updatedJobOfferList);
-      },
-      error => {
-        console.error('Error updating job offer:', error);
-      }
-    );
-  }
+
+  // updateJobOfferAndSetIsSavedFalse(joboffer: JobOffer) {
+  //   joboffer.isSaved = false;
+  //   this.updateJobOffer(joboffer).subscribe(
+  //     updatedJobOfferList => {
+  //       console.log('Job offer updated successfully:', updatedJobOfferList);
+  //     },
+  //     error => {
+  //       console.error('Error updating job offer:', error);
+  //     }
+  //   );
+  // }
 }
