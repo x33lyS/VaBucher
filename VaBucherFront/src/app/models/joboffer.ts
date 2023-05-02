@@ -11,4 +11,5 @@ export class JobOffer {
     url = "";
     isSaved = false;
     state = "";
+    isFavorite = false;
 }

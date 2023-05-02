@@ -72,10 +72,10 @@ export class JobofferComponent implements OnInit {
 
     this.jobhistoryService.getJobOfferHistory().subscribe((res) => {
       res.map((jobOffer: any) => {
-        console.log(jobOffer.idOffer, jobOffer.idUser, this.currentUser.id);
-        console.log(this.ids, 'ids')
-        const isSaved = jobOffer.idUser === this.currentUser.id && jobOffer.idOffer === this.ids;
-        return {...jobOffer, isSaved};
+        console.log(jobOffer.idOffer, 'idoffer', jobOffer.idUser,'iduser', this.currentUser.id, 'currentuser');
+        const isFavorite = jobOffer.idUser === this.currentUser.id;
+        console.log({...jobOffer, isFavorite}, 'joboffer favorite')
+        return {...jobOffer, isFavorite};
       });
     });
   }

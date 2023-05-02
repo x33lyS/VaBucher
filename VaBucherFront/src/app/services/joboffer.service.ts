@@ -123,24 +123,21 @@ export class JobofferService {
       jobHistoryList => {
         console.log('Job history created successfully:', currentUserId);
       });
-
-
-    const index = this.userFavoriteJobOffers.findIndex((item: any) => item.idOffer === joboffer.id);
-
-    if (joboffer.isSaved) {
-      // si l'offre est déjà en favoris, la retirer
-      if (index !== -1) {
-        this.userFavoriteJobOffers.splice(index, 1);
-      }
-    } else {
-      // sinon, l'ajouter aux favoris
-      if (index === -1) {
-        this.userFavoriteJobOffers.push(joboffer);
-      }
-    }
+    // const index = this.userFavoriteJobOffers.findIndex((item: any) => item.idOffer === joboffer.id);
+    // if (joboffer.isSaved) {
+    //   // si l'offre est déjà en favoris, la retirer
+    //   if (index !== -1) {
+    //     this.userFavoriteJobOffers.splice(index, 1);
+    //   }
+    // } else {
+    //   // sinon, l'ajouter aux favoris
+    //   if (index === -1) {
+    //     this.userFavoriteJobOffers.push(joboffer);
+    //   }
+    // }
 
     // mettre à jour la propriété isFavorite de l'offre
-    joboffer.isSaved = !joboffer.isSaved;
+    // joboffer.isSaved = !joboffer.isSaved;
 
     // this.jobHistoryService.getJobOfferHistory().subscribe((res) => {
     //   this.favoriteJobOffers = res;
