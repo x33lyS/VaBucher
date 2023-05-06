@@ -1,7 +1,10 @@
+<!-- <img class="image" style="position: absolute;" src="../assets/blobGauche.png"> -->
+
 <app-search (filtersChanged)="updateFilters($event)"></app-search>
 <app-loader *ngIf="showLoader"></app-loader>
 <div class="recent-offers" id="section_3" *ngIf="joboffersToDisplay.length > 0 || this.apiOffers.length > 0">
-  <img class="image" src="../assets/blobGauche.png">
+<img class="image" style="position: fixed; top: 0;" src="../assets/blobGauche.png">
+
   <div class="offer-title">
     <mat-tab-group mat-stretch-tabs="true" mat-align-tabs="start">
       <mat-tab *ngIf="joboffersToDisplay.length > 0" [ngClass]="{'padding-bottom': currentUser}" label="Nos offres d'emploi">
