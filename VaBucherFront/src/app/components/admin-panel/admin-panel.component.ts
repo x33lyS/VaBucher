@@ -218,7 +218,7 @@ export class AdminPanelComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        joboffer.state = 'deleted';
+        // joboffer.state = 'deleted';
         this.jobofferService
           .deleteJobOffer(joboffer)
           .subscribe((joboffers: JobOffer[]) => this.joboffers = joboffers);

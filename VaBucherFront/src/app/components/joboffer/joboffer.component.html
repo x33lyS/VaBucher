@@ -12,8 +12,9 @@
               <div class="box" id="box-{{joboffersToDisplay.indexOf(joboffer) % 3 === 0 ? 1 : 2}}" >
                 <ng-container *ngIf="currentUser">
                   <button matTooltip="Favoris" class="favoris"
-                          (click)="jobofferService.saveHistory(joboffer)"><mat-icon>{{
-                    joboffer.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
+                          (click)="jobofferService.saveHistory(joboffer)">
+                    <mat-icon>{{joboffer.isFavorite ? 'star' : 'star_border' }}</mat-icon>
+                  </button>
                 </ng-container>
                 <div (click)="showDetails(joboffer)">
                   <h6>{{ joboffer.title | firstUppercase}}</h6>
