@@ -10,5 +10,6 @@ export class JobOffer {
     isNew = "";
     url = "";
     isSaved = false;
-    state = "";
+    state: boolean = false;
+    isFavorite: boolean = false;
 }
