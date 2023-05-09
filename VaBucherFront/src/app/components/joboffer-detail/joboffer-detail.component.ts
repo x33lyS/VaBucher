@@ -29,7 +29,6 @@ export class JobofferDetailComponent {
     if (this.currentUser) {
       this.access = true;
     }
-    console.log(this.selectedJoboffer);
 
   }
   saveJobOffer() {

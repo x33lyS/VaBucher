@@ -54,6 +54,7 @@ table {
   position: relative;
   .image {
     position: absolute;
+    pointer-events: none;
     left: 0;
     height: 60%;
   }

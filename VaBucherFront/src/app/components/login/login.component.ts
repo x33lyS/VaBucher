@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit {
         },
         error: (error) => {
           this.toastr.error("Erreur lors de la connexion " +  ", " + error.error);
-          console.log("Erreur lors du login : Status " + error.status + ", " + error.error);
         }
       });
     }

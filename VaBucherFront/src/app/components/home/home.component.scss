@@ -250,7 +250,6 @@
     }
     .offers-container {
       position: relative;
-      height: 75vh;
     .pagination-button-left,
     .pagination-button-right {
       position: absolute;
@@ -261,7 +260,7 @@
       cursor: pointer;
       color: #333;
       width: 50px;
-      height: 50px;
+      height: 100%;
       background-color: transparent;
       border: none;
       &:hover {
@@ -279,7 +278,7 @@
     .offers {
       margin: 0 auto;
       width: 90vw; /* utiliser une unité relative pour la largeur */
-      max-width: 1200px; /* utiliser une largeur maximale pour éviter l'élargissement excessif */
+      max-width: 1500px; /* utiliser une largeur maximale pour éviter l'élargissement excessif */
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* définir la disposition de la grille */
       justify-content: center;

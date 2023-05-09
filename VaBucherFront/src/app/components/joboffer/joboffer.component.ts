@@ -70,9 +70,7 @@ export class JobofferComponent implements OnInit {
 
     this.jobhistoryService.getJobOfferHistory().subscribe((res) => {
       res.map((jobOffer: any) => {
-        console.log(jobOffer.idOffer, 'idoffer', jobOffer.idUser,'iduser', this.currentUser.id, 'currentuser');
         const isFavorite = jobOffer.idUser === this.currentUser.id;
-        console.log({...jobOffer, isFavorite}, 'joboffer favorite')
         return {...jobOffer, isFavorite};
       });
     });
@@ -106,9 +104,7 @@ export class JobofferComponent implements OnInit {
             return jobOffer;
           }
         }); // Mettre à jour this.joboffers avec les offres d'emploi mises à jour
-        console.log(this.joboffers, 'sdvsvs')
         this.ids = this.joboffers.map((jobOffer) => jobOffer.id);
-        console.log(this.ids, 'ids');
       });
     });
   }

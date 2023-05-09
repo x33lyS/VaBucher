@@ -75,25 +75,27 @@ export class RegistrationComponent implements OnInit {
       user.lastname = this.registrationform.value.lastname;
       user.email = this.registrationform.value.email;
       user.password = this.registrationform.value.password;
-      if (user.location) {
-          user.location = this.registrationform.value.location;
-        }
-        if (user.domain) {
-          user.domain = this.registrationform.value.domain.join(',');
-        }
-        if (user.jobtype) {
-          user.jobtype = this.registrationform.value.jobtype.join(',');
-        }
-        if (user.cv) {
-          user.cv = this.registrationform.value.cv;
-        }
-        if (user.phone) {
-          user.phone = this.registrationform.value.phone;
-        }
-
+      if (this.registrationform.value.location) {
+        user.location = this.registrationform.value.location;
+      }
+      if (this.registrationform.value.domain) {
+        user.domain = this.registrationform.value.domain;
+      }
+      if (this.registrationform.value.jobtype && Array.isArray(this.registrationform.value.jobtype)) {
+        user.jobtype = this.registrationform.value.jobtype.join(',');
+      }
+      if (this.registrationform.value.cv) {
+        user.cv = this.registrationform.value.cv;
+      }
+      if (this.registrationform.value.phone) {
+        user.phone = this.registrationform.value.phone;
+      }
+      
       this.userService.createUser(user).subscribe(
         () => {
-          console.log("Utilisateur créé avec succès !", user);
+          console.log(user);
+          
+
           // Traitement en cas de réussite, par exemple en redirigeant l'utilisateur vers une autre page
           this.authentService.login(user).subscribe({
             next: (result) => {

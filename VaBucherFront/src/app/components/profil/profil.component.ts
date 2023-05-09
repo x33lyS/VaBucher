@@ -141,10 +141,8 @@ updateCurrentUserPassword() {
   }
 
   updateJobOfferAndSetIsSavedFalse(joboffer: JobOffer) {
-    joboffer.isSaved = false;
     this.jobofferService.updateJobOffer(joboffer).subscribe(
       updatedJobOfferList => {
-        console.log('Job offer updated successfully:',updatedJobOfferList);
 
       },
       error => {

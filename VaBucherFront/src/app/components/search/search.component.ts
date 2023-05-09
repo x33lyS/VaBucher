@@ -58,15 +58,10 @@ export class SearchComponent {
   ngOnInit(): void {
     this.jobofferService.pages$.subscribe((pages) => {
       this.pages = pages;
-      // console.log(pages)
-      // this.enableScrapButton = this.pages.length <= 1;
       });
 
     this.jobofferService.currentPage$.subscribe((currentPage) => {
       this.cPage = currentPage
-      // this.enableScrapButton = (this.pages.length - 1) === this.cPage;
-      // console.log(this.cPage)
-      // console.log(this.pages.length)
     })
 
     combineLatest([
@@ -81,7 +76,6 @@ export class SearchComponent {
     this.searchService.offersToDisplay$.subscribe((offers) => {
       if (offers !== null)
       if (offers.length < 6) {
-        console.log(offers.length);
         
         this.enableScrapButton = true;
       }
@@ -128,7 +122,8 @@ export class SearchComponent {
         this.filterOptions();
       } else {
         if (this.currentUser) {
-          if (this.currentUser.domain) {
+          console.log(this.currentUser);
+          if (this.currentUser.domain) {            
             this.domainFilter = this.currentUser.domain;
           }
           if (this.currentUser.location) {
