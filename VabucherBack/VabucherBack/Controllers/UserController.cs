@@ -36,6 +36,7 @@ namespace VaBucherBack.Controllers
             {
                 return BadRequest("Un utilisateur avec cet e-mail existe déjà.");
             }
+            Console.WriteLine(user);
 
             var salt = BCrypt.Net.BCrypt.GenerateSalt();
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
