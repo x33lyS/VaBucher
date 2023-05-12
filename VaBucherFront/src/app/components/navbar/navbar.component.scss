@@ -3,7 +3,7 @@
   flex-wrap: inherit;
   align-items: center;
   justify-content: space-between;
-  padding: 0 15% 0;
+  padding: 0 30px 0 30px;
   background: transparent;
 }
 
@@ -12,20 +12,14 @@ ul li {
   font-size: var(--p-font-size);
   font-weight: var(--font-weight-light);
   background: transparent;
-
-}
-
-a {
-  touch-action: manipulation;
-  transition: all .3s;
-
 }
 
 a {
   display: inline-block;
   color: var(--primary-color);
   text-decoration: none;
-
+  touch-action: manipulation;
+  transition: all .3s;
 }
 
 a:hover {
@@ -48,7 +42,6 @@ a:hover {
 
 .custom-btn:hover {
   background: var(--custom-btn-bg-hover-color);
-
   color: var(--white-color)
 }
 
@@ -63,29 +56,32 @@ a:hover {
   width: 100%;
   background: 0 0;
   background: transparent;
-
   z-index: 9;
 }
 
 .navbar-inverse {
-  background: #000;
+  //background: #000;
+  backdrop-filter: blur(20px);
 }
 
 .navbar-brand,
 .navbar-brand:hover {
-  color: var(--white-color);
-  font-size: var(--h5-font-size);
+  color: var(--primary-color);
+  font-size: clamp(1rem, 5vw, 1rem);
   background: transparent;
   font-weight: var(--font-weight-bold)
 }
 
-
+.mat-mdc-icon-button.mat-mdc-button-base{
+  color: black ;
+}
 .navbar-expand-lg .navbar-nav .nav-item {
   border-radius: var(--border-radius-large);
-  margin: 10px;
+  margin: 5px;
   background: transparent;
-
-  padding: 5px 20px
+  padding: 5px 20px 5px 2px;
+  color: black;
+  font-size: clamp(1rem, 5vw, 1rem);
 }
 
 .navbar-nav .nav-item {
@@ -96,26 +92,28 @@ a:hover {
   position: relative;
   padding-top: 15px;
   background: transparent;
-
   padding-bottom: 15px
 }
 
-.navbar-nav .nav-item:hover {
-  background: transparent;
+.navbar-nav{
+  display: flex;
+  align-items: center;
+}
 
-  color: var(--secondary-color)
+.item{
+  display: flex !important;
+  align-items: center !important;
+  &:hover{
+    text-decoration: underline !important;
+  }
 }
 
 @media screen and (max-width:991px) {
   .navbar {
-    background-color: var(--primary-color);
+    //background-color: var(--primary-color);
+    backdrop-filter: blur(20px);
 
   }
-
-  .navbar-expand-lg .navbar-nav {
-    padding-bottom: 30px
-  }
-
   .navbar-expand-lg .navbar-nav .nav-item {
     padding: 0
   }

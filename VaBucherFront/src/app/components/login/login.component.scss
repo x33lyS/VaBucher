@@ -10,7 +10,6 @@
         display: flex;
         background: #fff;
         border-radius: 15px;
-        background-color: #fff;
         box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.07);
         .image {
           width: 50%;
@@ -19,7 +18,7 @@
           border-top-left-radius: 15px;
           border-bottom-left-radius: 15px;
         }
-    }   
+    }
     img {
       padding: 30px 0;
         width: 90%;
@@ -51,5 +50,37 @@
       button:hover{
         background-color: #767599;
       }
-    }    
+    }
+}
+
+.redirect{
+    margin-top: 20px;
+    text-align: center;
+    span {
+      font-weight: bolder;
+      color: #4E4D66;
+      text-decoration: underline;
+    }
+}
+
+//small device
+@media screen and (max-width: 850px) {
+    .signin {
+        .form {
+            width: 90vw;
+            .image {
+                display: none;
+            }
+        }
+        ._form {
+            width: 100%;
+            margin: 20px;
+            input {
+                width: 80%;
+            }
+            button {
+                width: 80%;
+            }
+        }
+    }
 }

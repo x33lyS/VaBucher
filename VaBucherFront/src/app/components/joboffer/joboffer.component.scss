@@ -12,27 +12,24 @@
   border: $bor;
   color: $col;
 }
+
 table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
-
   th {
     text-align: left;
     background: #f5f5f5;
     padding: 10px;
     border-bottom: 1px solid #e5e5e5;
   }
-
   td {
     padding: 10px;
     border-bottom: 1px solid #e5e5e5;
   }
-
   tr:nth-child(even) {
     background: #f9f9f9;
   }
-
   .highlight {
     background: #ffc107;
   }
@@ -41,47 +38,40 @@ table {
 .pagination {
   display: flex;
   justify-content: center;
-
   span {
     font-size: 24px;
     margin: 0 10px;
     cursor: pointer;
-
     &.active {
       color: #ED6A5A;
     }
   }
 }
 
-
 .recent-offers {
   background: var(--section-bg-color);
   min-height: 85vh;
   position: relative;
-
   .image {
     position: absolute;
+    pointer-events: none;
     left: 0;
     height: 60%;
   }
-
   .offer-title {
     h5 {
       text-transform: uppercase;
       text-align: center;
       padding: 30px 0;
     }
-
     h5.padding-bottom {
       padding-bottom: 10px;
     }
-
     p {
       text-align: center;
       padding: 0 0 30px;
     }
   }
-
   .pagination-button-left,
   .pagination-button-right {
     position: absolute;
@@ -95,41 +85,38 @@ table {
     height: 50px;
     background-color: transparent;
     border: none;
-
-
     &:hover {
       color: #000;
     }
   }
-
   .pagination-button-left {
     left: 1%;
+    height: 100%;
   }
-
   .pagination-button-right {
     right: 2%;
+    height: 100%;
   }
-
   .offers {
     margin: 0 auto;
     width: 90vw;
     display: flex;
-    height: 37vh;
-
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: space-between;
     .box {
       margin: 10px;
       border-radius: 12px;
-
+      width: calc((90vw - 40px) / 3);
       h6,
       p {
+        text-align: left;
         color: #fff;
         padding: 25px 15px 10px 20px;
       }
-
       p {
         padding: 0 15px 15px 15px;
       }
-
       button {
         border: 1px solid white;
         color: white;
@@ -138,37 +125,60 @@ table {
         padding: 5px 10px;
         margin: 5px 0 10px 15px;
       }
-
       background: var(--primary-color);
       padding-left: 0.25rem;
       padding-right: 0.25rem;
+      min-height: 400px;
     }
   }
-
   #box-2,
   #box-3 {
     flex: 0 0 30%;
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .offers {
+    width: auto !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .box {
+    width: auto !important;
+  }
+  .recent-offers{
+    img{
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .offers {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .job-offers {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 150px;
   height: 100%;
-
   .no-offers {
     display: flex;
     flex-direction: column;
     align-items: center;
-
     h6 {
       font-size: 1.5rem;
       font-weight: bold;
       margin: 0;
       margin-top: 1rem;
     }
-
     .button-start {
       position: relative;
       width: 250px;
@@ -180,7 +190,6 @@ table {
       transition: 0.5s;
       letter-spacing: 1px;
       border-radius: 10px;
-
       button {
         width: 101%;
         height: 100%;
@@ -190,7 +199,6 @@ table {
         font-size: 20px;
         color: #fff;
         border-radius: 10px;
-
         @include button(#ED6A5A, "https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png",
           3000%,
           100%,
@@ -199,15 +207,12 @@ table {
         cursor: pointer;
         -webkit-animation: ani2 0.7s steps(22) forwards;
         animation: ani2 0.7s steps(22) forwards;
-
         &:hover {
          -webkit-animation: ani 0.7s steps(22) forwards;
          animation: ani 0.7s steps(22) forwards;
         }
       }
     }
-
-
     .mas {
       position: absolute;
       color: #ED6A5A;
@@ -219,55 +224,72 @@ table {
       margin-top: 12px;
       overflow: hidden;
       font-weight: bold;
-
     }
-
     @-webkit-keyframes ani {
       from {
         -webkit-mask-position: 0 0;
         mask-position: 0 0;
       }
-
       to {
         -webkit-mask-position: 100% 0;
         mask-position: 100% 0;
       }
     }
-
     @keyframes ani {
       from {
         -webkit-mask-position: 0 0;
         mask-position: 0 0;
       }
-
       to {
         -webkit-mask-position: 100% 0;
         mask-position: 100% 0;
       }
     }
-
     @-webkit-keyframes ani2 {
       from {
         -webkit-mask-position: 100% 0;
         mask-position: 100% 0;
       }
-
       to {
         -webkit-mask-position: 0 0;
         mask-position: 0 0;
       }
     }
-
     @keyframes ani2 {
       from {
         -webkit-mask-position: 100% 0;
         mask-position: 100% 0;
       }
-
       to {
         -webkit-mask-position: 0 0;
         mask-position: 0 0;
       }
     }
+  }
+}
+
+.compare-button {
+  z-index: 1;
+  background: #ED6A5A;
+  position: fixed;
+  bottom: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.favoris{
+  border: none !important;
+}
+
+.voir-plus{
+  a{
+    color: white;
+  }
+  &:hover{
+    a{
+      color: #ED6A5A;
+    }
+    background: white !important;
+    color: #E94A35 !important;
   }
 }

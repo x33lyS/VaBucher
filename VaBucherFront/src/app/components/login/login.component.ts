@@ -5,6 +5,7 @@ import { AuthenticationService } from "../../services/authentication.service";
 import { Router } from '@angular/router';
 import { CurrentUser } from 'src/app/models/currentuser';
 import { UserService } from 'src/app/services/user.service';
+import {Toast, ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
       staySignedIn: [false]
     });
 
-  constructor(private authentService: AuthenticationService, private _formBuilder: FormBuilder, private router: Router, private userService: UserService) {
+  constructor(private authentService: AuthenticationService, private _formBuilder: FormBuilder, private router: Router, private userService: UserService,
+              private toastr: ToastrService ) {
   }
 
   ngOnInit(): void {
@@ -51,11 +53,12 @@ export class LoginComponent implements OnInit {
             sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
           }
           this.router.navigate(['/dashboard']);
+          this.toastr.success("Connexion réussie");
 
           // il faut protéger la route home aves un guard dans le futur pour ne pas pouvoir y accéder sans être connecté
         },
         error: (error) => {
-          console.log("Erreur lors du login : Status " + error.status + ", " + error.error);
+          this.toastr.error("Erreur lors de la connexion " +  ", " + error.error);
         }
       });
     }

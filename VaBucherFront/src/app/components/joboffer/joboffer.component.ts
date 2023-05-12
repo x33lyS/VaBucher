@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { JobOffer } from 'src/app/models/joboffer';
-import { EventEmitter, Input, Output } from '@angular/core';
-import { interval, timer } from 'rxjs';
-import { JobofferService } from 'src/app/services/joboffer.service';
-import { FilterPipe } from 'src/app/filter.pipe';
-import { ApiDataService } from "../../services/api-data.service";
-import { CurrentUser } from 'src/app/models/currentuser';
-import { JobtypeService } from 'src/app/services/jobtype.service';
-import { JobType } from 'src/app/models/jobtype';
-import { SearchService } from 'src/app/services/search.service';
-import { Search } from 'src/app/models/search';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {JobOffer} from 'src/app/models/joboffer';
+import {interval, timer} from 'rxjs';
+import {JobofferService} from 'src/app/services/joboffer.service';
+import {FilterPipe} from 'src/app/filter.pipe';
+import {ApiDataService} from "../../services/api-data.service";
+import {CurrentUser} from 'src/app/models/currentuser';
+import {JobtypeService} from 'src/app/services/jobtype.service';
+import {JobType} from 'src/app/models/jobtype';
+import {SearchService} from 'src/app/services/search.service';
+import {Search} from 'src/app/models/search';
+import {Router} from '@angular/router';
 import {JobhistoryService} from "../../services/jobhistory.service";
-
+import {AuthenticationService} from "../../services/authentication.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -22,7 +22,6 @@ import {JobhistoryService} from "../../services/jobhistory.service";
   providers: [FilterPipe]
 })
 export class JobofferComponent implements OnInit {
-
   joboffers: JobOffer[] = [];
   domainFilter!: string;
   locationFilter!: string;
@@ -40,12 +39,19 @@ export class JobofferComponent implements OnInit {
   searches!: Search[];
   selectedJobOffer: JobOffer | null = null;
   showLoader: boolean = true;
-
+  apiOffers: any[] = [];
+  jobOffersWithIcons: boolean = false;
+  ids: any;
 
   constructor(private router: Router,public jobofferService: JobofferService, private jobtypeService: JobtypeService, private searchService: SearchService,
-              private dataService: ApiDataService, private filter: FilterPipe, private jobhistory: JobhistoryService) { }
+              private dataService: ApiDataService, private filter: FilterPipe, private authentificationService: AuthenticationService,
+              private jobhistoryService: JobhistoryService,  private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.jobofferService.setPages(this.pages);
+    this.authentificationService.currentUser$.subscribe((currentUser) => {
+      this.currentUser = currentUser || this.authentificationService.getCurrentUser();
+    });
     this.getOffers();
     timer(1000).subscribe(() => {
       this.showLoader = false;
@@ -55,29 +61,20 @@ export class JobofferComponent implements OnInit {
       .subscribe((result: JobOffer[]) => (this.joboffers = result)));
     this.dataService.currentData.subscribe(data => {
       this.data = data;
+      this.apiOffers = this.data;
     });
     this.jobtypeService
       .getJobType()
       .subscribe((result: JobType[]) => (this.jobtypes = result));
     this.searchService.getSearch().subscribe((result: Search[]) => (this.searches = result));
-  }
 
-  saveHistory(joboffer: JobOffer) {
-    // @ts-ignore
-    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    const currentUserId = currentUser.id;
-    const currentJobOfferId = joboffer.id;
-    console.log('Creating job history for user', currentUserId, 'and job offer', currentJobOfferId);
-    this.jobhistory.createJobOfferHistory(currentJobOfferId, currentUserId).subscribe(
-      jobHistoryList => {
-        console.log('Job history created successfully:', jobHistoryList);
-      },
-      error => {
-        console.error('Error creating job history:', error);
-      }
-    );
+    this.jobhistoryService.getJobOfferHistory().subscribe((res) => {
+      res.map((jobOffer: any) => {
+        const isFavorite = jobOffer.idUser === this.currentUser.id;
+        return {...jobOffer, isFavorite};
+      });
+    });
   }
-
 
   public closeJobOfferDetails() {
     this.selectedJobOffer = null;
@@ -96,22 +93,40 @@ export class JobofferComponent implements OnInit {
 
   getOffers() {
     this.jobofferService.getJobOffer().subscribe((result: JobOffer[]) => {
-      this.joboffers = result
+      this.joboffers = result;
+      // Obtenir l'historique des offres d'emploi
+      this.jobhistoryService.getJobOfferHistory().subscribe((res) => {
+        this.joboffers = this.joboffers.map((jobOffer) => {
+          const index = res.findIndex((jobOfferHistory: any) => jobOffer.id === jobOfferHistory.idOffer && jobOfferHistory.idUser === this.currentUser.id);
+          if (index !== -1) {
+            return {...jobOffer, isFavorite: true};
+          } else {
+            return jobOffer;
+          }
+        }); // Mettre à jour this.joboffers avec les offres d'emploi mises à jour
+        this.ids = this.joboffers.map((jobOffer) => jobOffer.id);
+      });
     });
-
   }
+
 
   get joboffersToDisplay(): JobOffer[] {
     let filteredJoboffers = this.joboffers;
     filteredJoboffers = this.filter.transform(filteredJoboffers, this.domainFilter, this.locationFilter, this.jobtypefilter);
     this.setNumberPage(filteredJoboffers);
-    return filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+    this.jobofferService.getOffersAfterSearch(filteredJoboffers)
+    const newPages = filteredJoboffers.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+    this.jobofferService.setPages(this.pages)
+    this.searchService.updateOfferToDisplay(newPages)
+    return newPages
   }
 
   setPage(page: number) {
     this.currentPage = page;
     this.page = page;
+    this.jobofferService.setCurrentPage(this.currentPage)
   }
+
   showDetails(joboffer: JobOffer) {
     this.selectedJobOffer = joboffer;
   }
@@ -122,20 +137,17 @@ export class JobofferComponent implements OnInit {
     this.jobtypefilter = filters.jobtype;
     this.page = 1;
     this.currentPage = 1
+    this.jobofferService.setCurrentPage(this.currentPage)
   }
 
   searchNewOffer() {
     const randomDomain = this.searches[Math.floor(Math.random() * this.searches.length)];
-
     this.searchService.setCreatednewrandom({ domain: randomDomain });
-
     this.updateFilters({
       domain: randomDomain.filter,
       location: "",
       jobtype: ""
     });
   }
-
-
 }
 

@@ -40,6 +40,19 @@ namespace VabucherBack.Controllers
         {
             return Ok(await _context.JobOffers.ToListAsync());
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<JobOffer>> GetJobOfferById(int id)
+        {
+            var jobOffer = await _context.JobOffers.FindAsync(id);
+
+            if (jobOffer == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(jobOffer);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<List<JobOffer>>> CreateJobOffer(JobOffer jobOffer)
@@ -78,7 +91,7 @@ namespace VabucherBack.Controllers
                             try
                             {
                                 await Task.Delay(1000);
-                                nextLink = driver.FindElement(By.ClassName("job-cardstyle__JobCardComponent-sc-1mbmxes-0"));
+                                nextLink = driver.FindElement(By.ClassName("job-search-resultsstyle__JobCardWrapNew-sc-1wpt60k-6"));
                                 exist = nextLink.Text;
 
                             }
@@ -96,11 +109,11 @@ namespace VabucherBack.Controllers
                         }
                         if (exist != "")
                         {
-                            while (i <= driver.FindElements(By.ClassName("job-cardstyle__JobCardComponent-sc-1mbmxes-0")).Count())
+                            while (i <= driver.FindElements(By.ClassName("job-search-resultsstyle__JobCardWrapNew-sc-1wpt60k-6")).Count())
                             {
 
 
-                                nextLink = driver.FindElements(By.ClassName("job-cardstyle__JobCardComponent-sc-1mbmxes-0")).ElementAt(i);
+                                nextLink = driver.FindElements(By.ClassName("job-search-resultsstyle__JobCardWrapNew-sc-1wpt60k-6")).ElementAt(i);
 
                                 var originalHandles = driver.WindowHandles;
                                 nextLink.Click();
@@ -138,7 +151,7 @@ namespace VabucherBack.Controllers
                                 //Salary
                                 try
                                 {
-                                    var salaryElement = driver.FindElement(By.XPath("//span[@data-testid='svx_salaryComponent_body']"));
+                                    var salaryElement = driver.FindElement(By.XPath("//div[@data-testid='svx_jobview-salary']"));
                                     offer.Salaire = salaryElement.Text;
                                 }
                                 catch
@@ -168,7 +181,7 @@ namespace VabucherBack.Controllers
                                 //IsNew
                                 try
                                 {
-                                    var isNewElement = driver.FindElement(By.XPath("//div[@data-test-id='svx-jobview-posted']"));
+                                    var isNewElement = driver.FindElement(By.XPath("//div[@data-test-id='svx-jobview-posted-or-website-div']"));
                                     string pattern = @"\d+";
                                     Match match = Regex.Match(isNewElement.Text, pattern);
                                     if (match.Success)

@@ -1,0 +1,25 @@
+@media screen and (max-width: 1600px) {
+    .form {
+        width: 70vw!important;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .form {
+        width: 90vw!important;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .form {
+        width: 95vw!important;
+        display: block!important;
+        .user-form {
+            border-radius: 15px!important;
+            width: 100%!important;
+        }
+        h3 {
+            padding-top: 30px!important;
+        }
+    }
+}

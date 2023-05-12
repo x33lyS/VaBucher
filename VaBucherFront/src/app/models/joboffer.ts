@@ -9,4 +9,7 @@ export class JobOffer {
     domain = "";
     isNew = "";
     url = "";
+    isSaved = false;
+    state: boolean = false;
+    isFavorite: boolean = false;
 }

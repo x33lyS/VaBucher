@@ -3,6 +3,9 @@ import { CurrentUser } from 'src/app/models/currentuser';
 import { JobOffer } from 'src/app/models/joboffer';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { JobofferService } from 'src/app/services/joboffer.service';
+import { Router } from "@angular/router";
+import { JobhistoryService } from 'src/app/services/jobhistory.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -21,14 +24,21 @@ export class HomeComponent implements OnInit {
   currentUser: CurrentUser | null = null;
 
 
-  constructor(private jobofferService: JobofferService, private authentificationService: AuthenticationService) { }
+  constructor(public jobofferService: JobofferService, private authentificationService: AuthenticationService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     // this.getOffers();
-      this.getOffers();
+    this.getOffers();
+    this.authentificationService.currentUser$.subscribe((currentUser) => {
+      this.currentUser = currentUser || this.authentificationService.getCurrentUser();
+      // Si currentUser est null, on appelle getCurrentUser() pour chercher l'utilisateur dans le sessionStorage
+    });
   }
 
-
+  openSavedJobOffers() {
+    const savedJobOffers = this.jobofferService.getSavedJobOffers();
+    this.router.navigate(['/compare'], { state: { savedJobOffers } });
+  }
   showDetails(joboffer: JobOffer) {
     this.selectedJobOffer = joboffer;
   }
@@ -118,6 +128,8 @@ export class HomeComponent implements OnInit {
     }
     return this.joboffers
   }
+
+
 }
 
 

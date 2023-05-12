@@ -7,7 +7,7 @@ import {
   AdminPanelComponent,
   DialogAddSearch,
   DialogAddJobType,
-  DialogContentExampleDialog, DialogUpdateJobOffer, DialogUpdateSearch, DialogUpdateJobType
+  DialogContentExampleDialog, DialogUpdateJobOffer, DialogUpdateSearch, DialogUpdateJobType, DialogUpdateUser
 } from './components/admin-panel/admin-panel.component';
 import { FormsModule } from '@angular/forms';
 import { JobofferComponent } from './components/joboffer/joboffer.component';
@@ -36,6 +36,12 @@ import { JobofferDetailComponent } from './components/joboffer-detail/joboffer-d
 import { MatDialogModule } from '@angular/material/dialog';
 import { FirstUppercasePipe } from './first-uppercase.pipe';
 import { JobofferCompareComponent } from './components/joboffer-compare/joboffer-compare.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatTabsModule} from "@angular/material/tabs";
+import { ApiComponent } from './components/api/api.component';
+import {MatChipsModule} from "@angular/material/chips";
+import {MatMenuModule} from "@angular/material/menu"; // <--- Ajout de MatSnackBarModule
 
 
 @NgModule({
@@ -62,25 +68,32 @@ import { JobofferCompareComponent } from './components/joboffer-compare/joboffer
     DialogUpdateJobType,
     FirstUppercasePipe,
     JobofferCompareComponent,
+    ApiComponent,
+    DialogUpdateUser
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    MatIconModule,
-    FormsModule,
-    MatCheckboxModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    AppRoutingModule,
-    MatAutocompleteModule,
-    RouterModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    MatDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        MatIconModule,
+        FormsModule,
+        MatCheckboxModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        AppRoutingModule,
+        MatAutocompleteModule,
+        RouterModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(),
+        MatDialogModule,
+        MatTooltipModule,
+        MatSnackBarModule,
+        MatTabsModule,
+        MatChipsModule,
+        MatMenuModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

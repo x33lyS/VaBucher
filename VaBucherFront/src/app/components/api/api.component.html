@@ -1,0 +1,55 @@
+<ng-container *ngIf="!ApiResult">
+  <div class="box">
+    <div class="number-result">
+      <p>{{apiData.length}} annonces trouvés</p>
+    </div>
+    <div class="container" *ngFor="let api of apiData">
+      <div class="content">
+        <div class="header">
+          <div class="title">
+            <p>{{api.entreprise.nom}}</p>
+            <h1>{{api.intitule | uppercase}}</h1>
+          </div>
+          <div class="api-item__logo" *ngIf="api.entreprise?.logo">
+            <img src="{{api.entreprise.logo}}" alt="">
+          </div>
+        </div>
+        <div class="domain">
+          <mat-chip-listbox>
+            <mat-chip *ngFor="let domain of api.formations">
+              Domaine: {{domain.domaineLibelle | uppercase}}
+            </mat-chip>
+          </mat-chip-listbox>
+        </div>
+        <div class="salary" *ngIf="api.salaire?.libelle || api.salaire.commentaire">
+          <mat-chip-listbox>
+            <mat-chip>
+              Salaire: {{api.salaire.libelle | uppercase}} {{api.salaire.commentaire | uppercase}}
+            </mat-chip>
+          </mat-chip-listbox>
+        </div>
+
+        <div class="type">
+          <mat-chip-listbox>
+            <mat-chip>
+              Type: {{api.typeContrat | uppercase}} ({{api.typeContratLibelle | uppercase}})
+            </mat-chip>
+            <mat-chip>
+              Lieu: {{api.lieuTravail.libelle | uppercase}}
+            </mat-chip>
+          </mat-chip-listbox>
+        </div>
+        <div class="description">
+          {{api.description}}
+        </div>
+        <div class="postuler" >
+          <a *ngIf="api.contact.urlPostulation" href="{{api.contact.urlPostulation}}" target="_blank">Postuler</a>
+          <a *ngIf="api.origineOffre.urlOrigine && !api.contact.urlPostulation" href="{{api.origineOffre.urlOrigine}}" target="_blank">Postuler</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+
+

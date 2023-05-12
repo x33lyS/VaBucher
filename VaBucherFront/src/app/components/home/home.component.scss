@@ -1,10 +1,3 @@
-.signin {
-  margin: 150px auto;
-  width: 30vw;
-  height: 150px;
-  background-color: red;
-}
-
 @mixin button($bcolor,
   $url,
   $x1,
@@ -40,7 +33,7 @@
       position: absolute;
       top: 12vh;
       right: 0;
-      height: 80vh;
+      max-width: 60%;
     }
 
     .start {
@@ -257,7 +250,6 @@
     }
     .offers-container {
       position: relative;
-      min-height: 62vh;
     .pagination-button-left,
     .pagination-button-right {
       position: absolute;
@@ -268,29 +260,28 @@
       cursor: pointer;
       color: #333;
       width: 50px;
-      height: 50px;
+      height: 100%;
       background-color: transparent;
       border: none;
-      cursor: pointer;
-
-
       &:hover {
         color: #000;
       }
     }
     .pagination-button-left {
-      left: 10%;
+      left: 0;
     }
     .pagination-button-right {
-      left: 90%;
+      right: 0;
     }
   }
 
     .offers {
       margin: 0 auto;
-      width: 70vw;
-      display: flex;
-
+      width: 90vw; /* utiliser une unité relative pour la largeur */
+      max-width: 1500px; /* utiliser une largeur maximale pour éviter l'élargissement excessif */
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* définir la disposition de la grille */
+      justify-content: center;
       .box {
         margin: 10px;
         border-radius: 12px;
@@ -324,5 +315,35 @@
     #box-3 {
       flex: 0 0 40%;
     }
+  }
+}
+.compare-button{
+  background: #ED6A5A;
+  position: fixed;
+  bottom: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+@media screen and (max-width: 900px) {
+  .about {
+    .image {
+      img{
+        display: none;
+      }
+    }
+  }
+}
+@media screen and (max-width: 700px) {
+  .image{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .about {
+    padding: 10px !important;
+
   }
 }

@@ -1,0 +1,94 @@
+.container{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 6% 5%;
+  .offers{
+    // border: 1px solid #b2b2b2;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    margin: 5px;
+    padding: 20px 20px 0 20px;
+    flex-basis: 49%;
+    justify-content: space-between;
+    .companyInfo {
+      font-size: 20px;
+      // font-weight: 600;
+      color: var(--primary-color);
+    }
+    .header{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0px;
+      h2{
+        font-size: 1.7em;
+        font-weight: 600;
+        color: #353535;
+      }
+      button{
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        padding: 7px 9px;
+        border-radius: 50%;
+        transition: all 0.2s ease-in-out;
+        &:hover{
+          background: #E94A35;
+          color: white;
+        }
+      }
+
+    }
+    .content{
+      height: 50%;
+      .content-type{
+        margin: 20px 0;
+        gap: 20px;
+        height: 100%;
+        .vue-compare{
+          transition: all 0.2s ease;
+        }
+        p {
+          display: flex;
+          padding: 13px 5px;
+          margin-top: 5px;
+          width: 100%;
+          border-bottom: 1px solid lightgrey;
+          span{
+            font-weight: lighter;
+          }
+        }
+      }
+      p{
+        color: black;
+        font-weight: bolder;
+      }
+    }
+  }
+  .add-offer {
+    margin: 3px;
+    padding: 20px 20px 0 20px;
+    flex-basis: 49%;
+    text-align: center;
+    padding-top: 10%;
+    button {
+      padding: 20px 30px;
+      border-radius: 5px;
+      color: var(--primary-color);
+      font-weight: 600;
+      font-size: 20px;
+      background: none;
+      border: 1px solid var(--primary-color);
+      &:hover {
+        background: var(--primary-color);
+        color: #fff;
+      }
+    }
+  }
+}
+.hovered{
+  transform: scale(1.04);
+  background: #4E4D66;
+  color: white !important;
+  border-radius: 5px ;
+  padding: 30px;
+}

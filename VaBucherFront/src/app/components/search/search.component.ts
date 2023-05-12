@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { interval, take } from 'rxjs';
+import {combineLatest, interval, take} from 'rxjs';
 import { JobOffer } from 'src/app/models/joboffer';
 import { Search } from 'src/app/models/search';
 import { JobType } from 'src/app/models/jobtype';
@@ -10,6 +10,9 @@ import { SearchService } from 'src/app/services/search.service';
 import { JobtypeService } from 'src/app/services/jobtype.service';
 import { CurrentUser } from 'src/app/models/currentuser';
 import { JobofferComponent } from '../joboffer/joboffer.component';
+import {ToastrService} from "ngx-toastr";
+import {FormBuilder} from "@angular/forms";
+import {AuthenticationService} from "../../services/authentication.service";
 
 
 
@@ -19,48 +22,85 @@ import { JobofferComponent } from '../joboffer/joboffer.component';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent {
-  domainFilter!: string;
+  domainFilter!: any;
   locationFilter!: string;
-  jobtypefilter!: string;
-  apiData: any[] = [];
+  jobtypefilter!: any;
   searches: Search[] = [];
-  selectedJobTypes: any[] = [];
+  selectedJobTypes: [] = [];
   filteredSearches: any[] = [];
   currentUser!: CurrentUser;
   currentUserData: string | null | undefined
   jobtypes: JobType[] = [];
   joboffers: JobOffer[] = [];
-
-
+  enableScrapButton: boolean = false;
+  searchResult: any[] = [];
+  pages: any;
+  cPage: any;
 
   @Output() jobOffersUpdated = new EventEmitter<JobOffer[]>();
   @Output() filtersChanged = new EventEmitter<{ domain: string, location: string, jobtype: string }>();
-  private token = 'qQXLAMeZBi0kgujYwkbGCuX4t_w';
   @Input() jobofferComponent!: JobofferComponent;
 
   constructor(private jobofferService: JobofferService,
     private http: HttpClient,
     private dataService: ApiDataService,
     private searchService: SearchService,
-    private jobtypeService: JobtypeService) { }
+    private jobtypeService: JobtypeService,
+              private jobOffer: JobofferComponent,
+              private toastr: ToastrService,
+              private _formBuilder: FormBuilder,
+              private userAuthenticate: AuthenticationService) { }
 
+  userParameter = this._formBuilder.group({
+    userpreference: false,
+  })
 
   ngOnInit(): void {
-    this.currentUserData = localStorage.getItem('currentUser');
-    if (this.currentUserData) {
-      this.currentUser = JSON.parse(this.currentUserData);
-    }
+    this.jobofferService.pages$.subscribe((pages) => {
+      this.pages = pages;
+      });
+
+    this.jobofferService.currentPage$.subscribe((currentPage) => {
+      this.cPage = currentPage
+    })
+
+    combineLatest([
+      this.jobofferService.pages$,
+      this.jobofferService.currentPage$
+    ]).subscribe(([pages, currentPage]) => {
+      this.pages = pages;
+      this.cPage = currentPage;
+      this.enableScrapButton = this.pages.length === this.cPage;
+    });
+
+    this.searchService.offersToDisplay$.subscribe((offers) => {
+      if (offers !== null)
+      if (offers.length < 6) {
+        
+        this.enableScrapButton = true;
+      }
+    });
+
+    // this.enableScrapButton = !(this.pages && this.pages.length > 0 && this.pages[this.pages.length - 1] === this.cPage) || (this.pages && this.pages.length <= 1);
+
+    // this.currentUserData = localStorage.getItem('currentUser');
+    // if (this.currentUserData) {
+    //   this.currentUser = JSON.parse(this.currentUserData);
+    // }
+
+    this.userAuthenticate.currentUser$.subscribe((currentUser) => {
+      this.currentUser = currentUser || this.userAuthenticate.getCurrentUser();
+    });
+
     this.jobtypeService
       .getJobType()
       .subscribe((result: JobType[]) => (this.jobtypes = result));
     interval(5000).subscribe(() => this.searchService
       .getSearch()
       .subscribe((result: Search[]) => (this.searches = result)));
-
       this.searchService
       .getSearch()
       .subscribe((result: Search[]) => (this.searches = result));
-
     this.searchService.createnewrandom.subscribe(newrandom => {
       if (newrandom) {
         const { domain, jobType } = newrandom;
@@ -68,23 +108,53 @@ export class SearchComponent {
       }
     });
     this.ngAfterInitUserProfil();
+    this.dataService.filterPoleEmploiDomain$.subscribe( domainPoleEmploi => {
+      this.domainFilter = domainPoleEmploi;
+    })
   }
 
   ngAfterInitUserProfil() {
-    if (this.currentUser) {
-      if (this.currentUser.domain) {
-        this.domainFilter = this.currentUser.domain.split(',')[0];
+    this.userParameter.valueChanges.subscribe(value => {
+      if (value.userpreference === false ) {
+        this.domainFilter = '';
+        this.locationFilter = '';
+        this.jobtypefilter = '';
+        this.filterOptions();
+      } else {
+        if (this.currentUser) {
+          console.log(this.currentUser);
+          if (this.currentUser.domain) {            
+            this.domainFilter = this.currentUser.domain;
+          }
+          if (this.currentUser.location) {
+            this.locationFilter = this.currentUser.location;
+          }
+          if (this.currentUser.jobtype) {
+            this.jobtypefilter = this.currentUser.jobtype
+          }
+        }
+        this.filterOptions();
+      }
+    })
+  }
 
-      }
-      if (this.currentUser.location) {
-        this.locationFilter = this.currentUser.location;
-      }
-    }
-    this.filterOptions();
+  updatePoleEmploiDomain() {
+    this.dataService.setFilterPoleEmploiDomain(this.domainFilter);
+    this.jobofferService.setPages(this.pages)
+  }
+  updatePoleEmploiLocation() {
+    this.dataService.setFilterPoleEmploiLocation(this.locationFilter);
+    this.jobofferService.setPages(this.pages)
+  }
+  updatePoleEmploiJobType() {
+    this.dataService.setFilterPoleEmploiJobType(this.selectedJobTypes);
+    this.jobofferService.setPages(this.pages)
+  }
+  onOptionSelected() {
+    this.updatePoleEmploiDomain();
   }
 
   onSubmit() {
-    const apiUrl = `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?qualification=0&motsCles=${this.domainFilter}&commune=${this.locationFilter}&origineOffre=0`;
     const joboffer = new JobOffer();
     if (this.domainFilter) {
       joboffer.domain = this.domainFilter.charAt(0).toUpperCase() + this.domainFilter.slice(1);
@@ -97,24 +167,13 @@ export class SearchComponent {
     }
     this.jobofferService.createJobOffer(joboffer).subscribe((result: JobOffer[]) => this.jobOffersUpdated.emit(result));
     this.filterJobOffers();
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.token,
-    });
-    // @ts-ignore
-    this.http.get(`${apiUrl}`, { headers }).subscribe(({ resultats }) => {
-      resultats.forEach((item: any) => {
-        if (!this.apiData.find(x => x.id === item.id)) {
-          this.apiData.push(item);
-          this.dataService.updateData(this.apiData);
-        }
-      });
-    });
   }
 
   updateSelectedJobTypes(jobType: any) {
     this.selectedJobTypes = jobType
     this.jobtypefilter = this.selectedJobTypes.join(',');
     this.filterJobOffers();
+    this.updatePoleEmploiJobType();
   }
 
   filterOptions() {
@@ -127,8 +186,10 @@ export class SearchComponent {
       search.filter.toLowerCase().includes(lowerCaseFilter)
     );
     this.filterJobOffers()
+    this.updatePoleEmploiDomain()
   }
   filterJobOffers() {
     this.filtersChanged.emit({ domain: this.domainFilter, location: this.locationFilter, jobtype: this.jobtypefilter });
+    this.updatePoleEmploiLocation()
   }
 }

@@ -8,7 +8,7 @@
         <h3>Sign In</h3>
 
         <!-- <label class="form__label">Email Address</label> -->
-        <input type="text"formControlName="Email" name="Email" placeholder="Email"  required><br />
+        <input type="text" formControlName="Email" name="Email" placeholder="Email"  required><br />
         <small class="small" *ngIf="signInForm.get('Email')?.value.length <= 0">Email required</small>
         <mat-error *ngIf="signInForm.get('Email')?.hasError('Email') && !signInForm.get('Email')?.hasError('required')">
           Please enter a valid email address
@@ -24,8 +24,9 @@
         <mat-checkbox formControlName="staySignedIn">Stay signed in</mat-checkbox>
         <br />
 
-
         <button type="submit" [disabled]="!signInForm.valid">Sign in</button>
+        <p class="redirect">Pas de compte ? <span routerLink="/registration">Crée en un</span></p>
+
       </form>
     </div>
   </div>

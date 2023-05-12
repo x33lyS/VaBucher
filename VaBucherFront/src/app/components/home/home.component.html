@@ -17,9 +17,16 @@
   <div class="about" id="section_2">
     <div class="text">
       <h5>A PROPOS DE VABUCHER</h5>
-      <p>Va Bûcher est une plateforme de recherche d'alternance ou de stage exclusivement pour les étudiants, le but
-        étant de faciliter la recherche aux étudiants qui ont du mal à trouver une entreprise qui leur permettra de
-        continuer leurs études.</p>
+      <p>Bienvenue sur VaBucher, une plateforme dédiée aux étudiants à la recherche d'opportunités professionnelles.
+        </p>
+        <p>VaBucher propose un système de filtres qui permet aux étudiants de rechercher des emplois en fonction de leur domaine d'étude, de leur lieu de résidence et du type d'emploi recherché. Les utilisateurs peuvent affiner les résultats de leur recherche pour trouver des offres d'emploi qui correspondent exactement à leurs critères.
+        </p>
+        <br>
+        <p>En outre, VaBucher offre un système de compte permettant aux utilisateurs de sauvegarder des offres d'emploi en favoris et de configurer des filtres automatique correspondant à leurs critères de recherche. 
+          </p>
+          <br>
+          <p>
+        Avec le système de comparaison d'offres de VaBucher, les utilisateurs peuvent facilement comparer différentes offres d'emploi pour prendre une décision éclairée. Nous sommes convaincus que VaBucher aidera les étudiants à trouver l'emploi étudiant idéal pour eux.</p>
     </div>
     <div class="image">
       <img style="opacity: 0.7;" src="../assets/an_worker_in_orange_background_with_floating_object_digital_art.png">
@@ -35,8 +42,12 @@
       <button *ngIf="currentPage > 1" (click)="setPage(currentPage -1)" class="pagination-button-left">&lt;</button>
     <div class="offers">
       <div *ngFor="let i of [(currentPage * 4 - 3)-1, (currentPage * 4 - 2)-1]" class="box" id="box-{{i%2+1}}" (click)="showDetails(joboffers.slice(i, i+1)[0])">
+        <ng-container *ngIf="currentUser">
+          <button style="border: none;" matTooltip="Favoris" class="favoris" (click)="jobofferService.saveHistory(joboffers[i])"><mat-icon>{{ joboffers[i]?.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
+        </ng-container>
         <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.title as title">
           <h6>{{ title | firstUppercase }}</h6>
+        </ng-container>
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.salaire as salary">
             <button>Rémunération: {{ salary }}</button>
           </ng-container>
@@ -49,14 +60,17 @@
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.description as description">
             <p>{{ description.slice(0, description.slice(0, 350).lastIndexOf(' ')) + ' ...' }}</p>
           </ng-container>
-        </ng-container>
       </div>
 
     </div>
     <div class="offers">
       <div *ngFor="let i of [(currentPage * 4 - 1)-1, (currentPage * 4)-1]" class="box" id="box-{{i%2+3}}" (click)="showDetails(joboffers.slice(i, i+1)[0])">
+        <ng-container *ngIf="currentUser">
+          <button style="border: none;" matTooltip="Favoris" class="favoris" (click)="jobofferService.saveHistory(joboffers[i])"><mat-icon>{{ joboffers[i]?.isSaved ? 'star' : 'star_border' }}</mat-icon></button>
+        </ng-container>
         <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.title as title">
           <h6>{{ title | firstUppercase }}</h6>
+        </ng-container>
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.salaire as salary">
             <button>Rémunération: {{ salary }}</button>
           </ng-container>
@@ -69,7 +83,6 @@
           <ng-container *ngIf="joboffers.slice(i, i+1)[0]?.description as description">
             <p>{{ description.slice(0, description.slice(0, 350).lastIndexOf(' ')) + ' ...' }}</p>
           </ng-container>
-        </ng-container>
       </div>
 
     </div>
@@ -83,5 +96,8 @@
 
 </div>
 <app-joboffer-detail *ngIf="selectedJobOffer" [selectedJoboffer]="selectedJobOffer" (close)="closeJobOfferDetails()"></app-joboffer-detail>
+<ng-container *ngIf="currentUser" >
+  <button class="compare-button" mat-fab extended *ngIf="jobofferService.getSavedJobOffers().length > 0 " (click)="openSavedJobOffers()">{{jobofferService.getSavedJobOffers().length}} offres à comparer </button>
+</ng-container>
 
 

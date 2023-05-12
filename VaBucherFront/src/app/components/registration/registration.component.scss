@@ -1,81 +1,179 @@
-.container{
-  padding-top: 200px;
-}
-form {
-    width: 500px;
+.signup {
+  height: 120vh;
+  background-color: #f6f6f6;
+  .container {
+    padding-top: 70px;
+  }
+  .form {
     margin: 0 auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 20px;
-    label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      height: 36px;
-      padding: 6px 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-  .input-container{
-    display: block;
-    position: relative;
-    align-items: center;
-    margin-bottom: 15px;
-    input{
-      margin-bottom: 5px;
-    }
-    div{
-      width: 50%;
-      position: relative;
-      small, span {
-        color: red;
-        position: absolute;
-        //bottom: 0;
-        left: 0;
-        top: 100%;
-      }
-    }
-    span{
-      margin-top: 10px;
-    }
-    .validate-password{
-      padding: 50px;
-    }
-  }
-
-    p{
-      font-size: 12px;
-      margin-left: 5px;
-    }
-
-    button[type="submit"] {
-      width: 100%;
-      height: 36px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-
-      &:disabled {
-        background-color: #ccc;
-      }
-    }
-  }
-  span {
+    width: 50vw;
     display: flex;
-    align-items: center;
-  }
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.07);
+    .activeForm {
+      background-color: #fff!important;
+    }
+    //.compagny-form {
+    //  border-top-right-radius: 15px;
+    //  border-bottom-right-radius: 15px;
+    //}
+    //.switch-compagny-form {
+    //  width: 70%;
+    //  margin: 50% auto;
+    //  h3 {
+    //    color: #fff;
+    //  }
+    //  .switch-button {
+    //    background: #fff;
+    //    color: #4E4D66;
+    //  }
+    //}
+    .inactiveForm {
+      background-image: url("../../../assets/home.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+    .compagny-form {
+      border-top-right-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+    .switch-compagny-form {
 
-  .error-message{
-    width: 100%;
-    padding: 10px;
-    color: red;
+      width: 70%;
+      margin: 50% auto;
+      h3 {
+        color: #fff;
+      }
+      .switch-button {
+        background: #fff;
+        color: #4E4D66;
+      }
+    }
+    .user-form {
+      width: 100%;
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+      img {
+        padding: 30px 0;
+        width: 90%;
+        left: 0;
+      }
+    }
+    .compagny-form, .user-form {
+      background-color: #4E4D66;
+      width: 100%;
+      padding-bottom: 30px;
+      h3 {
+        margin-top: 50px;
+        text-align: center;
+      }
+      p {
+        text-align: center;
+        color: #000;
+      }
+      input {
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+        border: none;
+        margin-top: 15px;
+        background-color: #f1f1f1;
+      }
+      button {
+        padding: 13px 0;
+        color: #fff;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        background: #4E4D66;
+        margin-top: 30px;
+      }
+      button:hover{
+        background-color: #767599;
+      }
+      .input-container {
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        .form-name {
+          display: flex;
+          gap: 13px;
+          .form-container{
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+           .form-input {
+              width: 100%;
+            }
+            .form-error {
+              color: red;
+              display: block; /* Make the error message a block element */
+              margin-top: 2px; /* Add some margin to separate it from the input */
+            }
+          }
+        }
+      }
+    }
+    mat-select {
+      padding: 5px 10px;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+      margin-top: 15px;
+      background-color: #f1f1f1;
+      font-size: 13px;
+    }
   }
+}
+.redirect{
+  margin-top: 20px;
+  text-align: center;
+  span {
+    font-weight: bolder;
+    color: #4E4D66;
+    text-decoration: underline;
+  }
+}
+
+//small device
+@media screen and (max-width: 850px) {
+
+  .signup {
+    .form {
+      width: 90%;
+      .user-form {
+        width: 100%;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        img {
+          padding: 30px 0;
+          width: 90%;
+          left: 0;
+        }
+      }
+      .compagny-form {
+        width: 100%;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
+      .switch-compagny-form {
+        width: 100%;
+        margin: 50% auto;
+        h3 {
+          color: #fff;
+        }
+        .switch-button {
+          background: #fff;
+          color: #4E4D66;
+        }
+      }
+    }
+  }
+}

@@ -8,9 +8,8 @@
   <div class="offers mat-elevation-z5" *ngIf="filteredJobOffers.length > 0">
     <div class="head">
       <h1>Offers</h1>
-      <button class="add"><mat-icon>add</mat-icon></button>
     </div>
-    <table>
+    <table class="offer_table">
       <thead>
         <th>Title</th>
         <th>Description</th>
@@ -23,7 +22,7 @@
         <th></th>
       </thead>
       <tbody>
-        <tr *ngFor="let joboffer of filteredJobOffers.slice().reverse()" class="tr mat-elevation-z3">
+        <tr *ngFor="let joboffer of filteredJobOffers.slice().reverse()" class="tr mat-elevation-z3" [@deleteAnimation]="joboffer.state">
           <td>{{ joboffer.title }}</td>
           <td>{{ joboffer.description.slice(0, joboffer.description.slice(0, 500).lastIndexOf(' ')) + ' ...' }}</td>
           <td>{{ joboffer.salaire }}</td>
@@ -42,7 +41,6 @@
     <div class="users mat-elevation-z5" *ngIf="filteredUser.length > 0">
       <div class="head">
         <h1>users</h1>
-        <button class="add"><mat-icon>add</mat-icon></button>
       </div>
       <table>
         <thead>
@@ -56,7 +54,7 @@
           <th>CV</th>
           <th>Phone</th>
         </thead>
-        <tr *ngFor="let user of filteredUser" class="tr mat-elevation-z3">
+        <tr *ngFor="let user of filteredUser" class="tr mat-elevation-z3" [@deleteAnimation]="user.state">
           <td>{{user.firstname}}</td>
           <td>{{user.lastname}}</td>
           <td>{{user.email}}</td>
@@ -66,7 +64,8 @@
           <td>{{user.role}}</td>
           <td>{{user.cv}}</td>
           <td>{{user.phone}}</td>
-          <td><button class="delete" (click)="deleteUser(user)"><mat-icon>delete_forever</mat-icon></button></td>
+          <td><button *ngIf="canDeleteUser(user)" class="delete" (click)="deleteUser(user)"><mat-icon>delete_forever</mat-icon></button></td>
+          <td><button *ngIf="canDeleteUser(user)" class="delete" (click)="updateUser(user)"><mat-icon>create</mat-icon></button></td>
         </tr>
       </table>
     </div>
@@ -80,7 +79,7 @@
           <thead>
           <th>Filter</th>
           </thead>
-          <tr *ngFor="let search of filteredSearches" class="mat-elevation-z3">
+          <tr *ngFor="let search of filteredSearches" class="mat-elevation-z3" [@deleteAnimation]="search.state">
             <td>
               {{search.filter}}
             </td>
@@ -98,7 +97,7 @@
           <thead>
           <th>Jobs</th>
           </thead>
-          <tr *ngFor="let jobtype of filteredJobType" class="mat-elevation-z3" >
+          <tr *ngFor="let jobtype of filteredJobType" class="mat-elevation-z3" [@deleteAnimation]="jobtype.state" [@addAnimation]="jobtype === newJobType ? 'added' : ''">
             <td>
               {{jobtype.jobs}}
             </td>

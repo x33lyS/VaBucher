@@ -1,0 +1,40 @@
+*{
+  background: var(--section-bg-color);
+}
+.container{
+  padding: 5% 5% 10px 5% ;
+  .inputs-container{   
+  border: solid 2px #ED6A5A;
+border-radius: 25px;
+    padding: 50px;
+    .inputs{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 30px;
+      border-radius: 8px;
+      mat-form-field{
+        width: 100%;
+      }
+    }
+  }
+  .scraper-button{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    button{
+      width: 100%;
+      background: darkolivegreen;
+      border-radius: 8px;
+      padding: 20px;
+      font-size: 15px;
+      color: white;
+      margin-top: 20px;
+    }
+    p{
+      color: #c01f27;
+      text-align: center;
+      text-decoration: underline;
+      font-weight: bolder;
+    }
+  }
+}

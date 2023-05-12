@@ -6,6 +6,7 @@ import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/rout
 import {catchError, of, throwError} from "rxjs";
 import { CurrentUser } from '../models/currentuser';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,14 +19,11 @@ export class UserService {
   public getUser() : Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/${this.url}`);
   }
-  // j'ai mis type any pour le moment car on ne renvoi pas l'id et le role pour update, l'user de devrait pas y avoir accès
-  // voir si on fait les vérif en back
-  public updateUser(user: any): Observable<User[]> {
-    return this.http.put<User[]>(
-      `${this.apiUrl}/${this.url}`,
-      user
-    );
+
+  public updateUser(user: User): Observable<User[]> { 
+    return this.http.put<User[]>(`${this.apiUrl}/${this.url}`,user);
   }
+
   public createUser(user: User): Observable<User[] | HttpErrorResponse> {
     return this.http.post<User[]>(
       `${this.apiUrl}/${this.url}`,
